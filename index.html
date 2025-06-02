@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summer Learning Adventure 2025</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <h1>Summer Learning Adventure 2025</h1>
+        <div class="kid-selector">
+            <button id="sanha-btn" class="active">Sanha</button>
+            <button id="sanav-btn">Sanav</button>
+        </div>
+    </header>
+    
+    <main>
+        <section id="week-selection">
+            <h2>Summer Learning Adventure - <span id="current-week-display">Week 1 of 8</span></h2>
+            <div class="week-controls">
+                <button id="prev-week"><i class="fas fa-chevron-left"></i> Previous Week</button>
+                <div class="week-indicator">
+                    <div class="week-dots">
+                        <span class="week-dot active" data-week="1">1</span>
+                        <span class="week-dot" data-week="2">2</span>
+                        <span class="week-dot" data-week="3">3</span>
+                        <span class="week-dot" data-week="4">4</span>
+                        <span class="week-dot" data-week="5">5</span>
+                        <span class="week-dot" data-week="6">6</span>
+                        <span class="week-dot" data-week="7">7</span>
+                        <span class="week-dot" data-week="8">8</span>
+                    </div>
+                </div>
+                <button id="next-week">Next Week <i class="fas fa-chevron-right"></i></button>
+            </div>
+        </section>
+        
+        <section id="weekly-progress">
+            <h2><span id="selected-child-name">Sanha</span>'s Progress <span id="current-week-progress">Week 1</span></h2>
+            <div class="progress-summary">
+                <div class="progress-stats">
+                    <div class="stat">
+                        <i class="fas fa-tasks"></i>
+                        <span id="tasks-completed">0</span> of <span id="tasks-total">20</span> tasks completed
+                    </div>
+                    <div class="progress-percentage">
+                        <div class="progress-bar-container overall-progress">
+                            <div id="overall-progress-bar" class="progress-bar" style="width: 0%;">0%</div>
+                        </div>
+                    </div>
+                </div>
+                <div id="achievement-emoji" class="achievement-emoji">💪</div>
+            </div>
+        </section>
+
+        <section id="weekly-tasks">
+            <h2>Weekly Tasks</h2>
+            <div class="days-grid" id="days-container">
+                <!-- Days will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <section id="calendar-section">
+            <h2>Calendar View <span id="current-month-year"></span></h2>
+            <div class="calendar-controls">
+                <button id="prev-month"><i class="fas fa-chevron-left"></i></button>
+                <button id="next-month"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="calendar" id="calendar-container"></div>
+        </section>
+
+        <section id="daily-tasks">
+            <h2>Daily Tasks - <span id="selected-date"></span></h2>
+            <div id="tasks-container"></div>
+        </section>
+
+        <section id="progress-tracker">
+            <h2>Progress Tracker</h2>
+            <div class="progress-charts">
+                <div class="progress-chart">
+                    <h3>Reading</h3>
+                    <div class="progress-bar-container">
+                        <div id="reading-progress" class="progress-bar" style="width: 0%;">0%</div>
+                    </div>
+                </div>
+                <div class="progress-chart">
+                    <h3>Math</h3>
+                    <div class="progress-bar-container">
+                        <div id="math-progress" class="progress-bar" style="width: 0%;">0%</div>
+                    </div>
+                </div>
+                <div class="progress-chart">
+                    <h3>Writing</h3>
+                    <div class="progress-bar-container">
+                        <div id="writing-progress" class="progress-bar" style="width: 0%;">0%</div>
+                    </div>
+                </div>
+                <div class="progress-chart">
+                    <h3>Creative</h3>
+                    <div class="progress-bar-container">
+                        <div id="creative-progress" class="progress-bar" style="width: 0%;">0%</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="learning-tips">
+            <h2><i class="fas fa-lightbulb"></i> Daily Learning Tips</h2>
+            <div class="tips-container">
+                <div class="tip">
+                    <h3><i class="fas fa-book"></i> Reading</h3>
+                    <p>Take breaks every 15 minutes and discuss what you read with family.</p>
+                </div>
+                <div class="tip">
+                    <h3><i class="fas fa-pen"></i> Writing</h3>
+                    <p>Don't worry about perfect spelling - focus on expressing your ideas first!</p>
+                </div>
+                <div class="tip">
+                    <h3><i class="fas fa-calculator"></i> Math</h3>
+                    <p>Use real objects like toys or snacks to make math problems more fun.</p>
+                </div>
+                <div class="tip">
+                    <h3><i class="fas fa-palette"></i> Creative</h3>
+                    <p>There's no wrong way to be creative - let your imagination run wild!</p>
+                </div>
+                <div class="tip special-tip">
+                    <h3><i class="fas fa-robot"></i> AI Learning</h3>
+                    <p>Explain AI concepts simply as "computers that can learn and make smart guesses." Use examples like "AI helps suggest videos you might like."</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="rewards-system">
+            <h2><i class="fas fa-trophy"></i> Reward System</h2>
+            <div class="rewards-container">
+                <div class="reward">
+                    <i class="fas fa-star"></i>
+                    <p><strong>Daily:</strong> Complete all 4 tasks = Extra 30 min screen time</p>
+                </div>
+                <div class="reward">
+                    <i class="fas fa-medal"></i>
+                    <p><strong>Weekly:</strong> 80%+ completion = Special weekend activity</p>
+                </div>
+                <div class="reward">
+                    <i class="fas fa-award"></i>
+                    <p><strong>Monthly:</strong> Both kids 90%+ = Family celebration!</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="task-details-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 id="modal-task-title"></h2>
+            <p id="modal-task-description"></p>
+            <div id="modal-task-status" class="task-status"></div>
+            <div id="modal-buttons" class="modal-actions">
+                <button id="complete-task-btn">Mark as Complete</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Created with ❤️ for Sanha and Sanav - Summer 2025</p>
+        <p><a href="ai-learning-guide.md" target="_blank" class="ai-guide-link"><i class="fas fa-robot"></i> AI Learning Guide for Parents</a></p>
+    </footer>
+    
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

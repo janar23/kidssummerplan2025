@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Worksheet - Week 4: Multiplication Tables (2, 5, 10)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f8ff;
+        }
+        h1, h2 {
+            color: #2979ff;
+            text-align: center;
+        }
+        .instructions {
+            background-color: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .worksheet {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .problem {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+        }
+        input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            font-size: 16px;
+            border: 2px solid #bbdefb;
+            border-radius: 5px;
+        }
+        button {
+            background: linear-gradient(to right, #2979ff, #00b0ff);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 0;
+            display: block;
+        }
+        .feedback {
+            font-weight: bold;
+            margin-top: 10px;
+            min-height: 20px;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+        .back-button {
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            margin-top: 20px;
+        }
+        .progress-container {
+            width: 100%;
+            height: 20px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, #2979ff, #00b0ff);
+            width: 0%;
+            transition: width 0.5s;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+        }
+        .times-table {
+            border: 2px solid #bbdefb;
+            border-radius: 10px;
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+        .times-table h3 {
+            text-align: center;
+            color: #2979ff;
+            margin-top: 0;
+        }
+        .times-table div {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .times-table span {
+            display: block;
+            padding: 5px 10px;
+            margin: 5px;
+            background-color: #e3f2fd;
+            border-radius: 5px;
+        }
+        @media print {
+            button, .feedback, .progress-container {
+                display: none;
+            }
+            .problem {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Math Worksheet - Week 4</h1>
+    <h2>Multiplication Tables (2, 5, 10)</h2>
+
+    <div class="instructions">
+        <h3>Instructions:</h3>
+        <p>Solve each multiplication problem by entering the correct answer. Review the times tables below to help you. Click "Check Answer" to see if you got it right.</p>
+    </div>
+    
+    <div class="times-table">
+        <h3>2 Times Table</h3>
+        <div>
+            <span>2 × 1 = 2</span>
+            <span>2 × 2 = 4</span>
+            <span>2 × 3 = 6</span>
+            <span>2 × 4 = 8</span>
+            <span>2 × 5 = 10</span>
+            <span>2 × 6 = 12</span>
+            <span>2 × 7 = 14</span>
+            <span>2 × 8 = 16</span>
+            <span>2 × 9 = 18</span>
+            <span>2 × 10 = 20</span>
+        </div>
+    </div>
+    
+    <div class="times-table">
+        <h3>5 Times Table</h3>
+        <div>
+            <span>5 × 1 = 5</span>
+            <span>5 × 2 = 10</span>
+            <span>5 × 3 = 15</span>
+            <span>5 × 4 = 20</span>
+            <span>5 × 5 = 25</span>
+            <span>5 × 6 = 30</span>
+            <span>5 × 7 = 35</span>
+            <span>5 × 8 = 40</span>
+            <span>5 × 9 = 45</span>
+            <span>5 × 10 = 50</span>
+        </div>
+    </div>
+    
+    <div class="times-table">
+        <h3>10 Times Table</h3>
+        <div>
+            <span>10 × 1 = 10</span>
+            <span>10 × 2 = 20</span>
+            <span>10 × 3 = 30</span>
+            <span>10 × 4 = 40</span>
+            <span>10 × 5 = 50</span>
+            <span>10 × 6 = 60</span>
+            <span>10 × 7 = 70</span>
+            <span>10 × 8 = 80</span>
+            <span>10 × 9 = 90</span>
+            <span>10 × 10 = 100</span>
+        </div>
+    </div>
+
+    <div class="progress-container">
+        <div id="progress-bar" class="progress-bar">0%</div>
+    </div>
+
+    <div class="worksheet">
+        <div class="problem">
+            <p>1) 2 × 7 = <input type="number" id="answer1" min="0" max="100"></p>
+            <button onclick="checkAnswer(1, 14)">Check Answer</button>
+            <div id="feedback1" class="feedback"></div>
+        </div>
+
+        <div class="problem">
+            <p>2) 5 × 6 = <input type="number" id="answer2" min="0" max="100"></p>
+            <button onclick="checkAnswer(2, 30)">Check Answer</button>
+            <div id="feedback2" class="feedback"></div>
+        </div>
+
+        <div class="problem">
+            <p>3) 10 × 8 = <input type="number" id="answer3" min="0" max="100"></p>
+            <button onclick="checkAnswer(3, 80)">Check Answer</button>
+            <div id="feedback3" class="feedback"></div>
+        </div>
+
+        <div class="problem">
+            <p>4) 2 × 9 = <input type="number" id="answer4" min="0" max="100"></p>
+            <button onclick="checkAnswer(4, 18)">Check Answer</button>
+            <div id="feedback4" class="feedback"></div>
+        </div>
+
+        <div class="problem">
+            <p>5) 5 × 9 = <input type="number" id="answer5" min="0" max="100"></p>
+            <button onclick="checkAnswer(5, 45)">Check Answer</button>
+            <div id="feedback5" class="feedback"></div>
+        </div>
+
+        <div class="problem">
+            <p>6) 10 × 3 = <input type="number" id="answer6" min="0" max="100"></p>
+            <button onclick="checkAnswer(6, 30)">Check Answer</button>
+            <div id="feedback6" class="feedback"></div>
+        </div>
+
+        <div class="problem">
+            <p>7) 2 × 6 = <input type="number" id="answer7" min="0" max="100"></p>
+            <button onclick="checkAnswer(7, 12)">Check Answer</button>
+            <div id="feedback7" class="feedback"></div>
+        </div>
+
+        <div class="problem">
+            <p>8) 5 × 4 = <input type="number" id="answer8" min="0" max="100"></p>
+            <button onclick="checkAnswer(8, 20)">Check Answer</button>
+            <div id="feedback8" class="feedback"></div>
+        </div>
+
+        <div class="problem">
+            <p>9) 10 × 7 = <input type="number" id="answer9" min="0" max="100"></p>
+            <button onclick="checkAnswer(9, 70)">Check Answer</button>
+            <div id="feedback9" class="feedback"></div>
+        </div>
+
+        <div class="problem">
+            <p>10) 2 × 10 = <input type="number" id="answer10" min="0" max="100"></p>
+            <button onclick="checkAnswer(10, 20)">Check Answer</button>
+            <div id="feedback10" class="feedback"></div>
+        </div>
+
+        <div class="problem">
+            <p>11) 5 × 8 = <input type="number" id="answer11" min="0" max="100"></p>
+            <button onclick="checkAnswer(11, 40)">Check Answer</button>
+            <div id="feedback11" class="feedback"></div>
+        </div>
+
+        <div class="problem">
+            <p>12) 10 × 5 = <input type="number" id="answer12" min="0" max="100"></p>
+            <button onclick="checkAnswer(12, 50)">Check Answer</button>
+            <div id="feedback12" class="feedback"></div>
+        </div>
+    </div>
+
+    <button class="back-button" onclick="window.close()">Close Worksheet</button>
+
+    <script>
+        let correctAnswers = 0;
+        const totalProblems = 12;
+        
+        function checkAnswer(number, correctAnswer) {
+            const userAnswer = document.getElementById(`answer${number}`).value;
+            const feedbackElement = document.getElementById(`feedback${number}`);
+            
+            if (userAnswer == correctAnswer) { // Using == to compare as userAnswer is string
+                feedbackElement.textContent = "Correct! Great job! ✓";
+                feedbackElement.className = "feedback correct";
+                
+                // If this is the first time getting this answer correct
+                if (!feedbackElement.hasAttribute('data-correct')) {
+                    correctAnswers++;
+                    feedbackElement.setAttribute('data-correct', 'true');
+                    updateProgress();
+                }
+            } else {
+                feedbackElement.textContent = "Not quite. Try again! ✗";
+                feedbackElement.className = "feedback incorrect";
+            }
+        }
+        
+        function updateProgress() {
+            const progressPercentage = Math.round((correctAnswers / totalProblems) * 100);
+            const progressBar = document.getElementById('progress-bar');
+            progressBar.style.width = `${progressPercentage}%`;
+            progressBar.textContent = `${progressPercentage}%`;
+            
+            // Save progress to localStorage
+            localStorage.setItem('mathWorksheet4Progress', correctAnswers);
+            
+            if (correctAnswers === totalProblems) {
+                alert('🎉 Congratulations! You completed the worksheet! 🎉');
+            }
+        }
+        
+        // Load progress on page load
+        window.onload = function() {
+            const savedProgress = localStorage.getItem('mathWorksheet4Progress');
+            if (savedProgress) {
+                correctAnswers = parseInt(savedProgress);
+                updateProgress();
+                
+                // Mark previously correct answers
+                for (let i = 1; i <= totalProblems; i++) {
+                    const feedbackElement = document.getElementById(`feedback${i}`);
+                    if (feedbackElement.hasAttribute('data-correct')) {
+                        feedbackElement.textContent = "Correct! Great job! ✓";
+                        feedbackElement.className = "feedback correct";
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>

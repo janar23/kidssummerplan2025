@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writing Worksheet - Week 3: Write a Letter to Grandparents</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1, h2 {
+            color: #673ab7;
+            text-align: center;
+        }
+        .instructions {
+            background-color: #ede7f6;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .worksheet {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .letter-template {
+            background-color: #fffde7;
+            border: 2px dashed #ffd54f;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+        .writing-area {
+            width: 100%;
+            min-height: 400px;
+            border: 2px solid #d1c4e9;
+            border-radius: 5px;
+            padding: 20px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            line-height: 1.6;
+            background-color: #fffde7;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+        .word-bank {
+            background-color: #e1f5fe;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .word-bank h3 {
+            color: #0277bd;
+            margin-top: 0;
+        }
+        .word-bank ul {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 0;
+            list-style-type: none;
+        }
+        .word-bank li {
+            background-color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            border: 1px solid #b3e5fc;
+            font-size: 14px;
+        }
+        button {
+            background: linear-gradient(to right, #673ab7, #9c27b0);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 0;
+            display: block;
+        }
+        .back-button {
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            margin-top: 20px;
+        }
+        .save-button {
+            background: linear-gradient(to right, #4caf50, #8bc34a);
+        }
+        .letter-part {
+            margin-bottom: 10px;
+            color: #673ab7;
+        }
+        .letter-content {
+            margin-left: 20px;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+    <h1>Writing Worksheet - Week 3</h1>
+    <h2>Write a Letter to Grandparents</h2>
+
+    <div class="instructions">
+        <h3>Instructions:</h3>
+        <p>Write a letter to your grandparents telling them about what you've been doing this summer. Include things like what you're learning, what games you're playing, and what you're excited about. Use the letter template as a guide.</p>
+    </div>
+
+    <div class="word-bank">
+        <h3>Helpful Words:</h3>
+        <ul>
+            <li>dear</li>
+            <li>hello</li>
+            <li>miss you</li>
+            <li>love</li>
+            <li>hope</li>
+            <li>summer</li>
+            <li>learning</li>
+            <li>playing</li>
+            <li>reading</li>
+            <li>math</li>
+            <li>writing</li>
+            <li>fun</li>
+            <li>favorite</li>
+            <li>excited</li>
+            <li>visit</li>
+            <li>soon</li>
+            <li>from</li>
+            <li>yours</li>
+            <li>sincerely</li>
+            <li>hugs</li>
+        </ul>
+    </div>
+
+    <div class="letter-template">
+        <div class="letter-part">Date:</div>
+        <div class="letter-content">[Today's Date: June 2, 2025]</div>
+        
+        <div class="letter-part">Greeting:</div>
+        <div class="letter-content">Dear Grandma and Grandpa,</div>
+        
+        <div class="letter-part">Introduction:</div>
+        <div class="letter-content">[Write a nice greeting and tell them how you are]</div>
+        
+        <div class="letter-part">Body:</div>
+        <div class="letter-content">[Tell them what you've been doing this summer]<br>
+        [Tell them something new you learned]<br>
+        [Tell them about a fun activity you did]</div>
+        
+        <div class="letter-part">Questions:</div>
+        <div class="letter-content">[Ask them questions about how they are doing]</div>
+        
+        <div class="letter-part">Closing:</div>
+        <div class="letter-content">[Tell them you miss them and would like to see them]</div>
+        
+        <div class="letter-part">Sign off:</div>
+        <div class="letter-content">Love,<br>[Your Name]</div>
+    </div>
+
+    <div class="worksheet">
+        <textarea id="writing-area" class="writing-area" placeholder="Write your letter here...">Date: June 2, 2025
+
+Dear Grandma and Grandpa,
+
+"></textarea>
+        <button class="save-button" onclick="saveWriting()">Save Your Letter</button>
+    </div>
+
+    <button class="back-button" onclick="window.close()">Close Worksheet</button>
+
+    <script>
+        // Save the writing to localStorage
+        function saveWriting() {
+            const writingArea = document.getElementById('writing-area');
+            const content = writingArea.value;
+            
+            if (content.trim() !== '') {
+                localStorage.setItem('writingWeek3Content', content);
+                alert('Your letter has been saved! Great job! 📝');
+            } else {
+                alert('Please write something before saving!');
+            }
+        }
+        
+        // Load any saved writing when the page loads
+        window.onload = function() {
+            const savedWriting = localStorage.getItem('writingWeek3Content');
+            if (savedWriting) {
+                document.getElementById('writing-area').value = savedWriting;
+            }
+        }
+    </script>
+</body>
+</html>

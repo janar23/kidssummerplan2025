@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Worksheet - Week 1: Counting Games (1-100)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f8ff;
+        }
+        h1, h2 {
+            color: #2979ff;
+            text-align: center;
+        }
+        .instructions {
+            background-color: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .worksheet {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .problem {
+            margin-bottom: 25px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+        }
+        input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            font-size: 16px;
+            border: 2px solid #bbdefb;
+            border-radius: 5px;
+        }
+        button {
+            background: linear-gradient(to right, #2979ff, #00b0ff);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 0;
+            display: block;
+        }
+        .game-button {
+            background: linear-gradient(to right, #8bc34a, #4caf50);
+            margin: 5px;
+            display: inline-block;
+            font-size: 14px;
+            padding: 8px 15px;
+        }
+        .feedback {
+            font-weight: bold;
+            margin-top: 10px;
+            min-height: 20px;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+        .back-button {
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            margin-top: 20px;
+        }
+        .progress-container {
+            width: 100%;
+            height: 20px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, #2979ff, #00b0ff);
+            width: 0%;
+            transition: width 0.5s;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+        }
+        .number-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+        .number-cell {
+            border: 1px solid #bbdefb;
+            padding: 5px;
+            text-align: center;
+            background-color: #e3f2fd;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .number-cell:hover {
+            background-color: #bbdefb;
+        }
+        .number-cell.selected {
+            background-color: #2979ff;
+            color: white;
+        }
+        .number-cell.highlighted {
+            background-color: #8bc34a;
+            color: white;
+            font-weight: bold;
+        }
+        .skip-counting {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        .skip-button {
+            padding: 8px 15px;
+            border-radius: 20px;
+            margin: 5px;
+            cursor: pointer;
+            background: linear-gradient(to right, #673ab7, #9c27b0);
+            color: white;
+            border: none;
+        }
+        .missing-numbers {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .number-box {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #bbdefb;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .missing {
+            background-color: #e3f2fd;
+        }
+        .game-container {
+            margin-top: 20px;
+            padding: 15px;
+            border: 2px solid #bbdefb;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        .countdown {
+            font-size: 24px;
+            color: #2979ff;
+            text-align: center;
+            margin: 10px 0;
+        }
+        .target-number {
+            font-size: 32px;
+            color: #ff5722;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+        }
+        @media print {
+            button, .feedback, .progress-container {
+                display: none;
+            }
+            .problem {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Math Worksheet - Week 1</h1>
+    <h2>Counting Games (1-100)</h2>
+
+    <div class="instructions">
+        <h3>Instructions:</h3>
+        <p>Practice counting from 1 to 100 with these fun activities. Click on numbers in the grid, complete the missing numbers, and play the quick counting games. Have fun!</p>
+    </div>
+
+    <div class="progress-container">
+        <div id="progress-bar" class="progress-bar">0%</div>
+    </div>
+
+    <div class="worksheet">
+        <div class="problem">
+            <h3>1. Number Grid (1-100)</h3>
+            <p>Click on numbers to highlight them as you count out loud!</p>
+            <div id="number-grid" class="number-grid"></div>
+            
+            <div class="skip-counting">
+                <button class="skip-button" onclick="highlightSkipCounting(2)">Count by 2s</button>
+                <button class="skip-button" onclick="highlightSkipCounting(5)">Count by 5s</button>
+                <button class="skip-button" onclick="highlightSkipCounting(10)">Count by 10s</button>
+                <button class="skip-button" onclick="clearHighlights()">Clear All</button>
+            </div>
+        </div>
+
+        <div class="problem">
+            <h3>2. What Comes Next?</h3>
+            <p>Fill in the missing numbers in each sequence.</p>
+            
+            <div id="sequence1">
+                <p>Sequence 1: 5, 6, 7, ____, 9, 10</p>
+                <input type="number" id="seq1-answer" min="0" max="100">
+                <button onclick="checkSequence(1, 8)">Check Answer</button>
+                <div id="feedback1" class="feedback"></div>
+            </div>
+            
+            <div id="sequence2">
+                <p>Sequence 2: 14, 15, ____, 17, 18, 19</p>
+                <input type="number" id="seq2-answer" min="0" max="100">
+                <button onclick="checkSequence(2, 16)">Check Answer</button>
+                <div id="feedback2" class="feedback"></div>
+            </div>
+            
+            <div id="sequence3">
+                <p>Sequence 3: 28, 29, 30, ____, 32, 33</p>
+                <input type="number" id="seq3-answer" min="0" max="100">
+                <button onclick="checkSequence(3, 31)">Check Answer</button>
+                <div id="feedback3" class="feedback"></div>
+            </div>
+            
+            <div id="sequence4">
+                <p>Sequence 4: 45, ____, 47, 48, 49, 50</p>
+                <input type="number" id="seq4-answer" min="0" max="100">
+                <button onclick="checkSequence(4, 46)">Check Answer</button>
+                <div id="feedback4" class="feedback"></div>
+            </div>
+        </div>
+
+        <div class="problem">
+            <h3>3. Fill in the Missing Numbers</h3>
+            <p>Fill in the missing numbers in this sequence from 71 to 80.</p>
+            
+            <div class="missing-numbers">
+                <div class="number-box">71</div>
+                <div class="number-box missing"><input type="number" id="missing1" min="0" max="100" style="width: 40px; height: 40px; border: none; text-align: center;"></div>
+                <div class="number-box">73</div>
+                <div class="number-box missing"><input type="number" id="missing2" min="0" max="100" style="width: 40px; height: 40px; border: none; text-align: center;"></div>
+                <div class="number-box">75</div>
+                <div class="number-box missing"><input type="number" id="missing3" min="0" max="100" style="width: 40px; height: 40px; border: none; text-align: center;"></div>
+                <div class="number-box">77</div>
+                <div class="number-box missing"><input type="number" id="missing4" min="0" max="100" style="width: 40px; height: 40px; border: none; text-align: center;"></div>
+                <div class="number-box">79</div>
+                <div class="number-box">80</div>
+            </div>
+            
+            <button onclick="checkMissingNumbers()">Check Answers</button>
+            <div id="feedback5" class="feedback"></div>
+        </div>
+
+        <div class="problem">
+            <h3>4. Before and After</h3>
+            <p>Fill in the numbers that come before and after.</p>
+            
+            <div id="before-after1">
+                <p>What comes before 25? <input type="number" id="before1" min="0" max="100"></p>
+                <p>What comes after 25? <input type="number" id="after1" min="0" max="100"></p>
+                <button onclick="checkBeforeAfter(1, 24, 26)">Check Answer</button>
+                <div id="feedback6" class="feedback"></div>
+            </div>
+            
+            <div id="before-after2">
+                <p>What comes before 50? <input type="number" id="before2" min="0" max="100"></p>
+                <p>What comes after 50? <input type="number" id="after2" min="0" max="100"></p>
+                <button onclick="checkBeforeAfter(2, 49, 51)">Check Answer</button>
+                <div id="feedback7" class="feedback"></div>
+            </div>
+            
+            <div id="before-after3">
+                <p>What comes before 100? <input type="number" id="before3" min="0" max="100"></p>
+                <button onclick="checkBeforeAfter(3, 99, null)">Check Answer</button>
+                <div id="feedback8" class="feedback"></div>
+            </div>
+        </div>
+
+        <div class="problem">
+            <h3>5. Count & Find Game</h3>
+            <p>Instructions: Try to find the target number in the grid as quickly as you can!</p>
+            
+            <div class="game-container">
+                <button id="start-game" class="game-button">Start Game</button>
+                <div id="countdown" class="countdown"></div>
+                <div id="target-number" class="target-number"></div>
+                <div id="game-grid" class="number-grid" style="display: none;"></div>
+                <div id="game-result"></div>
+            </div>
+        </div>
+    </div>
+
+    <button class="back-button" onclick="window.close()">Close Worksheet</button>
+
+    <script>
+        let correctAnswers = 0;
+        const totalProblems = 8;
+        
+        window.onload = function() {
+            // Create number grid
+            createNumberGrid();
+            createGameGrid();
+            
+            // Setup game button
+            document.getElementById('start-game').addEventListener('click', startCountingGame);
+            
+            // Load saved progress
+            const savedProgress = localStorage.getItem('mathCountingProgress');
+            if (savedProgress) {
+                correctAnswers = parseInt(savedProgress);
+                updateProgress();
+                
+                // Mark previously correct answers
+                for (let i = 1; i <= totalProblems; i++) {
+                    const feedbackElement = document.getElementById(`feedback${i}`);
+                    if (feedbackElement && feedbackElement.hasAttribute('data-correct')) {
+                        feedbackElement.textContent = "Correct! Great job! ✓";
+                        feedbackElement.className = "feedback correct";
+                    }
+                }
+            }
+        }
+        
+        function createNumberGrid() {
+            const grid = document.getElementById('number-grid');
+            grid.innerHTML = '';
+            
+            for (let i = 1; i <= 100; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'number-cell';
+                cell.textContent = i;
+                cell.addEventListener('click', function() {
+                    this.classList.toggle('selected');
+                });
+                grid.appendChild(cell);
+            }
+        }
+        
+        function createGameGrid() {
+            const grid = document.getElementById('game-grid');
+            grid.innerHTML = '';
+            
+            // Create shuffled array of numbers 1-100
+            let numbers = Array.from({length: 100}, (_, i) => i + 1);
+            shuffleArray(numbers);
+            
+            for (let i = 0; i < 100; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'number-cell';
+                cell.textContent = numbers[i];
+                cell.dataset.value = numbers[i];
+                grid.appendChild(cell);
+            }
+        }
+        
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+        
+        function highlightSkipCounting(step) {
+            clearHighlights();
+            const cells = document.querySelectorAll('#number-grid .number-cell');
+            for (let i = step - 1; i < cells.length; i += step) {
+                cells[i].classList.add('highlighted');
+            }
+        }
+        
+        function clearHighlights() {
+            const highlightedCells = document.querySelectorAll('#number-grid .number-cell.highlighted');
+            highlightedCells.forEach(cell => {
+                cell.classList.remove('highlighted');
+            });
+        }
+        
+        function checkSequence(number, correctAnswer) {
+            const userAnswer = document.getElementById(`seq${number}-answer`).value;
+            const feedbackElement = document.getElementById(`feedback${number}`);
+            
+            if (userAnswer == correctAnswer) { // Using == since userAnswer is string
+                feedbackElement.textContent = "Correct! Great job! ✓";
+                feedbackElement.className = "feedback correct";
+                
+                // If this is the first time getting this answer correct
+                if (!feedbackElement.hasAttribute('data-correct')) {
+                    correctAnswers++;
+                    feedbackElement.setAttribute('data-correct', 'true');
+                    updateProgress();
+                }
+            } else {
+                feedbackElement.textContent = "Not quite. Try again! ✗";
+                feedbackElement.className = "feedback incorrect";
+            }
+        }
+        
+        function checkMissingNumbers() {
+            const missing1 = document.getElementById('missing1').value;
+            const missing2 = document.getElementById('missing2').value;
+            const missing3 = document.getElementById('missing3').value;
+            const missing4 = document.getElementById('missing4').value;
+            const feedbackElement = document.getElementById('feedback5');
+            
+            if (missing1 == 72 && missing2 == 74 && missing3 == 76 && missing4 == 78) {
+                feedbackElement.textContent = "All correct! Great job! ✓";
+                feedbackElement.className = "feedback correct";
+                
+                // If this is the first time getting this answer correct
+                if (!feedbackElement.hasAttribute('data-correct')) {
+                    correctAnswers++;
+                    feedbackElement.setAttribute('data-correct', 'true');
+                    updateProgress();
+                }
+            } else {
+                feedbackElement.textContent = "Not all answers are correct. Try again! ✗";
+                feedbackElement.className = "feedback incorrect";
+            }
+        }
+        
+        function checkBeforeAfter(number, correctBefore, correctAfter) {
+            const beforeAnswer = document.getElementById(`before${number}`).value;
+            const afterElement = document.getElementById(`after${number}`);
+            const feedbackElement = document.getElementById(`feedback${number + 5}`);
+            
+            let afterAnswer = null;
+            if (correctAfter !== null) {
+                afterAnswer = afterElement.value;
+            }
+            
+            let isCorrect = beforeAnswer == correctBefore;
+            if (correctAfter !== null) {
+                isCorrect = isCorrect && (afterAnswer == correctAfter);
+            }
+            
+            if (isCorrect) {
+                feedbackElement.textContent = "Correct! Great job! ✓";
+                feedbackElement.className = "feedback correct";
+                
+                // If this is the first time getting this answer correct
+                if (!feedbackElement.hasAttribute('data-correct')) {
+                    correctAnswers++;
+                    feedbackElement.setAttribute('data-correct', 'true');
+                    updateProgress();
+                }
+            } else {
+                feedbackElement.textContent = "Not quite. Try again! ✗";
+                feedbackElement.className = "feedback incorrect";
+            }
+        }
+        
+        function updateProgress() {
+            const progressPercentage = Math.round((correctAnswers / totalProblems) * 100);
+            const progressBar = document.getElementById('progress-bar');
+            progressBar.style.width = `${progressPercentage}%`;
+            progressBar.textContent = `${progressPercentage}%`;
+            
+            // Save progress to localStorage
+            localStorage.setItem('mathCountingProgress', correctAnswers);
+            
+            if (correctAnswers === totalProblems) {
+                alert('🎉 Congratulations! You completed all the counting activities! 🎉');
+            }
+        }
+        
+        // Counting game variables
+        let gameStarted = false;
+        let targetNumber;
+        let gameStartTime;
+        let gameCountdown;
+        
+        function startCountingGame() {
+            if (gameStarted) return;
+            
+            gameStarted = true;
+            document.getElementById('game-grid').style.display = 'grid';
+            document.getElementById('target-number').textContent = '';
+            document.getElementById('game-result').textContent = '';
+            
+            // Start countdown
+            let count = 3;
+            document.getElementById('countdown').textContent = count;
+            
+            gameCountdown = setInterval(() => {
+                count--;
+                document.getElementById('countdown').textContent = count;
+                
+                if (count === 0) {
+                    clearInterval(gameCountdown);
+                    document.getElementById('countdown').textContent = 'GO!';
+                    startGame();
+                }
+            }, 1000);
+        }
+        
+        function startGame() {
+            // Generate random number between 1-100
+            targetNumber = Math.floor(Math.random() * 100) + 1;
+            document.getElementById('target-number').textContent = `Find number: ${targetNumber}`;
+            
+            // Record start time
+            gameStartTime = new Date().getTime();
+            
+            // Add click events to grid
+            const cells = document.querySelectorAll('#game-grid .number-cell');
+            cells.forEach(cell => {
+                cell.addEventListener('click', checkGameAnswer);
+            });
+        }
+        
+        function checkGameAnswer(e) {
+            if (!gameStarted) return;
+            
+            const clickedValue = parseInt(e.target.dataset.value);
+            const endTime = new Date().getTime();
+            const timeTaken = (endTime - gameStartTime) / 1000; // Convert to seconds
+            
+            if (clickedValue === targetNumber) {
+                document.getElementById('game-result').textContent = `Great job! You found ${targetNumber} in ${timeTaken.toFixed(1)} seconds!`;
+                document.getElementById('game-result').style.color = 'green';
+                
+                gameStarted = false;
+                document.getElementById('start-game').textContent = 'Play Again';
+                document.getElementById('countdown').textContent = '';
+                
+                // Remove click events
+                const cells = document.querySelectorAll('#game-grid .number-cell');
+                cells.forEach(cell => {
+                    cell.removeEventListener('click', checkGameAnswer);
+                });
+                
+                // Create a new grid for next game
+                createGameGrid();
+            } else {
+                document.getElementById('game-result').textContent = `That's ${clickedValue}, keep looking for ${targetNumber}!`;
+                document.getElementById('game-result').style.color = 'red';
+            }
+        }
+    </script>
+</body>
+</html>

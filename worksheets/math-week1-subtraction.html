@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Worksheet - Week 1: Subtraction Practice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f8ff;
+        }
+        h1, h2 {
+            color: #2979ff;
+            text-align: center;
+        }
+        .instructions {
+            background-color: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .worksheet {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .problem {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+        }
+        input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            font-size: 16px;
+            border: 2px solid #bbdefb;
+            border-radius: 5px;
+        }
+        button {
+            background: linear-gradient(to right, #2979ff, #00b0ff);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 0;
+            display: block;
+        }
+        .feedback {
+            font-weight: bold;
+            margin-top: 10px;
+            min-height: 20px;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+        .back-button {
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            margin-top: 20px;
+        }
+        .progress-container {
+            width: 100%;
+            height: 20px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, #2979ff, #00b0ff);
+            width: 0%;
+            transition: width 0.5s;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+        }
+        .visual-block {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .blocks {
+            display: flex;
+            flex-wrap: wrap;
+            margin-right: 10px;
+        }
+        .block {
+            width: 20px;
+            height: 20px;
+            background-color: #bbdefb;
+            margin: 2px;
+            border-radius: 3px;
+        }
+        .crossed {
+            background-color: #e0e0e0;
+            position: relative;
+        }
+        .crossed::after {
+            content: "X";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #ff5252;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        @media print {
+            button, .feedback, .progress-container {
+                display: none;
+            }
+            .problem {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Math Worksheet - Week 1</h1>
+    <h2>Subtraction Practice</h2>
+
+    <div class="instructions">
+        <h3>Instructions:</h3>
+        <p>Solve each subtraction problem by entering the correct answer. Click "Check Answer" to see if you got it right. The blocks can help you visualize the subtraction!</p>
+    </div>
+
+    <div class="progress-container">
+        <div id="progress-bar" class="progress-bar">0%</div>
+    </div>
+
+    <div class="worksheet">
+        <div class="problem">
+            <p>1) 15 - 8 = <input type="number" id="answer1" min="0" max="100"></p>
+            <div class="visual-block">
+                <div class="blocks" id="blocks1"></div>
+                <span>- 8 = ?</span>
+            </div>
+            <button onclick="checkAnswer(1, 7)">Check Answer</button>
+            <div id="feedback1" class="feedback"></div>
+        </div>
+
+        <div class="problem">
+            <p>2) 20 - 12 = <input type="number" id="answer2" min="0" max="100"></p>
+            <div class="visual-block">
+                <div class="blocks" id="blocks2"></div>
+                <span>- 12 = ?</span>
+            </div>
+            <button onclick="checkAnswer(2, 8)">Check Answer</button>
+            <div id="feedback2" class="feedback"></div>
+        </div>
+
+        <div class="problem">
+            <p>3) 25 - 10 = <input type="number" id="answer3" min="0" max="100"></p>
+            <div class="visual-block">
+                <div class="blocks" id="blocks3"></div>
+                <span>- 10 = ?</span>
+            </div>
+            <button onclick="checkAnswer(3, 15)">Check Answer</button>
+            <div id="feedback3" class="feedback"></div>
+        </div>
+
+        <div class="problem">
+            <p>4) 18 - 9 = <input type="number" id="answer4" min="0" max="100"></p>
+            <div class="visual-block">
+                <div class="blocks" id="blocks4"></div>
+                <span>- 9 = ?</span>
+            </div>
+            <button onclick="checkAnswer(4, 9)">Check Answer</button>
+            <div id="feedback4" class="feedback"></div>
+        </div>
+
+        <div class="problem">
+            <p>5) 30 - 15 = <input type="number" id="answer5" min="0" max="100"></p>
+            <div class="visual-block">
+                <div class="blocks" id="blocks5"></div>
+                <span>- 15 = ?</span>
+            </div>
+            <button onclick="checkAnswer(5, 15)">Check Answer</button>
+            <div id="feedback5" class="feedback"></div>
+        </div>
+
+        <div class="problem">
+            <p>6) 16 - 7 = <input type="number" id="answer6" min="0" max="100"></p>
+            <div class="visual-block">
+                <div class="blocks" id="blocks6"></div>
+                <span>- 7 = ?</span>
+            </div>
+            <button onclick="checkAnswer(6, 9)">Check Answer</button>
+            <div id="feedback6" class="feedback"></div>
+        </div>
+
+        <div class="problem">
+            <p>7) 24 - 14 = <input type="number" id="answer7" min="0" max="100"></p>
+            <div class="visual-block">
+                <div class="blocks" id="blocks7"></div>
+                <span>- 14 = ?</span>
+            </div>
+            <button onclick="checkAnswer(7, 10)">Check Answer</button>
+            <div id="feedback7" class="feedback"></div>
+        </div>
+
+        <div class="problem">
+            <p>8) 22 - 9 = <input type="number" id="answer8" min="0" max="100"></p>
+            <div class="visual-block">
+                <div class="blocks" id="blocks8"></div>
+                <span>- 9 = ?</span>
+            </div>
+            <button onclick="checkAnswer(8, 13)">Check Answer</button>
+            <div id="feedback8" class="feedback"></div>
+        </div>
+
+        <div class="problem">
+            <p>9) 19 - 11 = <input type="number" id="answer9" min="0" max="100"></p>
+            <div class="visual-block">
+                <div class="blocks" id="blocks9"></div>
+                <span>- 11 = ?</span>
+            </div>
+            <button onclick="checkAnswer(9, 8)">Check Answer</button>
+            <div id="feedback9" class="feedback"></div>
+        </div>
+
+        <div class="problem">
+            <p>10) 28 - 13 = <input type="number" id="answer10" min="0" max="100"></p>
+            <div class="visual-block">
+                <div class="blocks" id="blocks10"></div>
+                <span>- 13 = ?</span>
+            </div>
+            <button onclick="checkAnswer(10, 15)">Check Answer</button>
+            <div id="feedback10" class="feedback"></div>
+        </div>
+
+        <button class="back-button" onclick="window.history.back()">Back to Schedule</button>
+    </div>
+
+    <script>
+        const totalProblems = 10;
+        let correctAnswers = 0;
+        
+        // Create visual blocks for each problem
+        function createBlocks() {
+            const problems = [
+                {id: 'blocks1', total: 15, subtract: 8},
+                {id: 'blocks2', total: 20, subtract: 12},
+                {id: 'blocks3', total: 25, subtract: 10},
+                {id: 'blocks4', total: 18, subtract: 9},
+                {id: 'blocks5', total: 30, subtract: 15},
+                {id: 'blocks6', total: 16, subtract: 7},
+                {id: 'blocks7', total: 24, subtract: 14},
+                {id: 'blocks8', total: 22, subtract: 9},
+                {id: 'blocks9', total: 19, subtract: 11},
+                {id: 'blocks10', total: 28, subtract: 13}
+            ];
+            
+            problems.forEach(problem => {
+                const container = document.getElementById(problem.id);
+                
+                for (let i = 0; i < problem.total; i++) {
+                    const block = document.createElement('div');
+                    block.className = i < problem.subtract ? 'block crossed' : 'block';
+                    container.appendChild(block);
+                }
+            });
+        }
+        
+        // Load blocks when page loads
+        window.addEventListener('DOMContentLoaded', createBlocks);
+        
+        function checkAnswer(questionNum, correctAnswer) {
+            const answerInput = document.getElementById(`answer${questionNum}`);
+            const feedbackElement = document.getElementById(`feedback${questionNum}`);
+            
+            if (!answerInput.value) {
+                feedbackElement.textContent = "Please enter an answer!";
+                feedbackElement.className = "feedback";
+                return;
+            }
+            
+            if (parseInt(answerInput.value) === correctAnswer) {
+                feedbackElement.textContent = "Correct! Great job! ✓";
+                feedbackElement.className = "feedback correct";
+                feedbackElement.setAttribute('data-correct', 'true');
+                
+                // Only increase the counter if this is the first time they got it right
+                if (!localStorage.getItem(`mathWorksheet1Subtraction-${questionNum}`)) {
+                    localStorage.setItem(`mathWorksheet1Subtraction-${questionNum}`, 'correct');
+                    correctAnswers++;
+                    updateProgress();
+                }
+            } else {
+                feedbackElement.textContent = "Not quite. Try again! ✗";
+                feedbackElement.className = "feedback incorrect";
+            }
+        }
+        
+        function updateProgress() {
+            const progressPercentage = Math.round((correctAnswers / totalProblems) * 100);
+            const progressBar = document.getElementById('progress-bar');
+            progressBar.style.width = `${progressPercentage}%`;
+            progressBar.textContent = `${progressPercentage}%`;
+            
+            // Save progress to localStorage
+            localStorage.setItem('mathWorksheet1SubtractionProgress', correctAnswers);
+            
+            if (correctAnswers === totalProblems) {
+                alert('🎉 Congratulations! You completed the worksheet! 🎉');
+            }
+        }
+        
+        // Load progress on page load
+        window.onload = function() {
+            // Check if any problems have been solved correctly before
+            for (let i = 1; i <= totalProblems; i++) {
+                if (localStorage.getItem(`mathWorksheet1Subtraction-${i}`) === 'correct') {
+                    correctAnswers++;
+                    
+                    const feedbackElement = document.getElementById(`feedback${i}`);
+                    feedbackElement.textContent = "Correct! Great job! ✓";
+                    feedbackElement.className = "feedback correct";
+                    feedbackElement.setAttribute('data-correct', 'true');
+                }
+            }
+            
+            // Update progress bar
+            updateProgress();
+        }
+    </script>
+</body>
+</html>

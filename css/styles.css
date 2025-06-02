@@ -1,0 +1,775 @@
+:root {
+    --primary-color: #ff7e5f;
+    --secondary-color: #feb47b;
+    --accent-color: #7bb0ff;
+    --success-color: #4caf50;
+    --text-color: #333;
+    --light-bg: #f9f9f9;
+    --dark-bg: #333;
+    --sanha-color: #ff8fab;
+    --sanav-color: #7bb0ff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, var(--light-bg), #fff);
+    color: var(--text-color);
+    min-height: 100vh;
+}
+
+header {
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 1rem 2rem;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.kid-selector {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.kid-selector button {
+    padding: 0.5rem 2rem;
+    border: none;
+    border-radius: 20px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.kid-selector button:nth-child(1) {
+    background-color: var(--sanha-color);
+    color: white;
+}
+
+.kid-selector button:nth-child(2) {
+    background-color: var(--sanav-color);
+    color: white;
+}
+
+.kid-selector button.active {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+section {
+    background-color: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+h2 {
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Calendar Styles */
+.calendar-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.calendar-controls button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--primary-color);
+}
+
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+}
+
+.calendar .day-name {
+    font-weight: bold;
+    text-align: center;
+    padding: 0.5rem;
+}
+
+.calendar .day {
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+    min-height: 80px;
+    border-radius: 5px;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.calendar .day:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.calendar .day.today {
+    border-color: var(--accent-color);
+    background-color: rgba(123, 176, 255, 0.1);
+}
+
+.calendar .day.selected {
+    border-color: var(--primary-color);
+    background-color: rgba(255, 126, 95, 0.1);
+}
+
+.calendar .day-number {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.calendar .task-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 2px;
+}
+
+.calendar .task-dot.reading {
+    background-color: #ff9800;
+}
+
+.calendar .task-dot.math {
+    background-color: #2196f3;
+}
+
+.calendar .task-dot.writing {
+    background-color: #9c27b0;
+}
+
+.calendar .task-dot.creative {
+    background-color: #4caf50;
+}
+
+.calendar .day.outside-month {
+    opacity: 0.3;
+}
+
+/* Task Styles */
+#tasks-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.task-card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 1rem;
+    background-color: var(--light-bg);
+    cursor: pointer;
+    transition: transform 0.2s;
+    position: relative;
+}
+
+.task-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.task-card h3 {
+    margin-bottom: 0.5rem;
+    color: var(--dark-bg);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.task-card p {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.task-card .task-category {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 0.3rem 0.6rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    color: white;
+}
+
+.task-card .task-category.reading {
+    background-color: #ff9800;
+}
+
+.task-card .task-category.math {
+    background-color: #2196f3;
+}
+
+.task-card .task-category.writing {
+    background-color: #9c27b0;
+}
+
+.task-card .task-category.creative {
+    background-color: #4caf50;
+}
+
+.task-card.completed {
+    opacity: 0.7;
+}
+
+.task-card.completed::after {
+    content: "✓";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    color: var(--success-color);
+    opacity: 0.7;
+}
+
+/* Week Selection Styles */
+#week-selection {
+    margin-bottom: 2rem;
+}
+
+.week-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.week-controls button {
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 20px;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.week-controls button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.week-controls button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.week-indicator {
+    flex: 1;
+    padding: 0 1rem;
+}
+
+.week-dots {
+    display: flex;
+    justify-content: space-between;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.week-dot {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    color: var(--dark-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.week-dot:hover {
+    transform: scale(1.1);
+}
+
+.week-dot.active {
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    color: white;
+    box-shadow: 0 0 10px rgba(255,126,95,0.5);
+    transform: scale(1.2);
+}
+
+/* Weekly Progress Styles */
+#weekly-progress {
+    background: linear-gradient(to right, #e0f7fa, #bbdefb);
+    margin-bottom: 2rem;
+}
+
+.progress-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.progress-stats {
+    flex: 1;
+}
+
+.stat {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.stat i {
+    color: var(--primary-color);
+}
+
+.progress-percentage {
+    width: 100%;
+    max-width: 400px;
+    margin-top: 0.5rem;
+}
+
+.overall-progress {
+    height: 15px;
+    margin-top: 0.5rem;
+}
+
+.achievement-emoji {
+    font-size: 3rem;
+    margin-left: 2rem;
+}
+
+/* Weekly Tasks Styles */
+.days-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.day-card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.day-card h3 {
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 0.5rem;
+    border-radius: 5px;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+.task-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.7rem;
+    border-radius: 5px;
+    background-color: var(--light-bg);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.task-item:hover {
+    transform: translateX(5px);
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+}
+
+.task-checkbox {
+    min-width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+}
+
+.task-checkbox.checked {
+    border-color: var(--success-color);
+    background-color: var(--success-color);
+    color: white;
+}
+
+.task-content {
+    flex: 1;
+}
+
+.task-title {
+    font-weight: bold;
+    margin-bottom: 0.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.task-title i {
+    font-size: 0.9rem;
+}
+
+.task-description {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.task-item.complete .task-description {
+    text-decoration: line-through;
+    color: #999;
+}
+
+.task-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+    color: white;
+    font-size: 0.8rem;
+}
+
+.task-icon.reading {
+    background-color: #ff9800;
+}
+
+.task-icon.math {
+    background-color: #2196f3;
+}
+
+.task-icon.writing {
+    background-color: #9c27b0;
+}
+
+.task-icon.creative {
+    background-color: #4caf50;
+}
+
+/* Progress Tracker Styles */
+.progress-charts {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.progress-chart {
+    text-align: center;
+}
+
+.progress-chart h3 {
+    margin-bottom: 0.5rem;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 30px;
+    background-color: #e0e0e0;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: width 0.5s ease;
+}
+
+#reading-progress {
+    background-color: #ff9800;
+}
+
+#math-progress {
+    background-color: #2196f3;
+}
+
+#writing-progress {
+    background-color: #9c27b0;
+}
+
+#creative-progress {
+    background-color: #4caf50;
+}
+
+#overall-progress-bar {
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+}
+
+/* Learning Tips Styles */
+#learning-tips {
+    background: linear-gradient(to right, #fff8e1, #fffde7);
+}
+
+.tips-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.tip {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.tip h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.special-tip {
+    background: linear-gradient(to right, #e0f7fa, #bbdefb);
+    border: 2px solid #64b5f6;
+    grid-column: 1 / -1;
+}
+
+.special-tip h3 {
+    color: #0277bd;
+}
+
+/* Rewards System Styles */
+#rewards-system {
+    background: linear-gradient(to right, #e8eaf6, #e3f2fd);
+}
+
+.rewards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.reward {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    min-width: 200px;
+    flex: 1;
+}
+
+.reward i {
+    font-size: 2rem;
+    color: gold;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    position: relative;
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.modal-actions {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+#complete-task-btn {
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 20px;
+    background-color: var(--success-color);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+#complete-task-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.task-status {
+    margin-top: 1rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.task-status.completed {
+    background-color: rgba(76, 175, 80, 0.2);
+    color: var(--success-color);
+}
+
+/* Worksheet Button Styles */
+.worksheet-button {
+    background: linear-gradient(to right, #00bcd4, #2196f3);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 5px 10px;
+    margin-top: 8px;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.worksheet-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.worksheet-button i {
+    margin-right: 5px;
+}
+
+/* Modal Button Styles */
+.modal-button {
+    background: linear-gradient(to right, #00bcd4, #2196f3);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 15px;
+    margin: 10px 5px 5px 0;
+    font-size: 14px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.modal-button:hover {
+    background: linear-gradient(to right, #00acc1, #1e88e5);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-button i {
+    margin-right: 5px;
+}
+
+#complete-task-btn {
+    background: linear-gradient(to right, #4caf50, #8bc34a);
+}
+
+#complete-task-btn:hover {
+    background: linear-gradient(to right, #43a047, #7cb342);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: var(--dark-bg);
+    color: white;
+    margin-top: 2rem;
+}
+
+.ai-guide-link {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(to right, #2979ff, #00b0ff);
+    color: white;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.ai-guide-link:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(41, 121, 255, 0.5);
+}
+
+.ai-guide-link i {
+    margin-right: 0.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .progress-charts,
+    #tasks-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .calendar .day {
+        min-height: 60px;
+    }
+}

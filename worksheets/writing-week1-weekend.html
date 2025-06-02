@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writing Worksheet - Week 1: Write about your weekend</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1, h2 {
+            color: #673ab7;
+            text-align: center;
+        }
+        .instructions {
+            background-color: #ede7f6;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .worksheet {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .writing-prompt {
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 5px solid #673ab7;
+        }
+        .writing-area {
+            width: 100%;
+            min-height: 300px;
+            border: 2px solid #d1c4e9;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            line-height: 1.6;
+            background-color: #fffde7;
+        }
+        .writing-lines {
+            position: relative;
+            width: 100%;
+            min-height: 300px;
+            background-color: #fffde7;
+            padding: 10px;
+            border-radius: 5px;
+            border: 2px solid #d1c4e9;
+            margin-bottom: 15px;
+            background-image: repeating-linear-gradient(#fffde7, #fffde7 31px, #c3bce4 31px, #c3bce4 32px);
+            line-height: 32px;
+        }
+        .word-bank {
+            background-color: #e1f5fe;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .word-bank h3 {
+            color: #0277bd;
+            margin-top: 0;
+        }
+        .word-bank ul {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 0;
+            list-style-type: none;
+        }
+        .word-bank li {
+            background-color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            border: 1px solid #b3e5fc;
+            font-size: 14px;
+        }
+        button {
+            background: linear-gradient(to right, #673ab7, #9c27b0);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 0;
+            display: block;
+        }
+        .back-button {
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            margin-top: 20px;
+        }
+        .save-button {
+            background: linear-gradient(to right, #4caf50, #8bc34a);
+        }
+        .ideas {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 5px solid #8bc34a;
+        }
+        .ideas h3 {
+            color: #558b2f;
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Writing Worksheet - Week 1</h1>
+    <h2>Write about your weekend</h2>
+
+    <div class="instructions">
+        <h3>Instructions:</h3>
+        <p>Write about what you did during your weekend. Include details about where you went, who you were with, what activities you did, and how you felt. Try to write at least 5-6 sentences.</p>
+    </div>
+
+    <div class="word-bank">
+        <h3>Helpful Words:</h3>
+        <ul>
+            <li>Saturday</li>
+            <li>Sunday</li>
+            <li>morning</li>
+            <li>afternoon</li>
+            <li>evening</li>
+            <li>first</li>
+            <li>next</li>
+            <li>then</li>
+            <li>finally</li>
+            <li>played</li>
+            <li>visited</li>
+            <li>watched</li>
+            <li>went</li>
+            <li>saw</li>
+            <li>enjoyed</li>
+            <li>fun</li>
+            <li>exciting</li>
+            <li>interesting</li>
+            <li>happy</li>
+            <li>favorite</li>
+        </ul>
+    </div>
+
+    <div class="writing-prompt">
+        <h3>Writing Prompt:</h3>
+        <p>My Weekend Adventures</p>
+    </div>
+
+    <div class="ideas">
+        <h3>Ideas to include:</h3>
+        <ul>
+            <li>What day did your weekend start?</li>
+            <li>What was the first thing you did?</li>
+            <li>Did you go anywhere special?</li>
+            <li>Who was with you?</li>
+            <li>What was the most fun part?</li>
+            <li>How did you feel?</li>
+        </ul>
+    </div>
+
+    <div class="worksheet">
+        <textarea id="writing-area" class="writing-area" placeholder="Start writing here..."></textarea>
+        <button class="save-button" onclick="saveWriting()">Save Your Writing</button>
+    </div>
+
+    <button class="back-button" onclick="window.close()">Close Worksheet</button>
+
+    <script>
+        // Save the writing to localStorage
+        function saveWriting() {
+            const writingArea = document.getElementById('writing-area');
+            const content = writingArea.value;
+            
+            if (content.trim() !== '') {
+                localStorage.setItem('writingWeek1Content', content);
+                alert('Your writing has been saved! Great job! 📝');
+            } else {
+                alert('Please write something before saving!');
+            }
+        }
+        
+        // Load any saved writing when the page loads
+        window.onload = function() {
+            const savedWriting = localStorage.getItem('writingWeek1Content');
+            if (savedWriting) {
+                document.getElementById('writing-area').value = savedWriting;
+            }
+        }
+    </script>
+</body>
+</html>

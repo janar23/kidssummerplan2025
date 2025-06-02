@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Worksheet - Week 1: Shape Identification & Drawing</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f8ff;
+        }
+        h1, h2 {
+            color: #2979ff;
+            text-align: center;
+        }
+        .instructions {
+            background-color: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .worksheet {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .problem {
+            margin-bottom: 25px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+        }
+        .shape-display {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        .shape {
+            margin: 10px;
+            text-align: center;
+        }
+        .shape svg {
+            width: 100px;
+            height: 100px;
+        }
+        .shape-name {
+            margin-top: 5px;
+            font-weight: bold;
+            color: #2979ff;
+        }
+        .answer-options {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .option-button {
+            background-color: #e3f2fd;
+            border: 2px solid #bbdefb;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        .option-button:hover {
+            background-color: #bbdefb;
+        }
+        .option-button.selected {
+            background-color: #2979ff;
+            color: white;
+            border-color: #2979ff;
+        }
+        button {
+            background: linear-gradient(to right, #2979ff, #00b0ff);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 0;
+            display: block;
+        }
+        .feedback {
+            font-weight: bold;
+            margin-top: 10px;
+            min-height: 20px;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+        .back-button {
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            margin-top: 20px;
+        }
+        .progress-container {
+            width: 100%;
+            height: 20px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, #2979ff, #00b0ff);
+            width: 0%;
+            transition: width 0.5s;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+        }
+        .drawing-task {
+            border: 2px dashed #2979ff;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        .drawing-task h3 {
+            color: #2979ff;
+            margin-top: 0;
+        }
+        .drawing-canvas {
+            width: 100%;
+            height: 200px;
+            border: 1px solid #bbdefb;
+            background-color: white;
+            margin-bottom: 10px;
+        }
+        .tool-panel {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .color-picker {
+            width: 30px;
+            height: 30px;
+            padding: 0;
+            border: none;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        @media print {
+            button, .feedback, .progress-container {
+                display: none;
+            }
+            .problem {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Math Worksheet - Week 1</h1>
+    <h2>Shape Identification & Drawing</h2>
+
+    <div class="instructions">
+        <h3>Instructions:</h3>
+        <p>Learn about different shapes, identify them correctly, and practice drawing them in the drawing area. Click "Check Answer" to see if you identified each shape correctly.</p>
+    </div>
+
+    <div class="progress-container">
+        <div id="progress-bar" class="progress-bar">0%</div>
+    </div>
+
+    <div class="worksheet">
+        <div class="problem">
+            <h3>Part 1: Identify the Shapes</h3>
+            
+            <div class="shape">
+                <svg width="100" height="100">
+                    <circle cx="50" cy="50" r="40" fill="#ff7043" stroke="#e64a19" stroke-width="2"></circle>
+                </svg>
+                <p>What shape is this?</p>
+                <div class="answer-options" data-question="1">
+                    <button class="option-button" data-answer="square">Square</button>
+                    <button class="option-button" data-answer="triangle">Triangle</button>
+                    <button class="option-button" data-answer="circle">Circle</button>
+                    <button class="option-button" data-answer="rectangle">Rectangle</button>
+                </div>
+                <button onclick="checkShapeAnswer(1, 'circle')">Check Answer</button>
+                <div id="feedback1" class="feedback"></div>
+            </div>
+            
+            <div class="shape">
+                <svg width="100" height="100">
+                    <rect x="10" y="10" width="80" height="80" fill="#4fc3f7" stroke="#0288d1" stroke-width="2"></rect>
+                </svg>
+                <p>What shape is this?</p>
+                <div class="answer-options" data-question="2">
+                    <button class="option-button" data-answer="square">Square</button>
+                    <button class="option-button" data-answer="triangle">Triangle</button>
+                    <button class="option-button" data-answer="circle">Circle</button>
+                    <button class="option-button" data-answer="rectangle">Rectangle</button>
+                </div>
+                <button onclick="checkShapeAnswer(2, 'square')">Check Answer</button>
+                <div id="feedback2" class="feedback"></div>
+            </div>
+            
+            <div class="shape">
+                <svg width="100" height="100">
+                    <polygon points="50,10 90,90 10,90" fill="#aed581" stroke="#689f38" stroke-width="2"></polygon>
+                </svg>
+                <p>What shape is this?</p>
+                <div class="answer-options" data-question="3">
+                    <button class="option-button" data-answer="square">Square</button>
+                    <button class="option-button" data-answer="triangle">Triangle</button>
+                    <button class="option-button" data-answer="circle">Circle</button>
+                    <button class="option-button" data-answer="rectangle">Rectangle</button>
+                </div>
+                <button onclick="checkShapeAnswer(3, 'triangle')">Check Answer</button>
+                <div id="feedback3" class="feedback"></div>
+            </div>
+            
+            <div class="shape">
+                <svg width="100" height="100">
+                    <rect x="10" y="20" width="80" height="60" fill="#ba68c8" stroke="#7b1fa2" stroke-width="2"></rect>
+                </svg>
+                <p>What shape is this?</p>
+                <div class="answer-options" data-question="4">
+                    <button class="option-button" data-answer="square">Square</button>
+                    <button class="option-button" data-answer="triangle">Triangle</button>
+                    <button class="option-button" data-answer="circle">Circle</button>
+                    <button class="option-button" data-answer="rectangle">Rectangle</button>
+                </div>
+                <button onclick="checkShapeAnswer(4, 'rectangle')">Check Answer</button>
+                <div id="feedback4" class="feedback"></div>
+            </div>
+        </div>
+        
+        <div class="problem">
+            <h3>Part 2: Count the Sides</h3>
+            
+            <div class="shape">
+                <svg width="100" height="100">
+                    <polygon points="50,10 90,30 90,70 50,90 10,70 10,30" fill="#ffb74d" stroke="#f57c00" stroke-width="2"></polygon>
+                </svg>
+                <p>How many sides does this shape have?</p>
+                <div class="answer-options" data-question="5">
+                    <button class="option-button" data-answer="3">3</button>
+                    <button class="option-button" data-answer="4">4</button>
+                    <button class="option-button" data-answer="5">5</button>
+                    <button class="option-button" data-answer="6">6</button>
+                </div>
+                <button onclick="checkShapeAnswer(5, '6')">Check Answer</button>
+                <div id="feedback5" class="feedback"></div>
+                <p><em>This is a hexagon (6 sides)</em></p>
+            </div>
+            
+            <div class="shape">
+                <svg width="100" height="100">
+                    <polygon points="50,10 85,35 70,80 30,80 15,35" fill="#81c784" stroke="#388e3c" stroke-width="2"></polygon>
+                </svg>
+                <p>How many sides does this shape have?</p>
+                <div class="answer-options" data-question="6">
+                    <button class="option-button" data-answer="3">3</button>
+                    <button class="option-button" data-answer="4">4</button>
+                    <button class="option-button" data-answer="5">5</button>
+                    <button class="option-button" data-answer="6">6</button>
+                </div>
+                <button onclick="checkShapeAnswer(6, '5')">Check Answer</button>
+                <div id="feedback6" class="feedback"></div>
+                <p><em>This is a pentagon (5 sides)</em></p>
+            </div>
+        </div>
+        
+        <div class="problem">
+            <h3>Part 3: Drawing Shapes</h3>
+            <p>Use the drawing area below to practice drawing different shapes!</p>
+            
+            <div class="drawing-task">
+                <h3>Try to draw:</h3>
+                <ol>
+                    <li>A circle</li>
+                    <li>A square</li>
+                    <li>A triangle</li>
+                    <li>A rectangle</li>
+                    <li>Any other shape you know!</li>
+                </ol>
+                <div class="tool-panel">
+                    <input type="color" id="color-picker" class="color-picker" value="#2979ff">
+                    <button id="clear-button">Clear Canvas</button>
+                </div>
+                <canvas id="drawing-canvas" class="drawing-canvas"></canvas>
+                <button id="save-drawing">Save My Drawing</button>
+                <p id="drawing-feedback"></p>
+            </div>
+        </div>
+    </div>
+
+    <button class="back-button" onclick="window.close()">Close Worksheet</button>
+
+    <script>
+        let correctAnswers = 0;
+        const totalProblems = 6;
+        let isDrawing = false;
+        let canvas, ctx, currentColor = "#2979ff";
+        
+        window.onload = function() {
+            // Initialize drawing canvas
+            canvas = document.getElementById('drawing-canvas');
+            ctx = canvas.getContext('2d');
+            resizeCanvas();
+            
+            document.getElementById('color-picker').addEventListener('input', function(e) {
+                currentColor = e.target.value;
+            });
+            
+            document.getElementById('clear-button').addEventListener('click', clearCanvas);
+            
+            document.getElementById('save-drawing').addEventListener('click', function() {
+                const drawingFeedback = document.getElementById('drawing-feedback');
+                drawingFeedback.textContent = "Drawing saved! Great job! ✓";
+                drawingFeedback.style.color = "green";
+                
+                // Save drawing to localStorage as data URL
+                localStorage.setItem('shapesDrawing', canvas.toDataURL());
+            });
+            
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+            
+            // Touch support
+            canvas.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                startDrawing(e.touches[0]);
+            });
+            canvas.addEventListener('touchmove', function(e) {
+                e.preventDefault();
+                draw(e.touches[0]);
+            });
+            canvas.addEventListener('touchend', stopDrawing);
+            
+            // Setup option buttons
+            const optionButtons = document.querySelectorAll('.option-button');
+            optionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const question = this.parentElement.getAttribute('data-question');
+                    const buttons = document.querySelectorAll(`.answer-options[data-question="${question}"] .option-button`);
+                    buttons.forEach(btn => btn.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+            
+            // Load saved progress
+            const savedProgress = localStorage.getItem('mathShapesProgress');
+            if (savedProgress) {
+                correctAnswers = parseInt(savedProgress);
+                updateProgress();
+                
+                // Mark previously correct answers
+                for (let i = 1; i <= totalProblems; i++) {
+                    const feedbackElement = document.getElementById(`feedback${i}`);
+                    if (feedbackElement.hasAttribute('data-correct')) {
+                        feedbackElement.textContent = "Correct! Great job! ✓";
+                        feedbackElement.className = "feedback correct";
+                    }
+                }
+            }
+            
+            // Load saved drawing
+            const savedDrawing = localStorage.getItem('shapesDrawing');
+            if (savedDrawing) {
+                const img = new Image();
+                img.onload = function() {
+                    ctx.drawImage(img, 0, 0);
+                    document.getElementById('drawing-feedback').textContent = "Your saved drawing has been loaded!";
+                    document.getElementById('drawing-feedback').style.color = "green";
+                }
+                img.src = savedDrawing;
+            }
+        }
+        
+        function resizeCanvas() {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            ctx.lineJoin = 'round';
+            ctx.lineCap = 'round';
+            ctx.lineWidth = 5;
+        }
+        
+        function startDrawing(e) {
+            isDrawing = true;
+            draw(e);
+        }
+        
+        function draw(e) {
+            if (!isDrawing) return;
+            
+            const rect = canvas.getBoundingClientRect();
+            const x = (e.clientX || e.pageX) - rect.left;
+            const y = (e.clientY || e.pageY) - rect.top;
+            
+            ctx.strokeStyle = currentColor;
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+        
+        function stopDrawing() {
+            isDrawing = false;
+            ctx.beginPath();
+        }
+        
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            document.getElementById('drawing-feedback').textContent = "";
+        }
+        
+        function checkShapeAnswer(number, correctAnswer) {
+            const questionGroup = document.querySelector(`.answer-options[data-question="${number}"]`);
+            const selectedButton = questionGroup.querySelector('.option-button.selected');
+            const feedbackElement = document.getElementById(`feedback${number}`);
+            
+            if (!selectedButton) {
+                feedbackElement.textContent = "Please select an answer!";
+                feedbackElement.className = "feedback";
+                return;
+            }
+            
+            const userAnswer = selectedButton.getAttribute('data-answer');
+            
+            if (userAnswer === correctAnswer) {
+                feedbackElement.textContent = "Correct! Great job! ✓";
+                feedbackElement.className = "feedback correct";
+                
+                // If this is the first time getting this answer correct
+                if (!feedbackElement.hasAttribute('data-correct')) {
+                    correctAnswers++;
+                    feedbackElement.setAttribute('data-correct', 'true');
+                    updateProgress();
+                }
+            } else {
+                feedbackElement.textContent = "Not quite. Try again! ✗";
+                feedbackElement.className = "feedback incorrect";
+            }
+        }
+        
+        function updateProgress() {
+            const progressPercentage = Math.round((correctAnswers / totalProblems) * 100);
+            const progressBar = document.getElementById('progress-bar');
+            progressBar.style.width = `${progressPercentage}%`;
+            progressBar.textContent = `${progressPercentage}%`;
+            
+            // Save progress to localStorage
+            localStorage.setItem('mathShapesProgress', correctAnswers);
+            
+            if (correctAnswers === totalProblems) {
+                alert('🎉 Congratulations! You completed the shape identification! Now have fun drawing shapes! 🎉');
+            }
+        }
+    </script>
+</body>
+</html>
