@@ -1,11 +1,11 @@
 {
-  "name": "Summer Learning Adventure 2025",
-  "short_name": "Kids Learning",
-  "description": "Summer learning activities for kids with weekly tasks and progress tracking",
+  "name": "Sanav and Sanha Summer Adventure 2025",
+  "short_name": "Sanav & Sanha",
+  "description": "Summer learning activities for Sanav and Sanha with weekly tasks and progress tracking",
   "start_url": "index.html",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#ff7e5f",
+  "theme_color": "#2c5aa0",
   "orientation": "any",
   "icons": [
     {

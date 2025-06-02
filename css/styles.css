@@ -1,13 +1,13 @@
 :root {
-    --primary-color: #ff7e5f;
-    --secondary-color: #feb47b;
-    --accent-color: #7bb0ff;
-    --success-color: #4caf50;
+    --primary-color: #2c5aa0;    /* Blue */
+    --secondary-color: #4caf50;  /* Green */
+    --accent-color: #8bc34a;     /* Light Green */
+    --success-color: #4caf50;    /* Green */
     --text-color: #333;
     --light-bg: #f9f9f9;
-    --dark-bg: #333;
-    --sanha-color: #ff8fab;
-    --sanav-color: #7bb0ff;
+    --dark-bg: #1a3a6e;          /* Dark Blue */
+    --sanha-color: #8bc34a;      /* Light Green for Sanha */
+    --sanav-color: #2c5aa0;      /* Blue for Sanav */
 }
 
 * {
