@@ -62,20 +62,6 @@
             </div>
         </section>
 
-        <section id="calendar-section">
-            <h2>Calendar View <span id="current-month-year"></span></h2>
-            <div class="calendar-controls">
-                <button id="prev-month"><i class="fas fa-chevron-left"></i></button>
-                <button id="next-month"><i class="fas fa-chevron-right"></i></button>
-            </div>
-            <div class="calendar" id="calendar-container"></div>
-        </section>
-
-        <section id="daily-tasks">
-            <h2>Daily Tasks - <span id="selected-date"></span></h2>
-            <div id="tasks-container"></div>
-        </section>
-
         <section id="progress-tracker">
             <h2>Progress Tracker</h2>
             <div class="progress-charts">
@@ -155,10 +141,11 @@
         <div class="modal-content">
             <span class="close-modal">&times;</span>
             <h2 id="modal-task-title"></h2>
-            <p id="modal-task-description"></p>
+            <div id="modal-task-description"></div>
             <div id="modal-task-status" class="task-status"></div>
             <div id="modal-buttons" class="modal-actions">
                 <button id="complete-task-btn">Mark as Complete</button>
+                <button id="print-prep-btn" style="display: none;"><i class="fas fa-print"></i> Print Prep List</button>
             </div>
         </div>
     </div>
@@ -169,6 +156,8 @@
     </footer>
     
     <script src="js/data.js"></script>
+    <script src="js/prep-data.js"></script>
+    <script src="js/parent-prep.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>
