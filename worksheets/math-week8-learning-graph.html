@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 8 Math - Calculate and Graph Your AI Learning</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f0f8ff; }
+        .worksheet-container { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c5aa0; text-align: center; }
+        .problem { margin: 20px 0; padding: 15px; border: 2px solid #2c5aa0; border-radius: 10px; background-color: #f8f9fa; }
+        .graph-card { background: linear-gradient(135deg, #e8f5e8, #c8e6c9); padding: 20px; border-radius: 15px; margin: 15px 0; border: 3px solid #4caf50; }
+        .graph-container { background: white; border: 3px solid #333; margin: 20px 0; position: relative; }
+        .graph-grid { display: grid; grid-template-columns: 50px repeat(8, 1fr); grid-template-rows: repeat(11, 40px); border: 2px solid #666; }
+        .graph-cell { border: 1px solid #ddd; display: flex; align-items: center; justify-content: center; font-size: 12px; }
+        .y-axis { background: #f5f5f5; font-weight: bold; }
+        .x-axis { background: #f5f5f5; font-weight: bold; }
+        .data-point { width: 20px; height: 20px; background: #2c5aa0; border-radius: 50%; position: absolute; cursor: pointer; transition: all 0.3s; }
+        .data-point:hover { transform: scale(1.3); background: #1e3f7d; }
+        .bar-chart { display: flex; align-items: end; justify-content: space-around; height: 200px; background: linear-gradient(to top, #e3f2fd, white); border: 3px solid #2196f3; border-radius: 10px; padding: 20px; margin: 20px 0; }
+        .bar { width: 60px; background: linear-gradient(to top, #4caf50, #81c784); border-radius: 5px 5px 0 0; display: flex; align-items: end; justify-content: center; font-weight: bold; color: white; position: relative; }
+        .bar-label { position: absolute; bottom: -25px; color: #333; font-size: 12px; }
+        .calculation-area { background: #fff3e0; padding: 20px; border-radius: 10px; margin: 15px 0; border: 3px solid #ff9800; }
+        .learning-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin: 20px 0; }
+        .stat-box { background: #e1f5fe; padding: 15px; border-radius: 10px; text-align: center; border: 2px solid #03a9f4; }
+        .stat-number { font-size: 24px; font-weight: bold; color: #1976d2; }
+        .progress-tracker { background: #f3e5f5; padding: 20px; border-radius: 10px; margin: 15px 0; border: 3px solid #9c27b0; }
+        .week-progress { display: flex; justify-content: space-between; margin: 10px 0; }
+        .week-bar { height: 20px; background: #4caf50; border-radius: 10px; position: relative; }
+        .week-label { font-size: 12px; font-weight: bold; margin-bottom: 5px; }
+        input[type="number"] { padding: 8px; border: 2px solid #2c5aa0; border-radius: 5px; font-size: 16px; width: 80px; }
+        button { background-color: #2c5aa0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; margin: 0 10px; }
+        button:hover { background-color: #1e3f7d; }
+        .feedback { margin-top: 10px; font-weight: bold; }
+        .correct { color: green; }
+        .incorrect { color: red; }
+        .controls { text-align: center; margin: 20px 0; }
+        .progress { text-align: center; margin: 20px 0; font-size: 18px; }
+        .stars { text-align: center; font-size: 24px; margin: 20px 0; }
+        .intro { background: #e8f5e8; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+        .data-emoji { font-size: 24px; margin-right: 10px; }
+        .celebration { text-align: center; font-size: 48px; margin: 15px 0; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <h1>📊 Calculate and Graph Your AI Learning 📈</h1>
+        
+        <p style="text-align: center; font-size: 18px; color: #2c5aa0; margin-bottom: 20px;" id="personal-greeting">
+            Hi there! Let's become data scientists! You'll calculate and graph your amazing AI learning journey! You're going to be a math data expert! 📊
+        </p>
+        
+        <div class="intro">
+            <h3>Your AI Learning Data Adventure!</h3>
+            <p>Data scientists use graphs and charts to show how AI systems learn and improve! Today you'll track your own learning like a real data scientist!</p>
+            
+            <div class="learning-stats">
+                <div class="stat-box">
+                    <div class="stat-number">8</div>
+                    <div>Weeks of Learning</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">40+</div>
+                    <div>Math Worksheets</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">100+</div>
+                    <div>Problems Solved</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">⭐</div>
+                    <div>You're Amazing!</div>
+                </div>
+            </div>
+            
+            <div class="celebration">📈</div>
+        </div>
+        
+        <div class="progress">Progress: <span id="score">0</span>/10</div>
+        <div class="stars" id="stars">⭐</div>
+        <div id="problems"></div>
+        <div class="controls">
+            <button onclick="checkAnswers()">Check Answers</button>
+            <button onclick="generateProblems()">New Problems</button>
+        </div>
+    </div>
+    <script>
+        let currentProblems = [];
+        let score = 0;
+        
+        // Get the selected child's name from URL parameters or localStorage
+        function getSelectedChildName() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let childName = urlParams.get('child');
+            
+            if (!childName) {
+                // Try to get from localStorage if not in URL
+                const savedChild = localStorage.getItem('selectedChild');
+                if (savedChild) {
+                    childName = savedChild;
+                }
+            }
+            
+            // Capitalize first letter
+            if (childName) {
+                return childName.charAt(0).toUpperCase() + childName.slice(1);
+            }
+            return 'there'; // fallback
+        }
+        
+        // Set personalized greeting
+        function setPersonalizedGreeting() {
+            const childName = getSelectedChildName();
+            const greeting = document.getElementById('personal-greeting');
+            greeting.textContent = `Hi ${childName}! Let's become data scientists! You'll calculate and graph your amazing AI learning journey! You're going to be a math data expert! 📊`;
+        }
+        
+        function createBarChart(data, labels) {
+            let chartHtml = '<div class="bar-chart">';
+            data.forEach((value, index) => {
+                const height = (value / Math.max(...data)) * 160; // Scale to max 160px
+                chartHtml += `
+                    <div class="bar" style="height: ${height}px;">
+                        <div class="bar-label">${labels[index]}</div>
+                        ${value}
+                    </div>
+                `;
+            });
+            chartHtml += '</div>';
+            return chartHtml;
+        }
+        
+        function createProgressTracker(weekData) {
+            let trackerHtml = '<div class="progress-tracker">';
+            weekData.forEach((data, index) => {
+                const percentage = (data.score / data.total) * 100;
+                trackerHtml += `
+                    <div class="week-progress">
+                        <div class="week-label">Week ${index + 1}: ${data.score}/${data.total}</div>
+                        <div class="week-bar" style="width: ${percentage}%; background: ${percentage >= 80 ? '#4caf50' : percentage >= 60 ? '#ff9800' : '#f44336'};"></div>
+                    </div>
+                `;
+            });
+            trackerHtml += '</div>';
+            return trackerHtml;
+        }
+        
+        function generateProblems() {
+            currentProblems = [];
+            const problemsDiv = document.getElementById('problems');
+            problemsDiv.innerHTML = '';
+            
+            const problems = [
+                {
+                    type: "bar-reading",
+                    title: "Sanha's Weekly Scores",
+                    description: "Sanha tracked her math scores each week:",
+                    visual: createBarChart([7, 8, 9, 8, 9, 10, 9, 10], ['W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'W7', 'W8']),
+                    question: "What was Sanha's highest score?",
+                    answer: 10
+                },
+                {
+                    type: "calculation",
+                    title: "Sanav's Average Score",
+                    description: "Sanav's scores: Week 1: 6, Week 2: 8, Week 3: 7, Week 4: 9",
+                    question: "What's his average score? (6+8+7+9) ÷ 4",
+                    answer: 7.5
+                },
+                {
+                    type: "improvement",
+                    title: "Aadhi's Learning Growth",
+                    description: "Aadhi started with 5 points in Week 1 and ended with 10 points in Week 8.",
+                    question: "How many points did she improve? (10 - 5)",
+                    answer: 5
+                },
+                {
+                    type: "percentage",
+                    title: "Sai Vittal's Success Rate",
+                    description: "Sai Vittal solved 8 out of 10 problems correctly.",
+                    question: "What percentage did he get right? (8 ÷ 10) × 100",
+                    answer: 80
+                },
+                {
+                    type: "total-calculation",
+                    title: "Sanvi's Total Points",
+                    description: "Sanvi earned: 7 points in Week 1, 8 in Week 2, 9 in Week 3, 10 in Week 4.",
+                    question: "How many total points? (7+8+9+10)",
+                    answer: 34
+                },
+                {
+                    type: "comparison",
+                    title: "Best Learning Week",
+                    description: "All friends' Week 5 scores: Sanha(9), Sanav(8), Aadhi(10), Sai(7), Sanvi(9)",
+                    question: "Who had the highest score in Week 5?",
+                    answer: "Aadhi"
+                },
+                {
+                    type: "trend",
+                    title: "Learning Trend Analysis",
+                    description: "Sanha's pattern: 6→7→8→9→10. Each week she improved by the same amount.",
+                    question: "How many points did she improve each week?",
+                    answer: 1
+                },
+                {
+                    type: "graph-reading",
+                    title: "AI Learning Speed",
+                    description: "An AI learned: Day 1: 10 words, Day 2: 20 words, Day 3: 30 words, Day 4: 40 words",
+                    question: "How many words per day is the AI learning? (Pattern: +10 each day)",
+                    answer: 10
+                },
+                {
+                    type: "prediction",
+                    title: "Future Score Prediction",
+                    description: "Sanav's scores follow this pattern: 5, 6, 7, 8, 9...",
+                    question: "If the pattern continues, what will his Week 10 score be?",
+                    answer: 11
+                },
+                {
+                    type: "class-average",
+                    title: "All Friends' Class Average",
+                    description: "Final Week 8 scores: Sanha(10), Sanav(9), Aadhi(10), Sai Vittal(8), Sanvi(10)",
+                    question: "What's the class average? (10+9+10+8+10) ÷ 5",
+                    answer: 9.4
+                }
+            ];
+            
+            problems.forEach((problem, i) => {
+                currentProblems.push(problem);
+                
+                let visualHtml = '';
+                if (problem.visual) {
+                    visualHtml = `<div class="calculation-area">${problem.visual}</div>`;
+                }
+                
+                const inputType = problem.type === "comparison" ? "text" : "number";
+                const placeholder = inputType === "text" ? "name" : "number";
+                const step = problem.type === "calculation" || problem.type === "class-average" ? "0.1" : "1";
+                
+                problemsDiv.innerHTML += `
+                    <div class='problem'>
+                        <h4>Data Science Challenge ${i + 1}</h4>
+                        <div class='graph-card'>
+                            <h4><span class='data-emoji'>📊</span>${problem.title}</h4>
+                            <p>${problem.description}</p>
+                            ${visualHtml}
+                            <p><strong>${problem.question}</strong></p>
+                        </div>
+                        <p><strong>Answer:</strong> <input type='${inputType}' id='answer${i}' placeholder='${placeholder}' ${inputType === "number" ? `min='0' max='100' step='${step}'` : ""}></p>
+                        <div class='feedback' id='feedback${i}'></div>
+                    </div>
+                `;
+            });
+            
+            score = 0;
+            updateScore();
+        }
+        
+        function checkAnswers() {
+            let correctCount = 0;
+            
+            currentProblems.forEach((problem, i) => {
+                const userInput = document.getElementById(`answer${i}`).value.trim();
+                const feedback = document.getElementById(`feedback${i}`);
+                
+                let userAnswer, correctAnswer;
+                
+                if (problem.type === "comparison") {
+                    userAnswer = userInput.toLowerCase();
+                    correctAnswer = problem.answer.toLowerCase();
+                } else {
+                    userAnswer = parseFloat(userInput);
+                    correctAnswer = parseFloat(problem.answer);
+                }
+                
+                if (userAnswer === correctAnswer) {
+                    feedback.textContent = '✅ Perfect data analysis! You think like a data scientist!';
+                    feedback.className = 'feedback correct';
+                    correctCount++;
+                } else {
+                    feedback.textContent = `❌ Try again! Answer: ${problem.answer}`;
+                    feedback.className = 'feedback incorrect';
+                }
+            });
+            
+            score = correctCount;
+            updateScore();
+            
+            if (score === currentProblems.length) {
+                setTimeout(() => {
+                    alert('🎉 AMAZING! You\'ve mastered data science and graphing! You can analyze AI learning like a pro! 📊⭐');
+                }, 500);
+            }
+        }
+        
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('stars').textContent = '⭐'.repeat(score);
+        }
+        
+        window.onload = function() {
+            setPersonalizedGreeting();
+            generateProblems();
+        };
+    </script>
+</body>
+</html> 

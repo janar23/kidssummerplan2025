@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 8 Math - AI-Style Pattern Recognition Games</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f0f8ff; }
+        .worksheet-container { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c5aa0; text-align: center; }
+        .problem { margin: 20px 0; padding: 15px; border: 2px solid #2c5aa0; border-radius: 10px; background-color: #f8f9fa; }
+        .ai-game-card { background: linear-gradient(135deg, #f3e5f5, #e1bee7); padding: 20px; border-radius: 15px; margin: 15px 0; border: 3px solid #9c27b0; }
+        .pattern-display { display: flex; justify-content: center; gap: 15px; margin: 20px 0; flex-wrap: wrap; min-height: 80px; align-items: center; }
+        .pattern-element { width: 60px; height: 60px; border: 3px solid #333; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin: 5px; transition: all 0.3s; }
+        .pattern-element:hover { transform: scale(1.1); }
+        .ai-brain { text-align: center; font-size: 48px; margin: 15px 0; animation: glow 2s ease-in-out infinite alternate; }
+        @keyframes glow { from { text-shadow: 0 0 5px #9c27b0, 0 0 10px #9c27b0, 0 0 15px #9c27b0; } to { text-shadow: 0 0 10px #9c27b0, 0 0 20px #9c27b0, 0 0 30px #9c27b0; } }
+        .choice-options { display: flex; justify-content: center; gap: 15px; margin: 20px 0; flex-wrap: wrap; }
+        .choice-btn { width: 80px; height: 80px; border: 3px solid #2c5aa0; border-radius: 10px; background: white; display: flex; align-items: center; justify-content: center; font-size: 28px; cursor: pointer; transition: all 0.3s; }
+        .choice-btn:hover { background: #e3f2fd; transform: scale(1.05); }
+        .choice-btn.selected { background: #2c5aa0; color: white; }
+        .level-badge { display: inline-block; background: #4caf50; color: white; padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: bold; margin: 5px; }
+        .difficulty { display: flex; justify-content: center; gap: 10px; margin: 15px 0; }
+        .diff-star { font-size: 20px; color: #ffc107; }
+        .sequence-number { background: #673ab7; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; position: absolute; top: -10px; right: -10px; font-size: 14px; }
+        .pattern-container { position: relative; }
+        input[type="number"], input[type="text"] { padding: 8px; border: 2px solid #2c5aa0; border-radius: 5px; font-size: 16px; width: 100px; }
+        button { background-color: #2c5aa0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; margin: 0 10px; }
+        button:hover { background-color: #1e3f7d; }
+        .feedback { margin-top: 10px; font-weight: bold; }
+        .correct { color: green; }
+        .incorrect { color: red; }
+        .controls { text-align: center; margin: 20px 0; }
+        .progress { text-align: center; margin: 20px 0; font-size: 18px; }
+        .stars { text-align: center; font-size: 24px; margin: 20px 0; }
+        .intro { background: #e8f5e8; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+        .ai-emoji { font-size: 24px; margin-right: 10px; }
+        .pattern-rule { background: #fff3e0; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 5px solid #ff9800; }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <h1>🤖 AI-Style Pattern Recognition Games 🧠</h1>
+        
+        <p style="text-align: center; font-size: 18px; color: #2c5aa0; margin-bottom: 20px;" id="personal-greeting">
+            Hi there! Let's play AI pattern games! You'll think like artificial intelligence and recognize amazing patterns! You're going to be a pattern detective! 🔍
+        </p>
+        
+        <div class="intro">
+            <h3>Think Like AI - Recognize Patterns!</h3>
+            <p>AI systems are amazing at finding patterns! They look at lots of examples and learn the rules. Today you'll train your brain to think like AI!</p>
+            
+            <div class="pattern-rule">
+                <h4>🧠 How AI Recognizes Patterns:</h4>
+                <ul>
+                    <li><strong>Observe:</strong> Look at several examples</li>
+                    <li><strong>Compare:</strong> Find what's the same and what's different</li>
+                    <li><strong>Predict:</strong> Guess what comes next</li>
+                    <li><strong>Test:</strong> Check if your prediction is right</li>
+                    <li><strong>Learn:</strong> Use mistakes to get better</li>
+                </ul>
+            </div>
+            
+            <div class="ai-brain">🤖</div>
+        </div>
+        
+        <div class="progress">Progress: <span id="score">0</span>/10</div>
+        <div class="stars" id="stars">⭐</div>
+        <div id="problems"></div>
+        <div class="controls">
+            <button onclick="checkAnswers()">Check Answers</button>
+            <button onclick="generateProblems()">New Problems</button>
+        </div>
+    </div>
+    <script>
+        let currentProblems = [];
+        let score = 0;
+        let selectedAnswers = {};
+        
+        // Get the selected child's name from URL parameters or localStorage
+        function getSelectedChildName() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let childName = urlParams.get('child');
+            
+            if (!childName) {
+                // Try to get from localStorage if not in URL
+                const savedChild = localStorage.getItem('selectedChild');
+                if (savedChild) {
+                    childName = savedChild;
+                }
+            }
+            
+            // Capitalize first letter
+            if (childName) {
+                return childName.charAt(0).toUpperCase() + childName.slice(1);
+            }
+            return 'there'; // fallback
+        }
+        
+        // Set personalized greeting
+        function setPersonalizedGreeting() {
+            const childName = getSelectedChildName();
+            const greeting = document.getElementById('personal-greeting');
+            greeting.textContent = `Hi ${childName}! Let's play AI pattern games! You'll think like artificial intelligence and recognize amazing patterns! You're going to be a pattern detective! 🔍`;
+        }
+        
+        function createPatternDisplay(elements, showNumbers = false) {
+            let patternHtml = '<div class="pattern-display">';
+            elements.forEach((element, index) => {
+                patternHtml += `
+                    <div class="pattern-container">
+                        <div class="pattern-element" style="background: ${element.color || 'white'};">
+                            ${element.symbol || element}
+                        </div>
+                        ${showNumbers ? `<div class="sequence-number">${index + 1}</div>` : ''}
+                    </div>
+                `;
+            });
+            patternHtml += '</div>';
+            return patternHtml;
+        }
+        
+        function createChoiceOptions(options, problemIndex) {
+            let optionsHtml = '<div class="choice-options">';
+            options.forEach((option, index) => {
+                optionsHtml += `
+                    <div class="choice-btn" onclick="selectAnswer(${problemIndex}, '${option}')" id="choice-${problemIndex}-${index}">
+                        ${option}
+                    </div>
+                `;
+            });
+            optionsHtml += '</div>';
+            return optionsHtml;
+        }
+        
+        function selectAnswer(problemIndex, answer) {
+            // Clear previous selections for this problem
+            const allChoices = document.querySelectorAll(`[id^="choice-${problemIndex}-"]`);
+            allChoices.forEach(choice => choice.classList.remove('selected'));
+            
+            // Select the clicked choice
+            const clickedChoice = event.target;
+            clickedChoice.classList.add('selected');
+            
+            // Store the answer
+            selectedAnswers[problemIndex] = answer;
+        }
+        
+        function generateProblems() {
+            currentProblems = [];
+            selectedAnswers = {};
+            const problemsDiv = document.getElementById('problems');
+            problemsDiv.innerHTML = '';
+            
+            const problems = [
+                {
+                    level: "Beginner",
+                    difficulty: 1,
+                    title: "Sanha's Color Sequence AI",
+                    description: "AI found this color pattern:",
+                    pattern: [
+                        {symbol: '🔴', color: '#ffcdd2'}, 
+                        {symbol: '🔵', color: '#c8e6c9'}, 
+                        {symbol: '🔴', color: '#ffcdd2'}, 
+                        {symbol: '🔵', color: '#c8e6c9'}, 
+                        {symbol: '?', color: '#f5f5f5'}
+                    ],
+                    question: "What should AI predict comes next?",
+                    options: ['🔴', '🔵', '🟢', '🟡'],
+                    answer: '🔴'
+                },
+                {
+                    level: "Beginner", 
+                    difficulty: 1,
+                    title: "Sanav's Number Pattern AI",
+                    description: "AI detected this number sequence:",
+                    pattern: ['2', '4', '6', '8', '?'],
+                    question: "What number should AI predict next?",
+                    options: ['9', '10', '11', '12'],
+                    answer: '10'
+                },
+                {
+                    level: "Intermediate",
+                    difficulty: 2,
+                    title: "Aadhi's Shape Recognition AI",
+                    description: "AI learned this shape pattern:",
+                    pattern: ['⭐', '🔺', '⭐', '🔺', '⭐', '?'],
+                    question: "What shape comes next in the AI's pattern?",
+                    options: ['⭐', '🔺', '🔴', '🟦'],
+                    answer: '🔺'
+                },
+                {
+                    level: "Intermediate",
+                    difficulty: 2,
+                    title: "Sai Vittal's Growing Pattern AI",
+                    description: "AI found a growing pattern:",
+                    pattern: ['1', '3', '5', '7', '?'],
+                    question: "What's the next number in this odd number pattern?",
+                    options: ['8', '9', '10', '11'],
+                    answer: '9'
+                },
+                {
+                    level: "Advanced",
+                    difficulty: 3,
+                    title: "Sanvi's Complex Color AI",
+                    description: "Advanced AI detected this complex pattern:",
+                    pattern: [
+                        {symbol: '🔴', color: '#ffcdd2'}, 
+                        {symbol: '🔴', color: '#ffcdd2'}, 
+                        {symbol: '🔵', color: '#c8e6c9'}, 
+                        {symbol: '🔴', color: '#ffcdd2'}, 
+                        {symbol: '🔴', color: '#ffcdd2'}, 
+                        {symbol: '🔵', color: '#c8e6c9'}, 
+                        {symbol: '?', color: '#f5f5f5'}
+                    ],
+                    question: "What pattern did AI find? (2 red, 1 blue)",
+                    options: ['🔴', '🔵', '🟢', '🟡'],
+                    answer: '🔴'
+                },
+                {
+                    level: "Beginner",
+                    difficulty: 1,
+                    title: "Animal Pattern Recognition",
+                    description: "AI training on animal patterns:",
+                    pattern: ['🐶', '🐱', '🐶', '🐱', '?'],
+                    question: "What animal should AI predict?",
+                    options: ['🐶', '🐱', '🐸', '🦋'],
+                    answer: '🐶'
+                },
+                {
+                    level: "Intermediate",
+                    difficulty: 2,
+                    title: "Size Pattern AI",
+                    description: "AI recognizes size patterns:",
+                    pattern: ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '?'],
+                    question: "What number continues this counting pattern?",
+                    options: ['3️⃣', '4️⃣', '5️⃣', '6️⃣'],
+                    answer: '5️⃣'
+                },
+                {
+                    level: "Advanced",
+                    difficulty: 3,
+                    title: "Mirror Pattern AI",
+                    description: "AI detected a mirror (palindrome) pattern:",
+                    pattern: ['A', 'B', 'C', 'B', '?'],
+                    question: "What completes this mirror pattern?",
+                    options: ['A', 'B', 'C', 'D'],
+                    answer: 'A'
+                },
+                {
+                    level: "Advanced",
+                    difficulty: 3,
+                    title: "Skip Counting AI",
+                    description: "AI found this skip counting pattern:",
+                    pattern: ['5', '10', '15', '20', '?'],
+                    question: "What's the next number (counting by 5s)?",
+                    options: ['21', '23', '25', '30'],
+                    answer: '25'
+                },
+                {
+                    level: "Expert",
+                    difficulty: 4,
+                    title: "All Friends' AI Challenge",
+                    description: "Master AI pattern with all concepts:",
+                    pattern: ['🔴', '🔵', '🔵', '🔴', '🔴', '🔴', '?'],
+                    question: "Find the pattern: red(1), blue(2), red(3). Next?",
+                    options: ['🔴', '🔵', '🟢', '🟡'],
+                    answer: '🔵'
+                }
+            ];
+            
+            problems.forEach((problem, i) => {
+                currentProblems.push(problem);
+                
+                const patternHtml = createPatternDisplay(problem.pattern, true);
+                const choicesHtml = createChoiceOptions(problem.options, i);
+                
+                const difficultyStars = '⭐'.repeat(problem.difficulty);
+                
+                problemsDiv.innerHTML += `
+                    <div class='problem'>
+                        <h4>AI Pattern Game ${i + 1}</h4>
+                        <div class='ai-game-card'>
+                            <div class='level-badge'>${problem.level}</div>
+                            <div class='difficulty'>${difficultyStars}</div>
+                            <h4><span class='ai-emoji'>🤖</span>${problem.title}</h4>
+                            <p>${problem.description}</p>
+                            ${patternHtml}
+                            <p><strong>${problem.question}</strong></p>
+                            ${choicesHtml}
+                        </div>
+                        <div class='feedback' id='feedback${i}'></div>
+                    </div>
+                `;
+            });
+            
+            score = 0;
+            updateScore();
+        }
+        
+        function checkAnswers() {
+            let correctCount = 0;
+            
+            currentProblems.forEach((problem, i) => {
+                const userAnswer = selectedAnswers[i];
+                const feedback = document.getElementById(`feedback${i}`);
+                
+                if (userAnswer === problem.answer) {
+                    feedback.textContent = '✅ Amazing! You think like AI! Perfect pattern recognition!';
+                    feedback.className = 'feedback correct';
+                    correctCount++;
+                } else {
+                    feedback.textContent = `❌ Try again! AI answer: ${problem.answer}`;
+                    feedback.className = 'feedback incorrect';
+                }
+            });
+            
+            score = correctCount;
+            updateScore();
+            
+            if (score === currentProblems.length) {
+                setTimeout(() => {
+                    alert('🎉 INCREDIBLE! You\'ve mastered AI-style pattern recognition! You think like artificial intelligence! 🤖⭐');
+                }, 500);
+            }
+        }
+        
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('stars').textContent = '⭐'.repeat(score);
+        }
+        
+        window.onload = function() {
+            setPersonalizedGreeting();
+            generateProblems();
+        };
+    </script>
+</body>
+</html> 
