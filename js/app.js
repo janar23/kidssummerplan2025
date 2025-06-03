@@ -221,7 +221,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         worksheetButton.innerHTML = '<i class="fas fa-file-alt"></i> Open Worksheet';
                         worksheetButton.addEventListener('click', function(e) {
                             e.stopPropagation(); // Prevent toggling task completion
-                            window.open(worksheetLink, '_blank', 'width=800,height=600');
+                            // Add the selected child's name as a URL parameter
+                            const worksheetUrl = `${worksheetLink}?child=${selectedChild}`;
+                            window.open(worksheetUrl, '_blank', 'width=800,height=600');
                         });
                         taskContent.appendChild(worksheetButton);
                     }
@@ -275,7 +277,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (worksheetButton) {
                     worksheetButton.style.display = 'block';
                     worksheetButton.onclick = function() {
-                        window.open(worksheetLink, '_blank', 'width=800,height=600');
+                        const worksheetUrl = `${worksheetLink}?child=${selectedChild}`;
+                        window.open(worksheetUrl, '_blank', 'width=800,height=600');
                     };
                 } else {
                     const buttonContainer = document.getElementById('modal-buttons');
@@ -284,7 +287,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     newWorksheetButton.className = 'modal-button';
                     newWorksheetButton.innerHTML = '<i class="fas fa-file-alt"></i> Open Worksheet';
                     newWorksheetButton.onclick = function() {
-                        window.open(worksheetLink, '_blank', 'width=800,height=600');
+                        const worksheetUrl = `${worksheetLink}?child=${selectedChild}`;
+                        window.open(worksheetUrl, '_blank', 'width=800,height=600');
                     };
                     buttonContainer.appendChild(newWorksheetButton);
                 }
@@ -560,13 +564,54 @@ document.addEventListener('DOMContentLoaded', function() {
                 "Simple word problems": "worksheets/math-week1-word-problems.html"
             },
             2: {
+                "Skip counting by 2s, 5s, 10s": "worksheets/math-week2-skip-counting.html",
+                "Measurement with rulers": "worksheets/math-week2-measurement.html",
+                "Time telling practice": "worksheets/math-week2-time-telling.html",
+                "Pattern recognition games": "worksheets/math-week2-pattern-recognition.html",
+                "Money counting practice": "worksheets/math-week2-money-counting.html",
                 "Subtraction worksheets (20 mins)": "worksheets/math-week2-subtraction.html"
             },
             3: {
-                "Double-digit addition": "worksheets/math-week3-double-digit-addition.html"
+                "Double-digit addition": "worksheets/math-week3-double-digit-addition.html",
+                "Geometry shapes & properties": "worksheets/math-week3-geometry-shapes.html",
+                "Graphing favorite colors/foods": "worksheets/math-week3-graphing.html",
+                "Fractions with pizza/pies": "worksheets/math-week3-fractions.html",
+                "Estimation games": "worksheets/math-week3-estimation.html"
             },
             4: {
-                "Multiplication tables (2,5,10)": "worksheets/math-week4-multiplication.html"
+                "Multiplication tables (2,5,10)": "worksheets/math-week4-multiplication.html",
+                "Calendar math activities": "worksheets/math-week4-calendar-activities.html",
+                "Division intro with objects": "worksheets/math-week4-division-intro.html",
+                "Place value games": "worksheets/math-week4-place-value.html",
+                "Problem solving challenges": "worksheets/math-week4-problem-solving.html"
+            },
+            5: {
+                "Mental math strategies": "worksheets/math-week5-mental-math.html",
+                "Measurement cooking project": "worksheets/math-week5-measurement-cooking.html",
+                "Symmetry in nature": "worksheets/math-week5-symmetry.html",
+                "Number line activities": "worksheets/math-week5-number-line.html",
+                "Data collection & sorting": "worksheets/math-week5-data-collection.html"
+            },
+            6: {
+                "Currency from different countries": "worksheets/math-week6-currency.html",
+                "Shopping math scenarios": "worksheets/math-week6-shopping.html",
+                "Temperature tracking graphs": "worksheets/math-week6-temperature.html",
+                "Patterns AI might recognize (dice/coins)": "worksheets/math-week6-patterns.html",
+                "Sports statistics simple analysis": "worksheets/math-week6-sports-stats.html"
+            },
+            7: {
+                "Create patterns AI could recognize": "worksheets/math-week7-ai-patterns.html",
+                "Measuring garden/outdoor spaces": "worksheets/math-week7-garden-measurement.html",
+                "Patterns AI uses in music and art": "worksheets/math-week7-music-art-patterns.html",
+                "Architecture & building math": "worksheets/math-week7-architecture.html",
+                "Distance and speed concepts for robots": "worksheets/math-week7-distance-speed.html"
+            },
+            8: {
+                "Solve real problems with simple algorithms": "worksheets/math-week8-algorithms.html",
+                "Review all math concepts": "worksheets/math-week8-review.html",
+                "Teach a simple algorithm to family": "worksheets/math-week8-teach-algorithm.html",
+                "AI-style pattern recognition games": "worksheets/math-week8-pattern-recognition.html",
+                "Calculate and graph your AI learning": "worksheets/math-week8-learning-graph.html"
             }
         };
         

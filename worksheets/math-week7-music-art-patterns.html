@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 7 Math - Patterns AI Uses in Music and Art</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f0f8ff; }
+        .worksheet-container { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c5aa0; text-align: center; }
+        .problem { margin: 20px 0; padding: 15px; border: 2px solid #2c5aa0; border-radius: 10px; background-color: #f8f9fa; }
+        .art-card { background: linear-gradient(135deg, #fce4ec, #f8bbd9); padding: 20px; border-radius: 15px; margin: 15px 0; border: 3px solid #e91e63; }
+        .music-card { background: linear-gradient(135deg, #e8eaf6, #c5cae9); padding: 20px; border-radius: 15px; margin: 15px 0; border: 3px solid #673ab7; }
+        .pattern-sequence { display: flex; gap: 10px; justify-content: center; align-items: center; margin: 20px 0; flex-wrap: wrap; }
+        .music-note { width: 50px; height: 50px; background: #9c27b0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: white; margin: 5px; }
+        .art-shape { width: 50px; height: 50px; border: 3px solid #333; display: flex; align-items: center; justify-content: center; font-size: 24px; margin: 5px; }
+        .color-red { background: #f44336; }
+        .color-blue { background: #2196f3; }
+        .color-green { background: #4caf50; }
+        .color-yellow { background: #ffeb3b; }
+        .rhythm-bar { height: 30px; background: #673ab7; margin: 2px; border-radius: 3px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
+        .beat-1 { width: 40px; }
+        .beat-2 { width: 80px; }
+        .beat-4 { width: 20px; }
+        .musical-staff { display: flex; align-items: center; gap: 5px; margin: 15px 0; }
+        .art-canvas { width: 200px; height: 150px; border: 3px solid #333; background: white; position: relative; margin: 15px auto; }
+        .pattern-element { position: absolute; width: 20px; height: 20px; border-radius: 50%; }
+        input[type="number"], input[type="text"] { padding: 8px; border: 2px solid #2c5aa0; border-radius: 5px; font-size: 16px; width: 120px; }
+        button { background-color: #2c5aa0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; margin: 0 10px; }
+        button:hover { background-color: #1e3f7d; }
+        .feedback { margin-top: 10px; font-weight: bold; }
+        .correct { color: green; }
+        .incorrect { color: red; }
+        .controls { text-align: center; margin: 20px 0; }
+        .progress { text-align: center; margin: 20px 0; font-size: 18px; }
+        .stars { text-align: center; font-size: 24px; margin: 20px 0; }
+        .intro { background: #e8f5e8; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+        .creative-emoji { font-size: 24px; margin-right: 10px; }
+        .ai-brain { text-align: center; font-size: 48px; margin: 15px 0; animation: rotate 4s linear infinite; }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <h1>🎨 Patterns AI Uses in Music and Art 🎵</h1>
+        
+        <p style="text-align: center; font-size: 18px; color: #2c5aa0; margin-bottom: 20px;" id="personal-greeting">
+            Hi there! Let's discover how AI creates beautiful music and art using mathematical patterns! You're going to be a creative AI artist! 🤖
+        </p>
+        
+        <div class="intro">
+            <h3>AI + Art + Music = Amazing Patterns!</h3>
+            <p>AI uses math patterns to create music, paintings, and designs! It learns from patterns in colors, sounds, and shapes.</p>
+            <p><strong>How AI creates art and music:</strong></p>
+            <ul>
+                <li><strong>Color patterns:</strong> Red, Blue, Red, Blue...</li>
+                <li><strong>Music rhythms:</strong> Beat patterns like strong-weak-strong-weak</li>
+                <li><strong>Shape sequences:</strong> Circle, square, triangle repeating</li>
+                <li><strong>Note patterns:</strong> High, low, medium notes in order</li>
+            </ul>
+            <div class="ai-brain">🎨</div>
+        </div>
+        
+        <div class="progress">Progress: <span id="score">0</span>/10</div>
+        <div class="stars" id="stars">⭐</div>
+        <div id="problems"></div>
+        <div class="controls">
+            <button onclick="checkAnswers()">Check Answers</button>
+            <button onclick="generateProblems()">New Problems</button>
+        </div>
+    </div>
+    <script>
+        let currentProblems = [];
+        let score = 0;
+        
+        // Get the selected child's name from URL parameters or localStorage
+        function getSelectedChildName() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let childName = urlParams.get('child');
+            
+            if (!childName) {
+                // Try to get from localStorage if not in URL
+                const savedChild = localStorage.getItem('selectedChild');
+                if (savedChild) {
+                    childName = savedChild;
+                }
+            }
+            
+            // Capitalize first letter
+            if (childName) {
+                return childName.charAt(0).toUpperCase() + childName.slice(1);
+            }
+            return 'there'; // fallback
+        }
+        
+        // Set personalized greeting
+        function setPersonalizedGreeting() {
+            const childName = getSelectedChildName();
+            const greeting = document.getElementById('personal-greeting');
+            greeting.textContent = `Hi ${childName}! Let's discover how AI creates beautiful music and art using mathematical patterns! You're going to be a creative AI artist! 🤖`;
+        }
+        
+        function createColorPattern(colors) {
+            let patternHtml = '<div class="pattern-sequence">';
+            colors.forEach(color => {
+                patternHtml += `<div class="art-shape color-${color}"></div>`;
+            });
+            patternHtml += '</div>';
+            return patternHtml;
+        }
+        
+        function createMusicPattern(notes) {
+            let patternHtml = '<div class="musical-staff">';
+            notes.forEach(note => {
+                patternHtml += `<div class="music-note">${note}</div>`;
+            });
+            patternHtml += '</div>';
+            return patternHtml;
+        }
+        
+        function createRhythmPattern(beats) {
+            let patternHtml = '<div class="pattern-sequence">';
+            beats.forEach(beat => {
+                patternHtml += `<div class="rhythm-bar beat-${beat}">${beat}</div>`;
+            });
+            patternHtml += '</div>';
+            return patternHtml;
+        }
+        
+        function generateProblems() {
+            currentProblems = [];
+            const problemsDiv = document.getElementById('problems');
+            problemsDiv.innerHTML = '';
+            
+            const problems = [
+                {
+                    type: "color-art",
+                    title: "Sanha's AI Color Pattern",
+                    description: "AI painted this color pattern for Sanha:",
+                    visual: createColorPattern(['red', 'blue', 'red', 'blue', 'red']),
+                    question: "What color should come next in this AI art pattern?",
+                    answer: "blue",
+                    cardType: "art"
+                },
+                {
+                    type: "music-notes",
+                    title: "Sanav's AI Music Composer",
+                    description: "AI composed this musical pattern for Sanav:",
+                    visual: createMusicPattern(['🎵', '🎶', '🎵', '🎶']),
+                    question: "What note should the AI add next?",
+                    answer: "🎵",
+                    cardType: "music"
+                },
+                {
+                    type: "rhythm",
+                    title: "Aadhi's Rhythm Generator",
+                    description: "AI created this rhythm pattern (numbers show beat length):",
+                    visual: createRhythmPattern([1, 2, 1, 2, 1]),
+                    question: "What beat length should come next?",
+                    answer: "2",
+                    cardType: "music"
+                },
+                {
+                    type: "art-shapes",
+                    title: "Sai Vittal's Shape Artist AI",
+                    description: "AI made this shape pattern: ⭐🔺⭐🔺⭐",
+                    question: "What shape comes next?",
+                    answer: "🔺",
+                    cardType: "art"
+                },
+                {
+                    type: "color-count",
+                    title: "Sanvi's Color Counter AI",
+                    description: "In this AI painting pattern: 🔴🔵🔴🔵🔴🔵🔴🔵",
+                    question: "How many red circles did the AI paint?",
+                    answer: "4",
+                    cardType: "art"
+                },
+                {
+                    type: "music-scale",
+                    title: "Musical Scale Pattern",
+                    description: "AI plays notes in this pattern: Do-Re-Mi-Do-Re-Mi",
+                    question: "How many different notes does the AI use?",
+                    answer: "3",
+                    cardType: "music"
+                },
+                {
+                    type: "growing-art",
+                    title: "Growing Art Pattern",
+                    description: "AI creates growing patterns: 1 star, 2 hearts, 3 circles, 4 squares",
+                    question: "How many triangles should the AI draw next?",
+                    answer: "5",
+                    cardType: "art"
+                },
+                {
+                    type: "mirror-music",
+                    title: "Mirror Music AI",
+                    description: "AI creates mirror patterns in music: C-D-E-D-C",
+                    question: "What note is in the center of this mirror pattern?",
+                    answer: "E",
+                    cardType: "music"
+                },
+                {
+                    type: "color-math",
+                    title: "Color Math Artist",
+                    description: "AI uses 3 colors: red, blue, green. It repeats this pattern 4 times.",
+                    question: "How many colors total did the AI use? (3 × 4)",
+                    answer: "12",
+                    cardType: "art"
+                },
+                {
+                    type: "creative-total",
+                    title: "AI's Creative Project",
+                    description: "AI made 5 paintings with 3 colors each, and 4 songs with 6 notes each.",
+                    question: "How many total elements did the AI create? (5×3 + 4×6)",
+                    answer: "39",
+                    cardType: "art"
+                }
+            ];
+            
+            problems.forEach((problem, i) => {
+                currentProblems.push(problem);
+                
+                const cardClass = problem.cardType === 'music' ? 'music-card' : 'art-card';
+                const emoji = problem.cardType === 'music' ? '🎵' : '🎨';
+                
+                let visualHtml = '';
+                if (problem.visual) {
+                    visualHtml = problem.visual;
+                }
+                
+                const inputType = isNaN(problem.answer) ? "text" : "number";
+                const placeholder = inputType === "text" ? "symbol/word" : "number";
+                
+                problemsDiv.innerHTML += `
+                    <div class='problem'>
+                        <h4>Creative AI Challenge ${i + 1}</h4>
+                        <div class='${cardClass}'>
+                            <h4><span class='creative-emoji'>${emoji}</span>${problem.title}</h4>
+                            <p>${problem.description}</p>
+                            ${visualHtml}
+                            <p><strong>${problem.question}</strong></p>
+                        </div>
+                        <p><strong>Answer:</strong> <input type='${inputType}' id='answer${i}' placeholder='${placeholder}' ${inputType === "number" ? "min='1' max='50'" : ""}></p>
+                        <div class='feedback' id='feedback${i}'></div>
+                    </div>
+                `;
+            });
+            
+            score = 0;
+            updateScore();
+        }
+        
+        function checkAnswers() {
+            let correctCount = 0;
+            
+            currentProblems.forEach((problem, i) => {
+                const userInput = document.getElementById(`answer${i}`).value.trim();
+                const userAnswer = isNaN(problem.answer) ? userInput.toLowerCase() : parseInt(userInput);
+                const correctAnswer = isNaN(problem.answer) ? problem.answer.toLowerCase() : parseInt(problem.answer);
+                const feedback = document.getElementById(`feedback${i}`);
+                
+                if (userAnswer === correctAnswer) {
+                    feedback.textContent = '✅ Amazing! You understand how AI creates beautiful patterns!';
+                    feedback.className = 'feedback correct';
+                    correctCount++;
+                } else {
+                    feedback.textContent = `❌ Try again! Answer: ${problem.answer}`;
+                    feedback.className = 'feedback incorrect';
+                }
+            });
+            
+            score = correctCount;
+            updateScore();
+        }
+        
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('stars').textContent = '⭐'.repeat(score);
+        }
+        
+        window.onload = function() {
+            setPersonalizedGreeting();
+            generateProblems();
+        };
+    </script>
+</body>
+</html> 

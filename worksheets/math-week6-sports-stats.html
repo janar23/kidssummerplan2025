@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 6 Math - Sports Statistics Simple Analysis</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f0f8ff; }
+        .worksheet-container { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c5aa0; text-align: center; }
+        .problem { margin: 20px 0; padding: 15px; border: 2px solid #2c5aa0; border-radius: 10px; background-color: #f8f9fa; }
+        .sports-card { background: linear-gradient(135deg, #e8f5e8, #c8e6c9); padding: 20px; border-radius: 15px; margin: 15px 0; border: 3px solid #4caf50; }
+        .scoreboard { background: #1a1a1a; color: #00ff00; font-family: 'Courier New', monospace; padding: 15px; border-radius: 10px; margin: 15px 0; text-align: center; }
+        .team-stats { display: flex; justify-content: space-around; margin: 15px 0; flex-wrap: wrap; }
+        .stat-box { background: white; border: 2px solid #2c5aa0; border-radius: 10px; padding: 15px; margin: 5px; text-align: center; min-width: 100px; }
+        .stat-number { font-size: 24px; font-weight: bold; color: #2c5aa0; }
+        .stat-label { font-size: 14px; color: #666; }
+        .medal { font-size: 36px; text-align: center; margin: 10px 0; }
+        .trophy { font-size: 48px; text-align: center; margin: 15px 0; }
+        .bar-chart { display: flex; align-items: end; justify-content: space-around; height: 120px; margin: 20px 0; }
+        .bar { width: 60px; background: linear-gradient(180deg, #4caf50, #2e7d32); border-radius: 5px 5px 0 0; display: flex; align-items: end; justify-content: center; color: white; font-weight: bold; margin: 0 5px; }
+        .bar-label { text-align: center; margin-top: 10px; font-weight: bold; font-size: 12px; }
+        input[type="number"] { padding: 8px; border: 2px solid #2c5aa0; border-radius: 5px; font-size: 16px; width: 80px; }
+        button { background-color: #2c5aa0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; margin: 0 10px; }
+        button:hover { background-color: #1e3f7d; }
+        .feedback { margin-top: 10px; font-weight: bold; }
+        .correct { color: green; }
+        .incorrect { color: red; }
+        .controls { text-align: center; margin: 20px 0; }
+        .progress { text-align: center; margin: 20px 0; font-size: 18px; }
+        .stars { text-align: center; font-size: 24px; margin: 20px 0; }
+        .intro { background: #e8f5e8; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+        .sport-emoji { font-size: 24px; margin-right: 10px; }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <h1>🏆 Sports Statistics Simple Analysis ⚽</h1>
+        
+        <p style="text-align: center; font-size: 18px; color: #2c5aa0; margin-bottom: 20px;" id="personal-greeting">
+            Hi there! Let's be sports statisticians and analyze games with math! You're going to be a sports data expert! 📊
+        </p>
+        
+        <div class="intro">
+            <h3>Sports Math is Everywhere!</h3>
+            <p>Sports are full of numbers and statistics! We can use math to understand who's winning, scoring, and improving.</p>
+            <p><strong>Sports Statistics We Can Analyze:</strong></p>
+            <ul>
+                <li><strong>Scores:</strong> Who scored more points?</li>
+                <li><strong>Averages:</strong> How many points per game?</li>
+                <li><strong>Totals:</strong> Total goals, baskets, or runs</li>
+                <li><strong>Differences:</strong> How much did they win by?</li>
+            </ul>
+            <div class="trophy">🏆</div>
+        </div>
+        
+        <div class="progress">Progress: <span id="score">0</span>/10</div>
+        <div class="stars" id="stars">⭐</div>
+        <div id="problems"></div>
+        <div class="controls">
+            <button onclick="checkAnswers()">Check Answers</button>
+            <button onclick="generateProblems()">New Problems</button>
+        </div>
+    </div>
+    <script>
+        let currentProblems = [];
+        let score = 0;
+        
+        // Get the selected child's name from URL parameters or localStorage
+        function getSelectedChildName() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let childName = urlParams.get('child');
+            
+            if (!childName) {
+                // Try to get from localStorage if not in URL
+                const savedChild = localStorage.getItem('selectedChild');
+                if (savedChild) {
+                    childName = savedChild;
+                }
+            }
+            
+            // Capitalize first letter
+            if (childName) {
+                return childName.charAt(0).toUpperCase() + childName.slice(1);
+            }
+            return 'there'; // fallback
+        }
+        
+        // Set personalized greeting
+        function setPersonalizedGreeting() {
+            const childName = getSelectedChildName();
+            const greeting = document.getElementById('personal-greeting');
+            greeting.textContent = `Hi ${childName}! Let's be sports statisticians and analyze games with math! You're going to be a sports data expert! 📊`;
+        }
+        
+        function createScoreboard(team1, score1, team2, score2) {
+            return `
+                <div class="scoreboard">
+                    <div style="font-size: 18px; margin-bottom: 10px;">SCOREBOARD</div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <div>${team1}: ${score1}</div>
+                        <div>${team2}: ${score2}</div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function createBarChart(data, labels) {
+            const maxValue = Math.max(...data);
+            let chartHtml = '<div class="bar-chart">';
+            
+            data.forEach((value, index) => {
+                const height = (value / maxValue) * 100; // Max height 100px
+                chartHtml += `
+                    <div style="text-align: center;">
+                        <div class="bar" style="height: ${height}px;">${value}</div>
+                        <div class="bar-label">${labels[index]}</div>
+                    </div>
+                `;
+            });
+            
+            chartHtml += '</div>';
+            return chartHtml;
+        }
+        
+        function generateProblems() {
+            currentProblems = [];
+            const problemsDiv = document.getElementById('problems');
+            problemsDiv.innerHTML = '';
+            
+            const problems = [
+                {
+                    type: "soccer-score",
+                    title: "Sanha's Soccer Game",
+                    sport: "⚽",
+                    description: "Sanha's team scored 4 goals and the other team scored 2 goals.",
+                    scoreboard: createScoreboard("Sanha's Team", 4, "Other Team", 2),
+                    question: "How many more goals did Sanha's team score?",
+                    answer: 2
+                },
+                {
+                    type: "basketball-total",
+                    title: "Sanav's Basketball Stats",
+                    sport: "🏀",
+                    description: "In 3 games, Sanav scored: Game 1: 8 points, Game 2: 6 points, Game 3: 10 points.",
+                    stats: [8, 6, 10],
+                    question: "What is Sanav's total points for all 3 games?",
+                    answer: 24
+                },
+                {
+                    type: "baseball-average",
+                    title: "Aadhi's Baseball Week",
+                    sport: "⚾",
+                    description: "Aadhi got hits in her games: Monday: 2 hits, Tuesday: 4 hits, Wednesday: 3 hits.",
+                    question: "What is the average number of hits per game? (Add them up and divide by 3)",
+                    answer: 3
+                },
+                {
+                    type: "tennis-comparison",
+                    title: "Sai Vittal vs Sanvi Tennis Match",
+                    sport: "🎾",
+                    description: "Sai Vittal won 6 games and Sanvi won 4 games in their tennis match.",
+                    question: "How many total games were played?",
+                    answer: 10
+                },
+                {
+                    type: "swimming-time",
+                    title: "Swimming Race Results",
+                    sport: "🏊",
+                    description: "Race times: Sanha: 45 seconds, Sanav: 50 seconds, Aadhi: 40 seconds.",
+                    question: "Who had the fastest time? How many seconds faster than Sanav?",
+                    answer: 10
+                },
+                {
+                    type: "football-yards",
+                    title: "Football Team Statistics",
+                    sport: "🏈",
+                    description: "The team gained: 1st quarter: 75 yards, 2nd quarter: 85 yards, 3rd quarter: 60 yards.",
+                    question: "How many total yards did they gain in 3 quarters?",
+                    answer: 220
+                },
+                {
+                    type: "track-medals",
+                    title: "Track and Field Medal Count",
+                    sport: "🏃",
+                    description: "Medal count: Sanha: 3 gold, Sanav: 2 gold, Aadhi: 4 gold, Sai Vittal: 1 gold, Sanvi: 2 gold.",
+                    question: "How many gold medals did all five friends win together?",
+                    answer: 12
+                },
+                {
+                    type: "hockey-goals",
+                    title: "Hockey Season Goals",
+                    sport: "🏒",
+                    description: "Goals scored each week: Week 1: 3, Week 2: 5, Week 3: 4, Week 4: 6.",
+                    question: "What is the average number of goals per week?",
+                    answer: 4.5
+                },
+                {
+                    type: "volleyball-sets",
+                    title: "Volleyball Tournament",
+                    sport: "🏐",
+                    description: "Each set score: Set 1: 25-20, Set 2: 22-25, Set 3: 25-18.",
+                    question: "What was the total number of points scored by both teams in all sets?",
+                    answer: 135
+                },
+                {
+                    type: "cycling-distance",
+                    title: "Cycling Challenge",
+                    sport: "🚴",
+                    description: "Daily distances: Monday: 5 miles, Tuesday: 7 miles, Wednesday: 6 miles, Thursday: 8 miles.",
+                    question: "What is the total distance cycled in 4 days?",
+                    answer: 26
+                }
+            ];
+            
+            problems.forEach((problem, i) => {
+                currentProblems.push(problem);
+                
+                let visualHtml = '';
+                if (problem.scoreboard) {
+                    visualHtml = problem.scoreboard;
+                } else if (problem.stats) {
+                    visualHtml = createBarChart(problem.stats, ['Game 1', 'Game 2', 'Game 3']);
+                }
+                
+                problemsDiv.innerHTML += `
+                    <div class='problem'>
+                        <h4>Sports Analysis ${i + 1}</h4>
+                        <div class='sports-card'>
+                            <h4><span class='sport-emoji'>${problem.sport}</span>${problem.title}</h4>
+                            <p>${problem.description}</p>
+                            ${visualHtml}
+                            <div class='medal'>🥇</div>
+                            <p><strong>${problem.question}</strong></p>
+                        </div>
+                        <p><strong>Answer:</strong> <input type='number' id='answer${i}' placeholder='?' min='0' max='1000' step='0.5'></p>
+                        <div class='feedback' id='feedback${i}'></div>
+                    </div>
+                `;
+            });
+            
+            score = 0;
+            updateScore();
+        }
+        
+        function checkAnswers() {
+            let correctCount = 0;
+            
+            currentProblems.forEach((problem, i) => {
+                const userAnswer = parseFloat(document.getElementById(`answer${i}`).value);
+                const feedback = document.getElementById(`feedback${i}`);
+                
+                if (Math.abs(userAnswer - problem.answer) < 0.01) { // Allow for small decimal differences
+                    feedback.textContent = '✅ Excellent sports analysis! You\'re a champion statistician!';
+                    feedback.className = 'feedback correct';
+                    correctCount++;
+                } else {
+                    feedback.textContent = `❌ Try again! Answer: ${problem.answer}`;
+                    feedback.className = 'feedback incorrect';
+                }
+            });
+            
+            score = correctCount;
+            updateScore();
+        }
+        
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('stars').textContent = '⭐'.repeat(score);
+        }
+        
+        window.onload = function() {
+            setPersonalizedGreeting();
+            generateProblems();
+        };
+    </script>
+</body>
+</html> 

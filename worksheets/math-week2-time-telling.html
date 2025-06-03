@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 2 Math - Time Telling Practice</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f0f8ff; }
+        .worksheet-container { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c5aa0; text-align: center; }
+        .problem { margin: 20px 0; padding: 15px; border: 2px solid #2c5aa0; border-radius: 10px; background-color: #f8f9fa; display: flex; align-items: center; }
+        .clock { width: 80px; height: 80px; background: #fff; border: 2px solid #2c5aa0; border-radius: 50%; position: relative; margin-right: 20px; }
+        .hand { position: absolute; left: 50%; top: 50%; background: #2c5aa0; transform-origin: bottom center; }
+        .hour { width: 6px; height: 25px; border-radius: 3px; }
+        .minute { width: 4px; height: 35px; border-radius: 2px; background: #ff9800; }
+        .problem input { width: 60px; padding: 5px; margin: 0 10px; border: 2px solid #2c5aa0; border-radius: 5px; }
+        .feedback { margin-top: 10px; font-weight: bold; }
+        .correct { color: green; }
+        .incorrect { color: red; }
+        .controls { text-align: center; margin: 20px 0; }
+        button { background-color: #2c5aa0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; margin: 0 10px; }
+        button:hover { background-color: #1e3f7d; }
+        .progress { text-align: center; margin: 20px 0; font-size: 18px; }
+        .stars { text-align: center; font-size: 24px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <h1>🕐 Time Telling Practice 🕐</h1>
+        <p style="text-align: center; font-size: 18px; color: #2c5aa0; margin-bottom: 20px;">
+            Hello time master! Let's learn to read clocks like a pro! You and your friends will love telling time! ⏰
+        </p>
+        <div class="progress">Progress: <span id="score">0</span>/10</div>
+        <div class="stars" id="stars">⭐</div>
+        <div id="problems"></div>
+        <div class="controls">
+            <button onclick="checkAnswers()">Check Answers</button>
+            <button onclick="generateProblems()">New Problems</button>
+        </div>
+    </div>
+    <script>
+        let currentProblems = [];
+        let score = 0;
+        function generateProblems() {
+            currentProblems = [];
+            const problemsDiv = document.getElementById('problems');
+            problemsDiv.innerHTML = '';
+            for (let i = 0; i < 10; i++) {
+                let hour, minute;
+                if (i < 3) { // o'clock
+                    hour = Math.floor(Math.random() * 12) + 1;
+                    minute = 0;
+                } else if (i < 7) { // quarter/half hours
+                    hour = Math.floor(Math.random() * 12) + 1;
+                    minute = [15, 30, 45][Math.floor(Math.random() * 3)];
+                } else { // random 5-min intervals
+                    hour = Math.floor(Math.random() * 12) + 1;
+                    minute = Math.floor(Math.random() * 12) * 5;
+                }
+                currentProblems.push({hour, minute});
+                const problemDiv = document.createElement('div');
+                problemDiv.className = 'problem';
+                problemDiv.innerHTML = `
+                    <div class='clock' id='clock${i}'></div>
+                    <span>What time is it? </span>
+                    <input type="text" id="answer${i}" placeholder="e.g. 3:25">
+                    <div class="feedback" id="feedback${i}"></div>
+                `;
+                problemsDiv.appendChild(problemDiv);
+                drawClock(`clock${i}`, hour, minute);
+            }
+            score = 0;
+            updateScore();
+        }
+        function drawClock(id, hour, minute) {
+            const clock = document.getElementById(id);
+            // Remove old hands
+            while (clock.firstChild) clock.removeChild(clock.firstChild);
+            // Hour hand
+            const hourHand = document.createElement('div');
+            hourHand.className = 'hand hour';
+            hourHand.style.height = '25px';
+            hourHand.style.transform = `translate(-50%, -100%) rotate(${(hour % 12) * 30 + minute / 2}deg)`;
+            clock.appendChild(hourHand);
+            // Minute hand
+            const minHand = document.createElement('div');
+            minHand.className = 'hand minute';
+            minHand.style.height = '35px';
+            minHand.style.transform = `translate(-50%, -100%) rotate(${minute * 6}deg)`;
+            clock.appendChild(minHand);
+        }
+        function checkAnswers() {
+            let correctCount = 0;
+            currentProblems.forEach((prob, index) => {
+                const answer = document.getElementById(`answer${index}`).value.trim();
+                const feedback = document.getElementById(`feedback${index}`);
+                const correct = `${prob.hour}:${prob.minute.toString().padStart(2, '0')}`;
+                if (answer === correct) {
+                    feedback.textContent = '✅ Correct!';
+                    feedback.className = 'feedback correct';
+                    correctCount++;
+                } else {
+                    feedback.textContent = `❌ Try again! The answer is ${correct}`;
+                    feedback.className = 'feedback incorrect';
+                }
+            });
+            score = correctCount;
+            updateScore();
+        }
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('stars').textContent = '⭐'.repeat(score);
+        }
+        window.onload = generateProblems;
+    </script>
+</body>
+</html> 

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 7 Math - Create Patterns AI Could Recognize</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f0f8ff; }
+        .worksheet-container { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c5aa0; text-align: center; }
+        .problem { margin: 20px 0; padding: 15px; border: 2px solid #2c5aa0; border-radius: 10px; background-color: #f8f9fa; }
+        .ai-card { background: linear-gradient(135deg, #e1f5fe, #b3e5fc); padding: 20px; border-radius: 15px; margin: 15px 0; border: 3px solid #03a9f4; }
+        .pattern-builder { display: flex; gap: 15px; justify-content: center; align-items: center; margin: 20px 0; flex-wrap: wrap; min-height: 80px; border: 2px dashed #2c5aa0; border-radius: 10px; padding: 20px; }
+        .pattern-tools { display: flex; gap: 10px; justify-content: center; margin: 15px 0; flex-wrap: wrap; }
+        .tool-button { width: 60px; height: 60px; border: 3px solid #333; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; background: white; transition: all 0.3s; }
+        .tool-button:hover { transform: scale(1.1); box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+        .shape-red { background: #ff6b6b; }
+        .shape-blue { background: #4ecdc4; }
+        .shape-green { background: #45b7d1; }
+        .shape-yellow { background: #feca57; }
+        .pattern-element { width: 50px; height: 50px; border: 3px solid #333; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px; margin: 2px; }
+        .ai-brain { text-align: center; font-size: 48px; margin: 15px 0; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        .feedback-area { background: #e8f5e8; padding: 15px; border-radius: 10px; margin: 15px 0; }
+        input[type="number"], input[type="text"] { padding: 8px; border: 2px solid #2c5aa0; border-radius: 5px; font-size: 16px; width: 120px; }
+        button { background-color: #2c5aa0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; margin: 0 10px; }
+        button:hover { background-color: #1e3f7d; }
+        .feedback { margin-top: 10px; font-weight: bold; }
+        .correct { color: green; }
+        .incorrect { color: red; }
+        .controls { text-align: center; margin: 20px 0; }
+        .progress { text-align: center; margin: 20px 0; font-size: 18px; }
+        .stars { text-align: center; font-size: 24px; margin: 20px 0; }
+        .intro { background: #e8f5e8; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+        .clear-btn { background-color: #ff5722; }
+        .clear-btn:hover { background-color: #d84315; }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <h1>🤖 Create Patterns AI Could Recognize 🎯</h1>
+        
+        <p style="text-align: center; font-size: 18px; color: #2c5aa0; margin-bottom: 20px;" id="personal-greeting">
+            Hi there! Let's become AI pattern creators! You'll design patterns that computers can learn and recognize! 🎨
+        </p>
+        
+        <div class="intro">
+            <h3>Become an AI Pattern Designer!</h3>
+            <p>AI systems learn by recognizing patterns. Today, you'll create patterns that an AI could study and understand!</p>
+            <p><strong>What makes a good AI pattern:</strong></p>
+            <ul>
+                <li><strong>Repetition:</strong> The same sequence repeats</li>
+                <li><strong>Rules:</strong> Clear rules that can be followed</li>
+                <li><strong>Predictability:</strong> Someone can guess what comes next</li>
+                <li><strong>Consistency:</strong> The pattern follows the same rule throughout</li>
+            </ul>
+            <div class="ai-brain">🤖</div>
+        </div>
+        
+        <div class="progress">Progress: <span id="score">0</span>/10</div>
+        <div class="stars" id="stars">⭐</div>
+        <div id="problems"></div>
+        <div class="controls">
+            <button onclick="checkAnswers()">Check Answers</button>
+            <button onclick="generateProblems()">New Problems</button>
+        </div>
+    </div>
+    <script>
+        let currentProblems = [];
+        let score = 0;
+        let currentPatternBuilder = null;
+        
+        // Get the selected child's name from URL parameters or localStorage
+        function getSelectedChildName() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let childName = urlParams.get('child');
+            
+            if (!childName) {
+                // Try to get from localStorage if not in URL
+                const savedChild = localStorage.getItem('selectedChild');
+                if (savedChild) {
+                    childName = savedChild;
+                }
+            }
+            
+            // Capitalize first letter
+            if (childName) {
+                return childName.charAt(0).toUpperCase() + childName.slice(1);
+            }
+            return 'there'; // fallback
+        }
+        
+        // Set personalized greeting
+        function setPersonalizedGreeting() {
+            const childName = getSelectedChildName();
+            const greeting = document.getElementById('personal-greeting');
+            greeting.textContent = `Hi ${childName}! Let's become AI pattern creators! You'll design patterns that computers can learn and recognize! 🎨`;
+        }
+        
+        function addToPattern(symbol, builderIndex) {
+            const builder = document.getElementById(`pattern-builder-${builderIndex}`);
+            if (builder.children.length < 8) { // Limit to 8 elements
+                const element = document.createElement('div');
+                element.className = 'pattern-element';
+                element.textContent = symbol;
+                if (symbol === '🔴') element.style.background = '#ff6b6b';
+                else if (symbol === '🔵') element.style.background = '#4ecdc4';
+                else if (symbol === '🟢') element.style.background = '#45b7d1';
+                else if (symbol === '🟡') element.style.background = '#feca57';
+                builder.appendChild(element);
+            }
+        }
+        
+        function clearPattern(builderIndex) {
+            const builder = document.getElementById(`pattern-builder-${builderIndex}`);
+            builder.innerHTML = '';
+        }
+        
+        function getPatternString(builderIndex) {
+            const builder = document.getElementById(`pattern-builder-${builderIndex}`);
+            const elements = Array.from(builder.children);
+            return elements.map(el => el.textContent).join('');
+        }
+        
+        function generateProblems() {
+            currentProblems = [];
+            const problemsDiv = document.getElementById('problems');
+            problemsDiv.innerHTML = '';
+            
+            const problems = [
+                {
+                    type: "create",
+                    title: "Sanha's Color Pattern Challenge",
+                    instruction: "Create a pattern using 🔴 and 🔵 that repeats every 2 colors (like: 🔴🔵🔴🔵...)",
+                    expectedPattern: "🔴🔵🔴🔵",
+                    question: "Build your pattern below, then tell me: What comes after 🔴🔵🔴🔵?",
+                    answer: "🔴",
+                    hasBuilder: true
+                },
+                {
+                    type: "analyze",
+                    title: "Sanav's Pattern Detective",
+                    description: "Look at this pattern: 🟢🟡🟢🟡🟢🟡",
+                    question: "What would an AI predict comes next?",
+                    answer: "🟢",
+                    hasBuilder: false
+                },
+                {
+                    type: "create",
+                    title: "Aadhi's Three-Color Challenge",
+                    instruction: "Create a pattern using 🔴🔵🟢 that repeats (like: 🔴🔵🟢🔴🔵🟢...)",
+                    expectedPattern: "🔴🔵🟢🔴🔵🟢",
+                    question: "What comes after your pattern repeats twice?",
+                    answer: "🔴",
+                    hasBuilder: true
+                },
+                {
+                    type: "rule",
+                    title: "Sai Vittal's Pattern Rule",
+                    description: "AI found this pattern: 🔴🔴🔵🔵🔴🔴🔵🔵",
+                    question: "What rule is the AI following? How many of each color appear together?",
+                    answer: "2",
+                    hasBuilder: false
+                },
+                {
+                    type: "create",
+                    title: "Sanvi's Growing Pattern",
+                    instruction: "Create a growing pattern: 🔴, 🔴🔵, 🔴🔵🟢, 🔴🔵🟢🟡",
+                    expectedPattern: "🔴🔵🟢🟡",
+                    question: "How many colors would be in the next part of the pattern?",
+                    answer: "5",
+                    hasBuilder: true
+                },
+                {
+                    type: "analyze",
+                    title: "AI Mirror Pattern",
+                    description: "AI created this mirror pattern: 🔴🔵🟢🔵🔴",
+                    question: "What's in the middle of this mirror pattern?",
+                    answer: "🟢",
+                    hasBuilder: false
+                },
+                {
+                    type: "complete",
+                    title: "Complete the AI's Pattern",
+                    description: "An AI started this pattern but got interrupted: 🔴🔵🔴🔵🔴",
+                    question: "What should come next to continue the pattern?",
+                    answer: "🔵",
+                    hasBuilder: false
+                },
+                {
+                    type: "count",
+                    title: "Pattern Frequency Counter",
+                    description: "In this AI pattern: 🔴🔵🔴🔵🔴🔵🔴🔵",
+                    question: "How many 🔴 circles are there?",
+                    answer: "4",
+                    hasBuilder: false
+                },
+                {
+                    type: "predict",
+                    title: "AI Prediction Challenge",
+                    description: "AI learned this pattern: 🟢🟢🟡🟢🟢🟡🟢🟢",
+                    question: "What should the AI predict comes next?",
+                    answer: "🟡",
+                    hasBuilder: false
+                },
+                {
+                    type: "design",
+                    title: "Design Your Own AI Pattern",
+                    instruction: "Create your own unique pattern that AI could learn! Use any colors.",
+                    question: "How many different colors did you use in your pattern?",
+                    answer: "varies",
+                    hasBuilder: true
+                }
+            ];
+            
+            problems.forEach((problem, i) => {
+                currentProblems.push(problem);
+                
+                let builderHtml = '';
+                if (problem.hasBuilder) {
+                    builderHtml = `
+                        <div class="pattern-tools">
+                            <div class="tool-button" onclick="addToPattern('🔴', ${i})">🔴</div>
+                            <div class="tool-button" onclick="addToPattern('🔵', ${i})">🔵</div>
+                            <div class="tool-button" onclick="addToPattern('🟢', ${i})">🟢</div>
+                            <div class="tool-button" onclick="addToPattern('🟡', ${i})">🟡</div>
+                            <button class="clear-btn" onclick="clearPattern(${i})">Clear</button>
+                        </div>
+                        <div id="pattern-builder-${i}" class="pattern-builder"></div>
+                    `;
+                }
+                
+                let descriptionHtml = '';
+                if (problem.description) {
+                    descriptionHtml = `<p><strong>Pattern:</strong> ${problem.description}</p>`;
+                }
+                
+                let instructionHtml = '';
+                if (problem.instruction) {
+                    instructionHtml = `<p><strong>Instructions:</strong> ${problem.instruction}</p>`;
+                }
+                
+                const inputType = (problem.answer === "varies") ? "number" : (isNaN(problem.answer) ? "text" : "number");
+                const placeholder = inputType === "text" ? "color emoji" : "number";
+                
+                problemsDiv.innerHTML += `
+                    <div class='problem'>
+                        <h4>AI Pattern Challenge ${i + 1}</h4>
+                        <div class='ai-card'>
+                            <h4>🤖 ${problem.title}</h4>
+                            ${instructionHtml}
+                            ${descriptionHtml}
+                            ${builderHtml}
+                            <div class='feedback-area'>
+                                <p><strong>${problem.question}</strong></p>
+                            </div>
+                        </div>
+                        <p><strong>Answer:</strong> <input type='${inputType}' id='answer${i}' placeholder='${placeholder}' ${inputType === "number" ? "min='1' max='10'" : ""}></p>
+                        <div class='feedback' id='feedback${i}'></div>
+                    </div>
+                `;
+            });
+            
+            score = 0;
+            updateScore();
+        }
+        
+        function checkAnswers() {
+            let correctCount = 0;
+            
+            currentProblems.forEach((problem, i) => {
+                const userInput = document.getElementById(`answer${i}`).value.trim();
+                const feedback = document.getElementById(`feedback${i}`);
+                
+                if (problem.answer === "varies") {
+                    // For creative problems, accept any reasonable answer
+                    const userNumber = parseInt(userInput);
+                    if (userNumber >= 1 && userNumber <= 4) {
+                        feedback.textContent = '✅ Great creative pattern! You\'re thinking like an AI designer!';
+                        feedback.className = 'feedback correct';
+                        correctCount++;
+                    } else {
+                        feedback.textContent = '❌ Enter how many colors you used (1-4)';
+                        feedback.className = 'feedback incorrect';
+                    }
+                } else {
+                    const userAnswer = isNaN(problem.answer) ? userInput.toLowerCase() : parseInt(userInput);
+                    const correctAnswer = isNaN(problem.answer) ? problem.answer.toLowerCase() : parseInt(problem.answer);
+                    
+                    if (userAnswer === correctAnswer) {
+                        feedback.textContent = '✅ Perfect! You understand how AI recognizes patterns!';
+                        feedback.className = 'feedback correct';
+                        correctCount++;
+                    } else {
+                        feedback.textContent = `❌ Try again! Answer: ${problem.answer}`;
+                        feedback.className = 'feedback incorrect';
+                    }
+                }
+            });
+            
+            score = correctCount;
+            updateScore();
+        }
+        
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('stars').textContent = '⭐'.repeat(score);
+        }
+        
+        window.onload = function() {
+            setPersonalizedGreeting();
+            generateProblems();
+        };
+    </script>
+</body>
+</html> 

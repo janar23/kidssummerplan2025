@@ -3,59 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Math Worksheet - Week 2: Subtraction Practice</title>
+    <title>Week 2 Math - Subtraction Adventure</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
             background-color: #f0f8ff;
         }
-        h1, h2 {
-            color: #2979ff;
-            text-align: center;
-        }
-        .instructions {
-            background-color: #e3f2fd;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-        .worksheet {
+        .worksheet-container {
             background-color: white;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c5aa0;
+            text-align: center;
         }
         .problem {
-            margin-bottom: 15px;
-            padding: 10px;
-            border: 1px solid #e0e0e0;
-            border-radius: 5px;
+            margin: 20px 0;
+            padding: 15px;
+            border: 2px solid #2c5aa0;
+            border-radius: 10px;
+            background-color: #f8f9fa;
         }
-        input[type="number"] {
+        .problem input {
             width: 60px;
             padding: 5px;
-            font-size: 16px;
-            border: 2px solid #bbdefb;
+            margin: 0 10px;
+            border: 2px solid #2c5aa0;
             border-radius: 5px;
         }
-        button {
-            background: linear-gradient(to right, #2979ff, #00b0ff);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 16px;
-            cursor: pointer;
-            margin: 10px 0;
-            display: block;
-        }
         .feedback {
-            font-weight: bold;
             margin-top: 10px;
-            min-height: 20px;
+            font-weight: bold;
         }
         .correct {
             color: green;
@@ -63,169 +46,118 @@
         .incorrect {
             color: red;
         }
-        .back-button {
-            background: linear-gradient(to right, #ff7e5f, #feb47b);
-            margin-top: 20px;
-        }
-        .progress-container {
-            width: 100%;
-            height: 20px;
-            background-color: #e0e0e0;
-            border-radius: 10px;
-            margin: 20px 0;
-            overflow: hidden;
-        }
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(to right, #2979ff, #00b0ff);
-            width: 0%;
-            transition: width 0.5s;
+        .controls {
             text-align: center;
-            color: white;
-            font-weight: bold;
+            margin: 20px 0;
         }
-        @media print {
-            button, .feedback, .progress-container {
-                display: none;
-            }
-            .problem {
-                page-break-inside: avoid;
-            }
+        button {
+            background-color: #2c5aa0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 0 10px;
+        }
+        button:hover {
+            background-color: #1e3f7d;
+        }
+        .progress {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 18px;
+        }
+        .stars {
+            text-align: center;
+            font-size: 24px;
+            margin: 20px 0;
         }
     </style>
 </head>
 <body>
-    <h1>Math Worksheet - Week 2</h1>
-    <h2>Subtraction Practice (1-50)</h2>
+    <div class="worksheet-container">
+        <h1>🌟 Subtraction Adventure 🌟</h1>
+        <div class="progress">Progress: <span id="score">0</span>/10</div>
+        <div class="stars" id="stars">⭐</div>
 
-    <div class="instructions">
-        <h3>Instructions:</h3>
-        <p>Solve each subtraction problem by entering the correct answer. Click "Check Answer" to see if you got it right. Try to solve all problems!</p>
-    </div>
-
-    <div class="progress-container">
-        <div id="progress-bar" class="progress-bar">0%</div>
-    </div>
-
-    <div class="worksheet">
-        <div class="problem">
-            <p>1) 20 - 8 = <input type="number" id="answer1" min="0" max="100"></p>
-            <button onclick="checkAnswer(1, 12)">Check Answer</button>
-            <div id="feedback1" class="feedback"></div>
+        <div id="problems">
+            <!-- Problems will be generated here -->
         </div>
 
-        <div class="problem">
-            <p>2) 35 - 15 = <input type="number" id="answer2" min="0" max="100"></p>
-            <button onclick="checkAnswer(2, 20)">Check Answer</button>
-            <div id="feedback2" class="feedback"></div>
-        </div>
-
-        <div class="problem">
-            <p>3) 48 - 13 = <input type="number" id="answer3" min="0" max="100"></p>
-            <button onclick="checkAnswer(3, 35)">Check Answer</button>
-            <div id="feedback3" class="feedback"></div>
-        </div>
-
-        <div class="problem">
-            <p>4) 27 - 9 = <input type="number" id="answer4" min="0" max="100"></p>
-            <button onclick="checkAnswer(4, 18)">Check Answer</button>
-            <div id="feedback4" class="feedback"></div>
-        </div>
-
-        <div class="problem">
-            <p>5) 42 - 24 = <input type="number" id="answer5" min="0" max="100"></p>
-            <button onclick="checkAnswer(5, 18)">Check Answer</button>
-            <div id="feedback5" class="feedback"></div>
-        </div>
-
-        <div class="problem">
-            <p>6) 50 - 25 = <input type="number" id="answer6" min="0" max="100"></p>
-            <button onclick="checkAnswer(6, 25)">Check Answer</button>
-            <div id="feedback6" class="feedback"></div>
-        </div>
-
-        <div class="problem">
-            <p>7) 33 - 14 = <input type="number" id="answer7" min="0" max="100"></p>
-            <button onclick="checkAnswer(7, 19)">Check Answer</button>
-            <div id="feedback7" class="feedback"></div>
-        </div>
-
-        <div class="problem">
-            <p>8) 45 - 17 = <input type="number" id="answer8" min="0" max="100"></p>
-            <button onclick="checkAnswer(8, 28)">Check Answer</button>
-            <div id="feedback8" class="feedback"></div>
-        </div>
-
-        <div class="problem">
-            <p>9) 40 - 19 = <input type="number" id="answer9" min="0" max="100"></p>
-            <button onclick="checkAnswer(9, 21)">Check Answer</button>
-            <div id="feedback9" class="feedback"></div>
-        </div>
-
-        <div class="problem">
-            <p>10) 36 - 8 = <input type="number" id="answer10" min="0" max="100"></p>
-            <button onclick="checkAnswer(10, 28)">Check Answer</button>
-            <div id="feedback10" class="feedback"></div>
+        <div class="controls">
+            <button onclick="checkAnswers()">Check Answers</button>
+            <button onclick="generateNewProblems()">New Problems</button>
         </div>
     </div>
-
-    <button class="back-button" onclick="window.close()">Close Worksheet</button>
 
     <script>
-        let correctAnswers = 0;
-        const totalProblems = 10;
-        
-        function checkAnswer(number, correctAnswer) {
-            const userAnswer = document.getElementById(`answer${number}`).value;
-            const feedbackElement = document.getElementById(`feedback${number}`);
+        let currentProblems = [];
+        let score = 0;
+
+        function generateProblem() {
+            const num1 = Math.floor(Math.random() * 50) + 1;
+            const num2 = Math.floor(Math.random() * num1) + 1;
+            return {
+                num1: num1,
+                num2: num2,
+                answer: num1 - num2
+            };
+        }
+
+        function generateNewProblems() {
+            currentProblems = [];
+            const problemsDiv = document.getElementById('problems');
+            problemsDiv.innerHTML = '';
             
-            if (userAnswer == correctAnswer) { // Using == to compare as userAnswer is string
-                feedbackElement.textContent = "Correct! Great job! ✓";
-                feedbackElement.className = "feedback correct";
+            for (let i = 0; i < 10; i++) {
+                const problem = generateProblem();
+                currentProblems.push(problem);
                 
-                // If this is the first time getting this answer correct
-                if (!feedbackElement.hasAttribute('data-correct')) {
-                    correctAnswers++;
-                    feedbackElement.setAttribute('data-correct', 'true');
-                    updateProgress();
-                }
-            } else {
-                feedbackElement.textContent = "Not quite. Try again! ✗";
-                feedbackElement.className = "feedback incorrect";
+                const problemDiv = document.createElement('div');
+                problemDiv.className = 'problem';
+                problemDiv.innerHTML = `
+                    <span>${i + 1}. ${problem.num1} - ${problem.num2} = </span>
+                    <input type="number" id="answer${i}" min="0">
+                    <div class="feedback" id="feedback${i}"></div>
+                `;
+                problemsDiv.appendChild(problemDiv);
             }
-        }
-        
-        function updateProgress() {
-            const progressPercentage = Math.round((correctAnswers / totalProblems) * 100);
-            const progressBar = document.getElementById('progress-bar');
-            progressBar.style.width = `${progressPercentage}%`;
-            progressBar.textContent = `${progressPercentage}%`;
             
-            // Save progress to localStorage
-            localStorage.setItem('mathWorksheet2Progress', correctAnswers);
-            
-            if (correctAnswers === totalProblems) {
-                alert('🎉 Congratulations! You completed the worksheet! 🎉');
-            }
+            score = 0;
+            updateScore();
         }
-        
-        // Load progress on page load
-        window.onload = function() {
-            const savedProgress = localStorage.getItem('mathWorksheet2Progress');
-            if (savedProgress) {
-                correctAnswers = parseInt(savedProgress);
-                updateProgress();
+
+        function checkAnswers() {
+            let correctCount = 0;
+            
+            currentProblems.forEach((problem, index) => {
+                const answer = parseInt(document.getElementById(`answer${index}`).value);
+                const feedback = document.getElementById(`feedback${index}`);
                 
-                // Mark previously correct answers
-                for (let i = 1; i <= totalProblems; i++) {
-                    const feedbackElement = document.getElementById(`feedback${i}`);
-                    if (feedbackElement.hasAttribute('data-correct')) {
-                        feedbackElement.textContent = "Correct! Great job! ✓";
-                        feedbackElement.className = "feedback correct";
-                    }
+                if (answer === problem.answer) {
+                    feedback.textContent = '✅ Correct!';
+                    feedback.className = 'feedback correct';
+                    correctCount++;
+                } else {
+                    feedback.textContent = `❌ Try again! The answer is ${problem.answer}`;
+                    feedback.className = 'feedback incorrect';
                 }
-            }
+            });
+            
+            score = correctCount;
+            updateScore();
         }
+
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            const starsDiv = document.getElementById('stars');
+            const starCount = Math.ceil(score / 2);
+            starsDiv.textContent = '⭐'.repeat(starCount);
+        }
+
+        // Generate initial problems when the page loads
+        window.onload = generateNewProblems;
     </script>
 </body>
 </html>

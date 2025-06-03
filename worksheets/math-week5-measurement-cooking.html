@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 5 Math - Measurement Cooking Project</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f0f8ff; }
+        .worksheet-container { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c5aa0; text-align: center; }
+        .problem { margin: 20px 0; padding: 15px; border: 2px solid #2c5aa0; border-radius: 10px; background-color: #f8f9fa; }
+        .recipe-card { background: linear-gradient(135deg, #fff3e0, #ffecb3); padding: 20px; border-radius: 15px; margin: 15px 0; border: 3px solid #ff9800; }
+        .ingredient { display: flex; align-items: center; margin: 10px 0; font-size: 18px; }
+        .measurement-visual { background-color: #e3f2fd; padding: 15px; border-radius: 10px; margin: 10px 0; }
+        .measuring-cups { display: flex; gap: 10px; justify-content: center; margin: 15px 0; flex-wrap: wrap; }
+        .cup { border: 3px solid #2c5aa0; border-radius: 10px; padding: 15px; text-align: center; background: linear-gradient(180deg, #fff 50%, #4caf50 50%); }
+        .cup-1 { width: 60px; height: 80px; }
+        .cup-half { width: 50px; height: 70px; }
+        .cup-quarter { width: 40px; height: 60px; }
+        input[type="number"], input[type="text"] { padding: 8px; border: 2px solid #2c5aa0; border-radius: 5px; font-size: 16px; width: 120px; }
+        button { background-color: #2c5aa0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; margin: 0 10px; }
+        button:hover { background-color: #1e3f7d; }
+        .feedback { margin-top: 10px; font-weight: bold; }
+        .correct { color: green; }
+        .incorrect { color: red; }
+        .controls { text-align: center; margin: 20px 0; }
+        .progress { text-align: center; margin: 20px 0; font-size: 18px; }
+        .stars { text-align: center; font-size: 24px; margin: 20px 0; }
+        .intro { background: #e8f5e8; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+        .cooking-emoji { font-size: 24px; margin-right: 10px; }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <h1>👨‍🍳 Measurement Cooking Project 👩‍🍳</h1>
+        
+        <p style="text-align: center; font-size: 18px; color: #2c5aa0; margin-bottom: 20px;" id="personal-greeting">
+            Hi there! Let's learn measurement while cooking! You're going to be an amazing chef! 👨‍🍳
+        </p>
+        
+        <div class="intro">
+            <h3>Cooking with Math!</h3>
+            <p>Cooking is full of math! We use measurements like cups, tablespoons, and teaspoons to make delicious food.</p>
+            <p><strong>Remember:</strong></p>
+            <ul>
+                <li>1 cup = 16 tablespoons = 48 teaspoons</li>
+                <li>1/2 cup = 8 tablespoons = 24 teaspoons</li>
+                <li>1/4 cup = 4 tablespoons = 12 teaspoons</li>
+            </ul>
+        </div>
+        
+        <div class="measuring-cups">
+            <div class="cup cup-1">
+                <div>1 Cup</div>
+                <div style="font-size: 12px;">16 tbsp</div>
+            </div>
+            <div class="cup cup-half">
+                <div>1/2 Cup</div>
+                <div style="font-size: 12px;">8 tbsp</div>
+            </div>
+            <div class="cup cup-quarter">
+                <div>1/4 Cup</div>
+                <div style="font-size: 12px;">4 tbsp</div>
+            </div>
+        </div>
+        
+        <div class="progress">Progress: <span id="score">0</span>/10</div>
+        <div class="stars" id="stars">⭐</div>
+        <div id="problems"></div>
+        <div class="controls">
+            <button onclick="checkAnswers()">Check Answers</button>
+            <button onclick="generateProblems()">New Problems</button>
+        </div>
+    </div>
+    <script>
+        let currentProblems = [];
+        let score = 0;
+        
+        // Get the selected child's name from URL parameters or localStorage
+        function getSelectedChildName() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let childName = urlParams.get('child');
+            
+            if (!childName) {
+                // Try to get from localStorage if not in URL
+                const savedChild = localStorage.getItem('selectedChild');
+                if (savedChild) {
+                    childName = savedChild;
+                }
+            }
+            
+            // Capitalize first letter
+            if (childName) {
+                return childName.charAt(0).toUpperCase() + childName.slice(1);
+            }
+            return 'there'; // fallback
+        }
+        
+        // Set personalized greeting
+        function setPersonalizedGreeting() {
+            const childName = getSelectedChildName();
+            const greeting = document.getElementById('personal-greeting');
+            greeting.textContent = `Hi ${childName}! Let's learn measurement while cooking! You're going to be an amazing chef! 👨‍🍳`;
+        }
+        
+        function generateProblems() {
+            currentProblems = [];
+            const problemsDiv = document.getElementById('problems');
+            problemsDiv.innerHTML = '';
+            
+            const recipes = [
+                {
+                    name: "Sanha's Chocolate Chip Cookies",
+                    question: "The recipe calls for 1/2 cup of sugar. How many tablespoons is that?",
+                    answer: 8,
+                    type: "conversion"
+                },
+                {
+                    name: "Sanav's Pancakes",
+                    question: "We need 2 cups of flour. If we only have a 1/4 cup measure, how many times do we need to fill it?",
+                    answer: 8,
+                    type: "division"
+                },
+                {
+                    name: "Aadhi's Fruit Salad",
+                    question: "The recipe needs 3/4 cup of honey. That's the same as 1/2 cup plus how many more tablespoons?",
+                    answer: 4,
+                    type: "addition"
+                },
+                {
+                    name: "Sai Vittal's Smoothie",
+                    question: "We're making smoothies for 6 people. Each person needs 1/2 cup of yogurt. How many total cups do we need?",
+                    answer: 3,
+                    type: "multiplication"
+                },
+                {
+                    name: "Sanvi's Muffins",
+                    question: "The recipe calls for 1 1/4 cups of milk. How many tablespoons is that? (1 1/4 = 1.25 cups)",
+                    answer: 20,
+                    type: "conversion"
+                },
+                {
+                    name: "Pizza Party Recipe",
+                    question: "We have 1 cup of cheese. If we use 1/4 cup on each pizza, how many pizzas can we make?",
+                    answer: 4,
+                    type: "division"
+                },
+                {
+                    name: "Bread Making",
+                    question: "Recipe needs 3 tablespoons of oil. How many teaspoons is that? (1 tbsp = 3 tsp)",
+                    answer: 9,
+                    type: "conversion"
+                },
+                {
+                    name: "Ice Cream Sundae",
+                    question: "Each sundae needs 2 tablespoons of chocolate sauce. For 5 sundaes, how many tablespoons total?",
+                    answer: 10,
+                    type: "multiplication"
+                },
+                {
+                    name: "Cake Frosting",
+                    question: "We made 12 tablespoons of frosting. How many 1/4 cup servings is that?",
+                    answer: 3,
+                    type: "division"
+                },
+                {
+                    name: "Soup Recipe",
+                    question: "Recipe calls for 2 1/2 cups of broth. We have 1 1/4 cups. How many more cups do we need?",
+                    answer: 1.25,
+                    type: "subtraction"
+                }
+            ];
+            
+            recipes.forEach((recipe, i) => {
+                currentProblems.push(recipe);
+                
+                problemsDiv.innerHTML += `
+                    <div class='problem'>
+                        <div class='recipe-card'>
+                            <h4><span class='cooking-emoji'>🍽️</span>${recipe.name}</h4>
+                            <p><strong>${recipe.question}</strong></p>
+                            <div class='measurement-visual'>
+                                <p>💡 <strong>Tip:</strong> Remember your measurement conversions!</p>
+                            </div>
+                            <p><strong>Answer:</strong> <input type='number' id='answer${i}' placeholder='?' min='0' step='0.25'></p>
+                            <div class='feedback' id='feedback${i}'></div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            score = 0;
+            updateScore();
+        }
+        
+        function checkAnswers() {
+            let correctCount = 0;
+            
+            currentProblems.forEach((problem, i) => {
+                const userAnswer = parseFloat(document.getElementById(`answer${i}`).value);
+                const feedback = document.getElementById(`feedback${i}`);
+                
+                if (Math.abs(userAnswer - problem.answer) < 0.01) { // Allow for small decimal differences
+                    feedback.textContent = '✅ Perfect! You\'re a cooking math master!';
+                    feedback.className = 'feedback correct';
+                    correctCount++;
+                } else {
+                    feedback.textContent = `❌ Try again! Answer: ${problem.answer}`;
+                    feedback.className = 'feedback incorrect';
+                }
+            });
+            
+            score = correctCount;
+            updateScore();
+        }
+        
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('stars').textContent = '⭐'.repeat(score);
+        }
+        
+        window.onload = function() {
+            setPersonalizedGreeting();
+            generateProblems();
+        };
+    </script>
+</body>
+</html> 
