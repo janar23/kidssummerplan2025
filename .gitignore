@@ -3,12 +3,14 @@ bin-debug/
 bin-release/
 [Oo]bj/
 [Bb]in/
+storybook/node_modules/
 
 # Other files and folders
 .settings/
 .history/
 .vscode/
 .cursor/
+
 
 .git
 
