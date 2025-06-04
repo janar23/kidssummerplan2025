@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 3 Math - Fractions with Pizza/Pies</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f0f8ff; }
+        .worksheet-container { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c5aa0; text-align: center; }
+        .problem { margin: 20px 0; padding: 15px; border: 2px solid #2c5aa0; border-radius: 10px; background-color: #f8f9fa; display: flex; align-items: center; }
+        .pizza-svg { width: 60px; height: 60px; margin-right: 20px; }
+        .problem input { width: 100px; padding: 5px; margin: 0 10px; border: 2px solid #2c5aa0; border-radius: 5px; }
+        .feedback { margin-top: 10px; font-weight: bold; }
+        .correct { color: green; }
+        .incorrect { color: red; }
+        .controls { text-align: center; margin: 20px 0; }
+        button { background-color: #2c5aa0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; margin: 0 10px; }
+        button:hover { background-color: #1e3f7d; }
+        .progress { text-align: center; margin: 20px 0; font-size: 18px; }
+        .stars { text-align: center; font-size: 24px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <h1>🍕 Fractions with Pizza/Pies 🍕</h1>
+        <div class="progress">Progress: <span id="score">0</span>/10</div>
+        <div class="stars" id="stars">⭐</div>
+        <div id="problems"></div>
+        <div class="controls">
+            <button onclick="checkAnswers()">Check Answers</button>
+            <button onclick="generateProblems()">New Problems</button>
+        </div>
+    </div>
+    <script>
+        let currentProblems = [];
+        let score = 0;
+        function pizzaSVG(parts, filled) {
+            let d = '';
+            for (let i = 0; i < parts; i++) {
+                const start = (i/parts)*2*Math.PI;
+                const end = ((i+1)/parts)*2*Math.PI;
+                const x1 = 30 + 28*Math.cos(start), y1 = 30 + 28*Math.sin(start);
+                const x2 = 30 + 28*Math.cos(end), y2 = 30 + 28*Math.sin(end);
+                d += `<path d='M30,30 L${x1},${y1} A28,28 0 0,1 ${x2},${y2} Z' fill='${i<filled?'#ffcc80':'#fffde7'}' stroke='#ff7043' stroke-width='2'/>`;
+            }
+            return `<svg class='pizza-svg' viewBox='0 0 60 60'>${d}</svg>`;
+        }
+        function generateProblems() {
+            currentProblems = [];
+            const problemsDiv = document.getElementById('problems');
+            problemsDiv.innerHTML = '';
+            for (let i = 0; i < 10; i++) {
+                let prob;
+                if (i < 3) {
+                    // Halves/quarters
+                    const parts = Math.random()<0.5?2:4;
+                    const filled = Math.floor(Math.random()*parts)+1;
+                    prob = {type:'fraction', parts, filled};
+                    currentProblems.push(prob);
+                    problemsDiv.innerHTML += `<div class='problem'>${pizzaSVG(parts,filled)}<span>What fraction is shaded?</span><input type='text' id='answer${i}' placeholder='e.g. 1/2'><div class='feedback' id='feedback${i}'></div></div>`;
+                } else if (i < 7) {
+                    // Thirds/sixths
+                    const parts = Math.random()<0.5?3:6;
+                    const filled = Math.floor(Math.random()*parts)+1;
+                    prob = {type:'fraction', parts, filled};
+                    currentProblems.push(prob);
+                    problemsDiv.innerHTML += `<div class='problem'>${pizzaSVG(parts,filled)}<span>What fraction is shaded?</span><input type='text' id='answer${i}' placeholder='e.g. 2/3'><div class='feedback' id='feedback${i}'></div></div>`;
+                } else {
+                    // Word problems
+                    const parts = [4,6,8][Math.floor(Math.random()*3)];
+                    const eaten = Math.floor(Math.random()*parts)+1;
+                    prob = {type:'word', parts, eaten};
+                    currentProblems.push(prob);
+                    problemsDiv.innerHTML += `<div class='problem'>${pizzaSVG(parts,parts-eaten)}<span>If you eat ${eaten} out of ${parts} slices, what fraction is left?</span><input type='text' id='answer${i}' placeholder='e.g. 2/6'><div class='feedback' id='feedback${i}'></div></div>`;
+                }
+            }
+            score = 0;
+            updateScore();
+        }
+        function checkAnswers() {
+            let correctCount = 0;
+            currentProblems.forEach((prob, i) => {
+                const feedback = document.getElementById(`feedback${i}`);
+                let correct = false;
+                if (prob.type==='fraction') {
+                    const ans = document.getElementById(`answer${i}`).value.trim();
+                    correct = ans === `${prob.filled}/${prob.parts}`;
+                } else if (prob.type==='word') {
+                    const ans = document.getElementById(`answer${i}`).value.trim();
+                    correct = ans === `${prob.parts-prob.eaten}/${prob.parts}`;
+                }
+                if (correct) {
+                    feedback.textContent = '✅ Correct!';
+                    feedback.className = 'feedback correct';
+                    correctCount++;
+                } else {
+                    feedback.textContent = '❌ Try again!';
+                    feedback.className = 'feedback incorrect';
+                }
+            });
+            score = correctCount;
+            updateScore();
+        }
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('stars').textContent = '⭐'.repeat(score);
+        }
+        window.onload = generateProblems;
+    </script>
+</body>
+</html> 

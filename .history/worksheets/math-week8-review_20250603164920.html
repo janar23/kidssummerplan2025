@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 8 Math - Review All Math Concepts</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f0f8ff; }
+        .worksheet-container { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c5aa0; text-align: center; }
+        .problem { margin: 20px 0; padding: 15px; border: 2px solid #2c5aa0; border-radius: 10px; background-color: #f8f9fa; }
+        .review-card { background: linear-gradient(135deg, #fff3e0, #ffe0b2); padding: 20px; border-radius: 15px; margin: 15px 0; border: 3px solid #ff9800; }
+        .concept-badge { display: inline-block; background: #2c5aa0; color: white; padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: bold; margin: 5px; }
+        .math-journey { display: flex; justify-content: space-around; margin: 20px 0; flex-wrap: wrap; }
+        .week-milestone { text-align: center; padding: 15px; border: 3px solid #4caf50; border-radius: 10px; background: #e8f5e8; margin: 5px; }
+        .week-number { font-size: 24px; font-weight: bold; color: #2c5aa0; }
+        .mixed-problems { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0; }
+        .mini-problem { background: #f3e5f5; padding: 15px; border-radius: 10px; border: 2px solid #9c27b0; }
+        .celebration { text-align: center; font-size: 48px; margin: 20px 0; animation: bounce 2s infinite; }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } 60% { transform: translateY(-5px); } }
+        input[type="number"], input[type="text"] { padding: 8px; border: 2px solid #2c5aa0; border-radius: 5px; font-size: 16px; width: 80px; }
+        button { background-color: #2c5aa0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; margin: 0 10px; }
+        button:hover { background-color: #1e3f7d; }
+        .feedback { margin-top: 10px; font-weight: bold; }
+        .correct { color: green; }
+        .incorrect { color: red; }
+        .controls { text-align: center; margin: 20px 0; }
+        .progress { text-align: center; margin: 20px 0; font-size: 18px; }
+        .stars { text-align: center; font-size: 24px; margin: 20px 0; }
+        .intro { background: #e8f5e8; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+        .achievement-emoji { font-size: 24px; margin-right: 10px; }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <h1>🎓 Review All Math Concepts 📚</h1>
+        
+        <p style="text-align: center; font-size: 18px; color: #2c5aa0; margin-bottom: 20px;" id="personal-greeting">
+            Hi there! Let's celebrate your amazing math journey! You've learned so much in 8 weeks! You're a math superstar! 🌟
+        </p>
+        
+        <div class="intro">
+            <h3>Your Amazing Math Journey!</h3>
+            <p>Congratulations! You've completed 8 weeks of amazing math learning! Let's review all the wonderful concepts you've mastered.</p>
+            
+            <div class="math-journey">
+                <div class="week-milestone">
+                    <div class="week-number">Week 1-2</div>
+                    <div>Addition, Subtraction</div>
+                    <div>Shapes, Counting</div>
+                </div>
+                <div class="week-milestone">
+                    <div class="week-number">Week 3-4</div>
+                    <div>Multiplication, Division</div>
+                    <div>Fractions, Geometry</div>
+                </div>
+                <div class="week-milestone">
+                    <div class="week-number">Week 5-6</div>
+                    <div>Measurement, Data</div>
+                    <div>Money, Temperature</div>
+                </div>
+                <div class="week-milestone">
+                    <div class="week-number">Week 7-8</div>
+                    <div>Patterns, Architecture</div>
+                    <div>AI & Algorithms</div>
+                </div>
+            </div>
+            
+            <div class="celebration">🎉</div>
+        </div>
+        
+        <div class="progress">Progress: <span id="score">0</span>/12</div>
+        <div class="stars" id="stars">⭐</div>
+        <div id="problems"></div>
+        <div class="controls">
+            <button onclick="checkAnswers()">Check Answers</button>
+            <button onclick="generateProblems()">New Problems</button>
+        </div>
+    </div>
+    <script>
+        let currentProblems = [];
+        let score = 0;
+        
+        // Get the selected child's name from URL parameters or localStorage
+        function getSelectedChildName() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let childName = urlParams.get('child');
+            
+            if (!childName) {
+                // Try to get from localStorage if not in URL
+                const savedChild = localStorage.getItem('selectedChild');
+                if (savedChild) {
+                    childName = savedChild;
+                }
+            }
+            
+            // Capitalize first letter
+            if (childName) {
+                return childName.charAt(0).toUpperCase() + childName.slice(1);
+            }
+            return 'there'; // fallback
+        }
+        
+        // Set personalized greeting
+        function setPersonalizedGreeting() {
+            const childName = getSelectedChildName();
+            const greeting = document.getElementById('personal-greeting');
+            greeting.textContent = `Hi ${childName}! Let's celebrate your amazing math journey! You've learned so much in 8 weeks! You're a math superstar! 🌟`;
+        }
+        
+        function generateProblems() {
+            currentProblems = [];
+            const problemsDiv = document.getElementById('problems');
+            problemsDiv.innerHTML = '';
+            
+            const problems = [
+                {
+                    concept: "Addition",
+                    week: "1",
+                    title: "Sanha's Sticker Collection",
+                    description: "Sanha has 15 star stickers and gets 12 more from Sanav.",
+                    question: "How many stickers does she have now?",
+                    answer: 27
+                },
+                {
+                    concept: "Subtraction", 
+                    week: "2",
+                    title: "Sanav's Cookie Sharing",
+                    description: "Sanav had 24 cookies and gave 8 to his friends.",
+                    question: "How many cookies does he have left?",
+                    answer: 16
+                },
+                {
+                    concept: "Multiplication",
+                    week: "4", 
+                    title: "Aadhi's Garden Rows",
+                    description: "Aadhi plants 6 rows with 5 flowers in each row.",
+                    question: "How many flowers total?",
+                    answer: 30
+                },
+                {
+                    concept: "Division",
+                    week: "4",
+                    title: "Sai Vittal's Pizza Party",
+                    description: "Sai Vittal has 20 pizza slices to share equally among 4 friends.",
+                    question: "How many slices does each friend get?",
+                    answer: 5
+                },
+                {
+                    concept: "Fractions",
+                    week: "3",
+                    title: "Sanvi's Pie Sharing",
+                    description: "Sanvi cuts a pie into 8 equal pieces and eats 3 pieces.",
+                    question: "How many pieces are left?",
+                    answer: 5
+                },
+                {
+                    concept: "Geometry",
+                    week: "3",
+                    title: "Shape Detective Challenge",
+                    description: "A shape has 4 equal sides and 4 right angles.",
+                    question: "How many sides does this square have?",
+                    answer: 4
+                },
+                {
+                    concept: "Measurement",
+                    week: "5",
+                    title: "Sanha's Room Planning",
+                    description: "Sanha's room is 8 feet long and 6 feet wide.",
+                    question: "What is the area of her room? (8 × 6)",
+                    answer: 48
+                },
+                {
+                    concept: "Money",
+                    week: "6",
+                    title: "Sanav's Shopping Trip",
+                    description: "Sanav buys a toy for $7 and pays with a $10 bill.",
+                    question: "How much change does he get?",
+                    answer: 3
+                },
+                {
+                    concept: "Patterns",
+                    week: "7", 
+                    title: "Aadhi's Pattern Sequence",
+                    description: "Aadhi's pattern: 2, 4, 6, 8, ?",
+                    question: "What number comes next?",
+                    answer: 10
+                },
+                {
+                    concept: "Data",
+                    week: "5",
+                    title: "Sai Vittal's Survey Results",
+                    description: "Survey results: 5 like red, 8 like blue, 3 like green.",
+                    question: "How many people were surveyed total?",
+                    answer: 16
+                },
+                {
+                    concept: "Time",
+                    week: "2",
+                    title: "Sanvi's Daily Schedule",
+                    description: "Sanvi does homework for 45 minutes and reads for 30 minutes.",
+                    question: "How many total minutes does she spend? (45 + 30)",
+                    answer: 75
+                },
+                {
+                    concept: "Algorithms",
+                    week: "8",
+                    title: "All Friends' Algorithm Challenge",
+                    description: "Algorithm: Start with 0, add 3, then add 2, then add 1.",
+                    question: "What's the final number? (0 + 3 + 2 + 1)",
+                    answer: 6
+                }
+            ];
+            
+            problems.forEach((problem, i) => {
+                currentProblems.push(problem);
+                
+                problemsDiv.innerHTML += `
+                    <div class='problem'>
+                        <h4>Math Review ${i + 1}</h4>
+                        <div class='review-card'>
+                            <div class='concept-badge'>Week ${problem.week} • ${problem.concept}</div>
+                            <h4><span class='achievement-emoji'>📝</span>${problem.title}</h4>
+                            <p>${problem.description}</p>
+                            <p><strong>${problem.question}</strong></p>
+                        </div>
+                        <p><strong>Answer:</strong> <input type='number' id='answer${i}' placeholder='?' min='0' max='200'></p>
+                        <div class='feedback' id='feedback${i}'></div>
+                    </div>
+                `;
+            });
+            
+            score = 0;
+            updateScore();
+        }
+        
+        function checkAnswers() {
+            let correctCount = 0;
+            
+            currentProblems.forEach((problem, i) => {
+                const userAnswer = parseInt(document.getElementById(`answer${i}`).value);
+                const feedback = document.getElementById(`feedback${i}`);
+                
+                if (userAnswer === problem.answer) {
+                    feedback.textContent = `✅ Perfect! You've mastered ${problem.concept}!`;
+                    feedback.className = 'feedback correct';
+                    correctCount++;
+                } else {
+                    feedback.textContent = `❌ Try again! Answer: ${problem.answer}`;
+                    feedback.className = 'feedback incorrect';
+                }
+            });
+            
+            score = correctCount;
+            updateScore();
+            
+            if (score === currentProblems.length) {
+                setTimeout(() => {
+                    alert('🎉 AMAZING! You\'ve mastered all these math concepts! You\'re ready to graduate as a Math Expert! 🎓⭐');
+                }, 500);
+            }
+        }
+        
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('stars').textContent = '⭐'.repeat(score);
+        }
+        
+        window.onload = function() {
+            setPersonalizedGreeting();
+            generateProblems();
+        };
+    </script>
+</body>
+</html> 

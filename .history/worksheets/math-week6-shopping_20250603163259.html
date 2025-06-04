@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 6 Math - Shopping Math Scenarios</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f0f8ff; }
+        .worksheet-container { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c5aa0; text-align: center; }
+        .problem { margin: 20px 0; padding: 15px; border: 2px solid #2c5aa0; border-radius: 10px; background-color: #f8f9fa; }
+        .shopping-card { background: linear-gradient(135deg, #fff3e0, #ffecb3); padding: 20px; border-radius: 15px; margin: 15px 0; border: 3px solid #ff9800; }
+        .store-front { text-align: center; font-size: 48px; margin: 15px 0; }
+        .price-tag { background: #4caf50; color: white; padding: 5px 10px; border-radius: 15px; font-weight: bold; display: inline-block; margin: 5px; }
+        .shopping-list { background: #e3f2fd; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #2196f3; }
+        .item-row { display: flex; justify-content: space-between; align-items: center; margin: 10px 0; padding: 8px; background: white; border-radius: 5px; }
+        .money-visual { display: flex; gap: 10px; justify-content: center; margin: 15px 0; flex-wrap: wrap; }
+        .money-bill { background: #4caf50; color: white; padding: 8px 15px; border-radius: 8px; font-weight: bold; border: 2px solid #2e7d32; }
+        .money-coin { background: #ffc107; color: #333; padding: 5px 8px; border-radius: 50%; font-weight: bold; border: 2px solid #f57c00; }
+        input[type="number"], input[type="text"] { padding: 8px; border: 2px solid #2c5aa0; border-radius: 5px; font-size: 16px; width: 120px; }
+        button { background-color: #2c5aa0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; margin: 0 10px; }
+        button:hover { background-color: #1e3f7d; }
+        .feedback { margin-top: 10px; font-weight: bold; }
+        .correct { color: green; }
+        .incorrect { color: red; }
+        .controls { text-align: center; margin: 20px 0; }
+        .progress { text-align: center; margin: 20px 0; font-size: 18px; }
+        .stars { text-align: center; font-size: 24px; margin: 20px 0; }
+        .intro { background: #e8f5e8; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+        .cart-emoji { font-size: 24px; margin-right: 10px; }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <h1>🛒 Shopping Math Scenarios 💰</h1>
+        
+        <p style="text-align: center; font-size: 18px; color: #2c5aa0; margin-bottom: 20px;" id="personal-greeting">
+            Hi there! Let's go shopping and practice math! You're going to be a smart shopper! 🛍️
+        </p>
+        
+        <div class="intro">
+            <h3>Shopping with Math!</h3>
+            <p>When we go shopping, we use math everywhere! We add up prices, calculate change, and make sure we have enough money.</p>
+            <p><strong>Shopping Math Skills:</strong></p>
+            <ul>
+                <li><strong>Addition:</strong> Adding up item prices</li>
+                <li><strong>Subtraction:</strong> Calculating change</li>
+                <li><strong>Multiplication:</strong> Buying multiple items</li>
+                <li><strong>Comparing:</strong> Finding the best deal</li>
+            </ul>
+            <div class="money-visual">
+                <div class="money-bill">$5</div>
+                <div class="money-bill">$1</div>
+                <div class="money-coin">25¢</div>
+                <div class="money-coin">10¢</div>
+                <div class="money-coin">5¢</div>
+            </div>
+        </div>
+        
+        <div class="progress">Progress: <span id="score">0</span>/10</div>
+        <div class="stars" id="stars">⭐</div>
+        <div id="problems"></div>
+        <div class="controls">
+            <button onclick="checkAnswers()">Check Answers</button>
+            <button onclick="generateProblems()">New Problems</button>
+        </div>
+    </div>
+    <script>
+        let currentProblems = [];
+        let score = 0;
+        
+        // Get the selected child's name from URL parameters or localStorage
+        function getSelectedChildName() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let childName = urlParams.get('child');
+            
+            if (!childName) {
+                // Try to get from localStorage if not in URL
+                const savedChild = localStorage.getItem('selectedChild');
+                if (savedChild) {
+                    childName = savedChild;
+                }
+            }
+            
+            // Capitalize first letter
+            if (childName) {
+                return childName.charAt(0).toUpperCase() + childName.slice(1);
+            }
+            return 'there'; // fallback
+        }
+        
+        // Set personalized greeting
+        function setPersonalizedGreeting() {
+            const childName = getSelectedChildName();
+            const greeting = document.getElementById('personal-greeting');
+            greeting.textContent = `Hi ${childName}! Let's go shopping and practice math! You're going to be a smart shopper! 🛍️`;
+        }
+        
+        function generateProblems() {
+            currentProblems = [];
+            const problemsDiv = document.getElementById('problems');
+            problemsDiv.innerHTML = '';
+            
+            const problems = [
+                {
+                    type: "addition",
+                    store: "🏪 Toy Store",
+                    scenario: "Sanha wants to buy a toy car for $3 and a doll for $5. How much will she spend in total?",
+                    items: [{ name: "🚗 Toy Car", price: 3 }, { name: "🪆 Doll", price: 5 }],
+                    question: "What is the total cost?",
+                    answer: 8
+                },
+                {
+                    type: "change",
+                    store: "🍭 Candy Shop",
+                    scenario: "Sanav buys candy for $2. He pays with a $5 bill. How much change does he get?",
+                    items: [{ name: "🍬 Candy", price: 2 }],
+                    money: 5,
+                    question: "How much change?",
+                    answer: 3
+                },
+                {
+                    type: "multiplication",
+                    store: "📚 Book Store",
+                    scenario: "Aadhi wants to buy 4 books. Each book costs $3. How much will all the books cost?",
+                    items: [{ name: "📖 Book", price: 3, quantity: 4 }],
+                    question: "What is the total cost for 4 books?",
+                    answer: 12
+                },
+                {
+                    type: "comparison",
+                    store: "🧸 Toy Store",
+                    scenario: "Sai Vittal is comparing prices. Store A sells a puzzle for $7. Store B sells the same puzzle for $5. Which is cheaper?",
+                    question: "How much money would Sai Vittal save by buying from Store B?",
+                    answer: 2
+                },
+                {
+                    type: "addition",
+                    store: "🎨 Art Store",
+                    scenario: "Sanvi buys crayons for $4, paper for $2, and stickers for $3. What's the total?",
+                    items: [{ name: "🖍️ Crayons", price: 4 }, { name: "📄 Paper", price: 2 }, { name: "⭐ Stickers", price: 3 }],
+                    question: "What is the total cost?",
+                    answer: 9
+                },
+                {
+                    type: "change",
+                    store: "🍎 Grocery Store",
+                    scenario: "Sanha buys fruit for $6. She gives the cashier $10. How much change should she receive?",
+                    items: [{ name: "🍎 Fruit", price: 6 }],
+                    money: 10,
+                    question: "How much change?",
+                    answer: 4
+                },
+                {
+                    type: "multiplication",
+                    store: "🍪 Bakery",
+                    scenario: "Sanav wants to buy 3 cookies. Each cookie costs $2. How much will he spend?",
+                    items: [{ name: "🍪 Cookie", price: 2, quantity: 3 }],
+                    question: "What is the total cost for 3 cookies?",
+                    answer: 6
+                },
+                {
+                    type: "budget",
+                    store: "🧸 Toy Store",
+                    scenario: "Aadhi has $15 to spend. She wants a game for $8 and a toy for $5. Does she have enough money?",
+                    question: "How much money will she have left after buying both items?",
+                    answer: 2
+                },
+                {
+                    type: "division",
+                    store: "🍕 Pizza Shop",
+                    scenario: "Sai Vittal and Sanvi want to share a $12 pizza equally. How much should each person pay?",
+                    question: "How much does each person pay?",
+                    answer: 6
+                },
+                {
+                    type: "addition",
+                    store: "🎮 Game Store",
+                    scenario: "All five friends pool their money: Sanha has $8, Sanav has $7, Aadhi has $9, Sai Vittal has $6, and Sanvi has $5. How much do they have together?",
+                    question: "What is their total money?",
+                    answer: 35
+                }
+            ];
+            
+            problems.forEach((problem, i) => {
+                currentProblems.push(problem);
+                
+                let itemsHtml = '';
+                if (problem.items) {
+                    problem.items.forEach(item => {
+                        const quantity = item.quantity ? `${item.quantity}x ` : '';
+                        itemsHtml += `
+                            <div class='item-row'>
+                                <span>${quantity}${item.name}</span>
+                                <span class='price-tag'>$${item.price}</span>
+                            </div>
+                        `;
+                    });
+                }
+                
+                let moneyHtml = '';
+                if (problem.money) {
+                    moneyHtml = `<p><strong>Money given:</strong> <span class='price-tag'>$${problem.money}</span></p>`;
+                }
+                
+                problemsDiv.innerHTML += `
+                    <div class='problem'>
+                        <h4>Shopping Trip ${i + 1}</h4>
+                        <div class='shopping-card'>
+                            <div class='store-front'>${problem.store}</div>
+                            <p><strong>Scenario:</strong> ${problem.scenario}</p>
+                            ${itemsHtml ? `<div class='shopping-list'>${itemsHtml}</div>` : ''}
+                            ${moneyHtml}
+                            <p><strong>${problem.question}</strong></p>
+                        </div>
+                        <p><strong>Answer:</strong> $<input type='number' id='answer${i}' placeholder='?' min='0' max='100' step='0.01'></p>
+                        <div class='feedback' id='feedback${i}'></div>
+                    </div>
+                `;
+            });
+            
+            score = 0;
+            updateScore();
+        }
+        
+        function checkAnswers() {
+            let correctCount = 0;
+            
+            currentProblems.forEach((problem, i) => {
+                const userAnswer = parseFloat(document.getElementById(`answer${i}`).value);
+                const feedback = document.getElementById(`feedback${i}`);
+                
+                if (Math.abs(userAnswer - problem.answer) < 0.01) { // Allow for small decimal differences
+                    feedback.textContent = '✅ Great shopping math! You\'re a smart shopper!';
+                    feedback.className = 'feedback correct';
+                    correctCount++;
+                } else {
+                    feedback.textContent = `❌ Try again! Answer: $${problem.answer}`;
+                    feedback.className = 'feedback incorrect';
+                }
+            });
+            
+            score = correctCount;
+            updateScore();
+        }
+        
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('stars').textContent = '⭐'.repeat(score);
+        }
+        
+        window.onload = function() {
+            setPersonalizedGreeting();
+            generateProblems();
+        };
+    </script>
+</body>
+</html> 

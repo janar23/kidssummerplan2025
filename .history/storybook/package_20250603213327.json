@@ -1,0 +1,22 @@
+{
+  "name": "honest-friends-storybook",
+  "version": "1.0.0",
+  "description": "A story book about honesty featuring Sanav, Sanha, and Sai Vittal",
+  "main": "generate-pdf.js",
+  "scripts": {
+    "generate-pdf": "node generate-pdf.js",
+    "start": "node generate-pdf.js"
+  },
+  "dependencies": {
+    "puppeteer": "^21.0.0"
+  },
+  "keywords": [
+    "storybook",
+    "children",
+    "honesty",
+    "education",
+    "pdf"
+  ],
+  "author": "Summer Learning Adventure 2025",
+  "license": "MIT"
+} 

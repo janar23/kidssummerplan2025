@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Worksheet - Week 1: Simple Word Problems</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f8ff;
+        }
+        h1, h2 {
+            color: #2979ff;
+            text-align: center;
+        }
+        .instructions {
+            background-color: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .worksheet {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .problem {
+            margin-bottom: 25px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+        }
+        input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            font-size: 16px;
+            border: 2px solid #bbdefb;
+            border-radius: 5px;
+        }
+        button {
+            background: linear-gradient(to right, #2979ff, #00b0ff);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 0;
+            display: block;
+        }
+        .feedback {
+            font-weight: bold;
+            margin-top: 10px;
+            min-height: 20px;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+        .back-button {
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            margin-top: 20px;
+        }
+        .progress-container {
+            width: 100%;
+            height: 20px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, #2979ff, #00b0ff);
+            width: 0%;
+            transition: width 0.5s;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+        }
+        .problem-image {
+            max-width: 200px;
+            height: auto;
+            display: block;
+            margin: 15px auto;
+            border-radius: 10px;
+            border: 2px solid #bbdefb;
+        }
+        .hint-button {
+            background: linear-gradient(to right, #9c27b0, #673ab7);
+            font-size: 14px;
+            padding: 8px 15px;
+            margin: 5px 0;
+        }
+        .hint {
+            background-color: #f3e5f5;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 5px solid #9c27b0;
+            display: none;
+            margin-top: 10px;
+        }
+        .step-container {
+            margin-top: 15px;
+            margin-bottom: 10px;
+            display: none;
+        }
+        .step {
+            background-color: #f3e5f5;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+            border-left: 5px solid #9c27b0;
+        }
+        .show-steps {
+            background: linear-gradient(to right, #9c27b0, #673ab7);
+            font-size: 14px;
+            padding: 8px 15px;
+            margin: 5px 0 15px 0;
+        }
+        @media print {
+            button, .feedback, .progress-container {
+                display: none;
+            }
+            .problem {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Math Worksheet - Week 1</h1>
+    <h2>Simple Word Problems</h2>
+    
+    <div style="background: #e3f2fd; border-radius: 10px; padding: 15px; margin: 20px 0; text-align: center; color: #2c5aa0; font-size: 18px;">
+        <strong>Hi Sanha and Sanav! 🌟</strong><br>
+        Let's solve some amazing word problems together! You're going to do great! 
+    </div>
+
+    <div class="instructions">
+        <h3>Instructions:</h3>
+        <p>Read each word problem carefully, then solve it by entering your answer. If you need help, you can use the hints and steps buttons. Click "Check Answer" when you're done.</p>
+    </div>
+
+    <div class="progress-container">
+        <div id="progress-bar" class="progress-bar">0%</div>
+    </div>
+
+    <div class="worksheet">
+        <div class="problem">
+            <h3>Problem 1: Apples in the Basket</h3>
+            <p>Sanha has 7 apples in her basket. Sanav gives her 5 more apples. How many apples does Sanha have now?</p>
+            
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMTUwIj48c3R5bGU+LnN0MHtmaWxsOiNkN2NjYzg7c3Ryb2tlOiM4YjU5M2Y7c3Ryb2tlLXdpZHRoOjJ9LnN0MXtmaWxsOiMjODQyMjg7c3Ryb2tlOiM2ZDI0MTI7c3Ryb2tlLXdpZHRoOjF9LnN0MntmaWxsOiM3NmMxMzU7c3Ryb2tlOiMzODc4MWY7c3Ryb2tlLXdpZHRoOjF9PC9zdHlsZT48cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjUsMTEwIEMzMCwxNDAgMTcwLDE0MCAxNzUsMTEwIEMxODAsODAgMTYwLDkwIDE1MCw5MCBDMTQwLDkwIDEzNSw4MCAxMDAsODAgQzY1LDgwIDYwLDkwIDUwLDkwIEM0MCw5MCAyMCw4MCAyNSwxMTAgWiIvPjxjaXJjbGUgY2xhc3M9InN0MSIgY3g9IjQwIiBjeT0iOTUiIHI9IjEwIi8+PGNpcmNsZSBjbGFzcz0ic3QxIiBjeD0iNjAiIGN5PSI5MCIgcj0iMTIiLz48Y2lyY2xlIGNsYXNzPSJzdDEiIGN4PSI4MCIgY3k9Ijk1IiByPSIxMSIvPjxjaXJjbGUgY2xhc3M9InN0MSIgY3g9IjEwMCIgY3k9Ijk4IiByPSIxMCIvPjxjaXJjbGUgY2xhc3M9InN0MSIgY3g9IjEyMCIgY3k9Ijk1IiByPSIxMiIvPjxjaXJjbGUgY2xhc3M9InN0MSIgY3g9IjE0MCIgY3k9Ijk4IiByPSIxMSIvPjxjaXJjbGUgY2xhc3M9InN0MSIgY3g9IjE2MCIgY3k9Ijk1IiByPSIxMCIvPjxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik00MCw4NyBDNDIsODEgNDcsODAgNTAsODUgTTYwLDgyIEM2Miw3NiA2Nyw3NSA3MCw4MCBNODAsODcgQzgyLDgxIDg3LDgwIDkwLDg1IE0xMDAsOTAgQzEwMiw4NCAxMDcsODMgMTEwLDg4IE0xMjAsODcgQzEyMiw4MSAxMjcsODAgMTMwLDg1IE0xNDAsOTAgQzE0Miw4NCAxNDcsODMgMTUwLDg4IE0xNjAsODcgQzE2Miw4MSAxNjcsODAgMTcwLDg1Ii8+PC9zdmc+" alt="Apples in a basket" class="problem-image">
+            
+            <p>Answer: <input type="number" id="answer1" min="0" max="100"></p>
+            
+            <button class="hint-button" onclick="toggleHint(1)">Show Hint</button>
+            <div id="hint1" class="hint">
+                <p>Hint: To solve this problem, add the number of apples Sanha already has (7) to the number of apples Sanav gives her (5).</p>
+            </div>
+            
+            <button class="show-steps" onclick="toggleSteps(1)">Show Steps</button>
+            <div id="steps1" class="step-container">
+                <div class="step">Step 1: Identify what you know. Sanha has 7 apples, and Sanav gives her 5 more.</div>
+                <div class="step">Step 2: When someone gets more of something, you add.</div>
+                <div class="step">Step 3: Calculate 7 + 5 = 12</div>
+                <div class="step">Step 4: The answer is 12 apples.</div>
+            </div>
+            
+            <button onclick="checkAnswer(1, 12)">Check Answer</button>
+            <div id="feedback1" class="feedback"></div>
+        </div>
+
+        <div class="problem">
+            <h3>Problem 2: Birds on a Tree</h3>
+            <p>There are 8 birds sitting on a tree. 3 birds fly away. How many birds are left on the tree?</p>
+            
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMTUwIj48c3R5bGU+LnN0MHtmaWxsOiM4YjU5M2Y7c3Ryb2tlOiM2MzNjMjY7c3Ryb2tlLXdpZHRoOjJ9LnN0MXtmaWxsOiM3NmMxMzU7c3Ryb2tlOiMzODc4MWY7c3Ryb2tlLXdpZHRoOjF9LnN0MntmaWxsOiM2MDdkOGI7c3Ryb2tlOiMzNDQ5NTA7c3Ryb2tlLXdpZHRoOjFweDt9PC9zdHlsZT48cGF0aCBjbGFzcz0ic3QwIiBkPSJNOTcsMTUwIEMxMDAsMTAgMTAwLDUwIDEwMCw1MEwxMTUsMjUgTTEwMCw1MEw4NSwyNSBNNzUsMzUgQzc1LDM1IDEwMCw0MCAxMjUsNDAiLz48cGF0aCBjbGFzcz0ic3QxIiBkPSJNNzAsMjAgQzcwLDIwIDY1LDQwIDgwLDUwIEM4MCw1MCAxMDAsNjUgMTM1LDQ1IEMxNDAsNDAgMTQ1LDIwIDE0NSwyMCBDMTQ1LDIwIDEzMCw1IDEyMCwxNSBDMTIwLDE1IDEwMCwwIDg1LDE1IEM4NSwxNSA3NSwwIDcwLDIwIFpNNzUsMzUgQzc1LDM1IDYwLDMwIDU1LDQwIEM1NSw0MCA1MCw2MCAxMDAsNjUgQzEwMCw2NSAxNTAsNjUgMTUwLDQwIEMxNTAsNDAgMTQwLDMwIDEzMCwzNSIvPjxjaXJjbGUgY2xhc3M9InN0MiIgY3g9IjUwIiBjeT0iMzAiIHI9IjgiLz48Y2lyY2xlIGNsYXNzPSJzdDIiIGN4PSI2NSIgY3k9IjI1IiByPSI2Ii8+PGNpcmNsZSBjbGFzcz0ic3QyIiBjeD0iODUiIGN5PSIyMCIgcj0iNyIvPjxjaXJjbGUgY2xhc3M9InN0MiIgY3g9IjEwNSIgY3k9IjE1IiByPSI1Ii8+PGNpcmNsZSBjbGFzcz0ic3QyIiBjeD0iMTIwIiBjeT0iMjAiIHI9IjciLz48cGF0aCBjbGFzcz0ic3QyIiBkPSJNMTU1LDMwIEM2MCwxMCAxNDUsMTAgMTU1LDIwIi8+PHBhdGggY2xhc3M9InN0MiIgZD0iTTM1LDE1IEM0MCwxMCA0NSw1IDQwLDE1Ii8+PHBhdGggY2xhc3M9InN0MiIgZD0iTTY1LDUgQzcwLDAgNzUsLTUgNzAsNSIvPjwvc3ZnPg==" alt="Birds on a tree" class="problem-image">
+            
+            <p>Answer: <input type="number" id="answer2" min="0" max="100"></p>
+            
+            <button class="hint-button" onclick="toggleHint(2)">Show Hint</button>
+            <div id="hint2" class="hint">
+                <p>Hint: When birds fly away, they are leaving the tree, so you need to subtract.</p>
+            </div>
+            
+            <button class="show-steps" onclick="toggleSteps(2)">Show Steps</button>
+            <div id="steps2" class="step-container">
+                <div class="step">Step 1: Identify what you know. There are 8 birds on the tree, and 3 birds fly away.</div>
+                <div class="step">Step 2: When something leaves or is taken away, you subtract.</div>
+                <div class="step">Step 3: Calculate 8 - 3 = 5</div>
+                <div class="step">Step 4: The answer is 5 birds left on the tree.</div>
+            </div>
+            
+            <button onclick="checkAnswer(2, 5)">Check Answer</button>
+            <div id="feedback2" class="feedback"></div>
+        </div>
+
+        <div class="problem">
+            <h3>Problem 3: Cookies on a Plate</h3>
+            <p>There are 4 chocolate cookies and 6 sugar cookies on a plate. How many cookies are there in total?</p>
+            
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMTUwIj48c3R5bGU+LnN0MHtmaWxsOiNmMmYyZjI7c3Ryb2tlOiNjY2NjY2M7c3Ryb2tlLXdpZHRoOjJ9LnN0MXtmaWxsOiM4YjU5M2Y7c3Ryb2tlOiM2MzNjMjY7c3Ryb2tlLXdpZHRoOjF9LnN0MntmaWxsOiNlNmU2ZTY7c3Ryb2tlOiNjY2NjY2M7c3Ryb2tlLXdpZHRoOjF9LnN0M3tmaWxsOiM1MDI5MTA7fTwvc3R5bGU+PGVsbGlwc2UgY2xhc3M9InN0MCIgY3g9IjEwMCIgY3k9IjEwMCIgcng9IjgwIiByeT0iMjUiLz48Y2lyY2xlIGNsYXNzPSJzdDEiIGN4PSI1MCIgY3k9IjkwIiByPSIxNSIvPjxjaXJjbGUgY2xhc3M9InN0MSIgY3g9IjgwIiBjeT0iODUiIHI9IjE1Ii8+PGNpcmNsZSBjbGFzcz0ic3QxIiBjeD0iMTEwIiBjeT0iOTAiIHI9IjE1Ii8+PGNpcmNsZSBjbGFzcz0ic3QxIiBjeD0iMTQwIiBjeT0iODUiIHI9IjE1Ii8+PGNpcmNsZSBjbGFzcz0ic3QyIiBjeD0iNjUiIGN5PSIxMTUiIHI9IjE1Ii8+PGNpcmNsZSBjbGFzcz0ic3QyIiBjeD0iOTUiIGN5PSIxMTAiIHI9IjE1Ii8+PGNpcmNsZSBjbGFzcz0ic3QyIiBjeD0iMTI1IiBjeT0iMTE1IiByPSIxNSIvPjxjaXJjbGUgY2xhc3M9InN0MiIgY3g9IjE1NSIgY3k9IjExMCIgcj0iMTUiLz48Y2lyY2xlIGNsYXNzPSJzdDIiIGN4PSIxNzAiIGN5PSI5MCIgcj0iMTUiLz48Y2lyY2xlIGNsYXNzPSJzdDIiIGN4PSI0MCIgY3k9IjExMCIgcj0iMTAiLz48Y2lyY2xlIGNsYXNzPSJzdDMiIGN4PSI1NSIgY3k9IjgzIiByPSIzIi8+PGNpcmNsZSBjbGFzcz0ic3QzIiBjeD0iNDUiIGN5PSI5MCIgcj0iMyIvPjxjaXJjbGUgY2xhc3M9InN0MyIgY3g9IjU1IiBjeT0iOTciIHI9IjMiLz48Y2lyY2xlIGNsYXNzPSJzdDMiIGN4PSI4NSIgY3k9Ijc4IiByPSIzIi8+PGNpcmNsZSBjbGFzcz0ic3QzIiBjeD0iNzUiIGN5PSI4NSIgcj0iMyIvPjxjaXJjbGUgY2xhc3M9InN0MyIgY3g9Ijg1IiBjeT0iOTIiIHI9IjMiLz48Y2lyY2xlIGNsYXNzPSJzdDMiIGN4PSIxMTUiIGN5PSI4MyIgcj0iMyIvPjxjaXJjbGUgY2xhc3M9InN0MyIgY3g9IjEwNSIgY3k9IjkwIiByPSIzIi8+PGNpcmNsZSBjbGFzcz0ic3QzIiBjeD0iMTE1IiBjeT0iOTciIHI9IjMiLz48Y2lyY2xlIGNsYXNzPSJzdDMiIGN4PSIxNDUiIGN5PSI3OCIgcj0iMyIvPjxjaXJjbGUgY2xhc3M9InN0MyIgY3g9IjEzNSIgY3k9Ijg1IiByPSIzIi8+PGNpcmNsZSBjbGFzcz0ic3QzIiBjeD0iMTQ1IiBjeT0iOTIiIHI9IjMiLz48L3N2Zz4=" alt="Cookies on a plate" class="problem-image">
+            
+            <p>Answer: <input type="number" id="answer3" min="0" max="100"></p>
+            
+            <button class="hint-button" onclick="toggleHint(3)">Show Hint</button>
+            <div id="hint3" class="hint">
+                <p>Hint: To find the total number of cookies, add the number of chocolate cookies (4) and the number of sugar cookies (6).</p>
+            </div>
+            
+            <button class="show-steps" onclick="toggleSteps(3)">Show Steps</button>
+            <div id="steps3" class="step-container">
+                <div class="step">Step 1: Identify what you know. There are 4 chocolate cookies and 6 sugar cookies.</div>
+                <div class="step">Step 2: When finding a total, you add.</div>
+                <div class="step">Step 3: Calculate 4 + 6 = 10</div>
+                <div class="step">Step 4: The answer is 10 cookies in total.</div>
+            </div>
+            
+            <button onclick="checkAnswer(3, 10)">Check Answer</button>
+            <div id="feedback3" class="feedback"></div>
+        </div>
+
+        <div class="problem">
+            <h3>Problem 4: Toy Cars</h3>
+            <p>Sanav has 12 toy cars. He gives 5 toy cars to his friend. How many toy cars does Sanav have left?</p>
+            
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMTUwIj48c3R5bGU+LnN0MHtmaWxsOiNlNjRhMTk7c3Ryb2tlOiM5OTJkMGY7c3Ryb2tlLXdpZHRoOjJ9LnN0MXtmaWxsOiM0MjQyNDI7c3Ryb2tlOiMyMTIxMjE7c3Ryb2tlLXdpZHRoOjF9LnN0MntmaWxsOiNmZmY7fTwvc3R5bGU+PHBhdGggY2xhc3M9InN0MCIgZD0iTTIwLDEwMCBDMjAsODAgMzAsODAgNDAsODAgQzUwLDgwIDYwLDEwMCA4MCwxMDAgTDE1MCwxMDAgQzE3MCwxMDAgMTgwLDgwIDE5MCw5MCBMMTY1LDEyMCBMMzUsMTIwIEwyMCwxMDAgWiIvPjxjaXJjbGUgY2xhc3M9InN0MSIgY3g9IjUwIiBjeT0iMTIwIiByPSIxOCIvPjxjaXJjbGUgY2xhc3M9InN0MSIgY3g9IjE1MCIgY3k9IjEyMCIgcj0iMTgiLz48Y2lyY2xlIGNsYXNzPSJzdDIiIGN4PSI1MCIgY3k9IjEyMCIgcj0iOCIvPjxjaXJjbGUgY2xhc3M9InN0MiIgY3g9IjE1MCIgY3k9IjEyMCIgcj0iOCIvPjxyZWN0IGNsYXNzPSJzdDIiIHg9IjgwIiB5PSI4NSIgd2lkdGg9IjQwIiBoZWlnaHQ9IjE1Ii8+PHBhdGggY2xhc3M9InN0MiIgZD0iTTMwLDkwIEMzNSw4NSA0MCw4NSA0NSw4NSBNMTU1LDkwIEMxNjAsODUgMTY1LDg1IDE3MCw4NSIvPjwvc3ZnPg==" alt="Toy cars" class="problem-image">
+            
+            <p>Answer: <input type="number" id="answer4" min="0" max="100"></p>
+            
+            <button class="hint-button" onclick="toggleHint(4)">Show Hint</button>
+            <div id="hint4" class="hint">
+                <p>Hint: When Sanav gives away toy cars, he has fewer cars, so you need to subtract.</p>
+            </div>
+            
+            <button class="show-steps" onclick="toggleSteps(4)">Show Steps</button>
+            <div id="steps4" class="step-container">
+                <div class="step">Step 1: Identify what you know. Sanav has 12 toy cars and gives away 5 of them.</div>
+                <div class="step">Step 2: When something is given away, you subtract.</div>
+                <div class="step">Step 3: Calculate 12 - 5 = 7</div>
+                <div class="step">Step 4: The answer is 7 toy cars left.</div>
+            </div>
+            
+            <button onclick="checkAnswer(4, 7)">Check Answer</button>
+            <div id="feedback4" class="feedback"></div>
+        </div>
+
+        <div class="problem">
+            <h3>Problem 5: Balloons at a Party</h3>
+            <p>For Sanha's birthday party, her mom bought 6 red balloons and 8 blue balloons. How many balloons were there in total?</p>
+            
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMTUwIj48c3R5bGU+LnN0MHtmaWxsOiNlNjRhMTk7c3Ryb2tlOiM5OTJkMGY7c3Ryb2tlLXdpZHRoOjJ9LnN0MXtmaWxsOiMxNTY1YzA7c3Ryb2tlOiMwZDQ3YTk7c3Ryb2tlLXdpZHRoOjJ9LnN0MntmaWxsOiNjY2NjY2M7c3Ryb2tlOiM5OTk5OTk7c3Ryb2tlLXdpZHRoOjF9PC9zdHlsZT48Y2lyY2xlIGNsYXNzPSJzdDAiIGN4PSI0MCIgY3k9IjQwIiByPSIyNSIvPjxjaXJjbGUgY2xhc3M9InN0MCIgY3g9IjgwIiBjeT0iMzUiIHI9IjIwIi8+PGNpcmNsZSBjbGFzcz0ic3QwIiBjeD0iMTEwIiBjeT0iNDUiIHI9IjIyIi8+PGNpcmNsZSBjbGFzcz0ic3QxIiBjeD0iMTQwIiBjeT0iNDAiIHI9IjI1Ii8+PGNpcmNsZSBjbGFzcz0ic3QwIiBjeD0iNTAiIGN5PSI3MCIgcj0iMTgiLz48Y2lyY2xlIGNsYXNzPSJzdDEiIGN4PSI4MCIgY3k9IjYwIiByPSIyMCIvPjxjaXJjbGUgY2xhc3M9InN0MSIgY3g9IjE3MCIgY3k9IjM1IiByPSIyMCIvPjxjaXJjbGUgY2xhc3M9InN0MSIgY3g9IjExMCIgY3k9IjcwIiByPSIxOCIvPjxjaXJjbGUgY2xhc3M9InN0MSIgY3g9IjE1MCIgY3k9IjY1IiByPSIyMiIvPjxjaXJjbGUgY2xhc3M9InN0MCIgY3g9IjE4MCIgY3k9IjY1IiByPSIxOCIvPjxjaXJjbGUgY2xhc3M9InN0MSIgY3g9IjE3MCIgY3k9Ijk1IiByPSIyMSIvPjxjaXJjbGUgY2xhc3M9InN0MCIgY3g9IjE0MCIgY3k9IjkwIiByPSIxOSIvPjxjaXJjbGUgY2xhc3M9InN0MSIgY3g9IjExMCIgY3k9Ijk1IiByPSIyMCIvPjxjaXJjbGUgY2xhc3M9InN0MSIgY3g9IjgwIiBjeT0iOTAiIHI9IjE4Ii8+PGNpcmNsZSBjbGFzcz0ic3QwIiBjeD0iNTAiIGN5PSI5NSIgcj0iMjEiLz48cGF0aCBjbGFzcz0ic3QyIiBkPSJNNDUsMTExIEM0NSwxMTEgOTUsMTIwIDEwMCwxNTAgTTgwLDEwNCBDODAsMTA0IDkwLDEyNSAxMDAsMTUwIE0xMTAsMTEwIEMxMTAsMTEwIDEwNSwxMzAgMTAwLDE1MCBNMTQwLDEwNSBDMTQwLDEwNSAxMjAsMTI1IDEwMCwxNTAgTTE2NSwxMTEgQzE2NSwxMTEgMTQwLDEyNSAxMDAsMTUwIi8+PC9zdmc+" alt="Balloons" class="problem-image">
+            
+            <p>Answer: <input type="number" id="answer5" min="0" max="100"></p>
+            
+            <button class="hint-button" onclick="toggleHint(5)">Show Hint</button>
+            <div id="hint5" class="hint">
+                <p>Hint: To find the total number of balloons, add the number of red balloons (6) and the number of blue balloons (8).</p>
+            </div>
+            
+            <button class="show-steps" onclick="toggleSteps(5)">Show Steps</button>
+            <div id="steps5" class="step-container">
+                <div class="step">Step 1: Identify what you know. There are 6 red balloons and 8 blue balloons.</div>
+                <div class="step">Step 2: When finding a total, you add.</div>
+                <div class="step">Step 3: Calculate 6 + 8 = 14</div>
+                <div class="step">Step 4: The answer is 14 balloons in total.</div>
+            </div>
+            
+            <button onclick="checkAnswer(5, 14)">Check Answer</button>
+            <div id="feedback5" class="feedback"></div>
+        </div>
+    </div>
+
+    <button class="back-button" onclick="window.close()">Close Worksheet</button>
+
+    <script>
+        let correctAnswers = 0;
+        const totalProblems = 5;
+        
+        function toggleHint(number) {
+            const hint = document.getElementById(`hint${number}`);
+            if (hint.style.display === 'block') {
+                hint.style.display = 'none';
+            } else {
+                hint.style.display = 'block';
+            }
+        }
+        
+        function toggleSteps(number) {
+            const steps = document.getElementById(`steps${number}`);
+            if (steps.style.display === 'block') {
+                steps.style.display = 'none';
+            } else {
+                steps.style.display = 'block';
+            }
+        }
+        
+        function checkAnswer(number, correctAnswer) {
+            const userAnswer = document.getElementById(`answer${number}`).value;
+            const feedbackElement = document.getElementById(`feedback${number}`);
+            
+            if (userAnswer == correctAnswer) { // Using == since userAnswer is string
+                feedbackElement.textContent = "Correct! Great job! ✓";
+                feedbackElement.className = "feedback correct";
+                
+                // If this is the first time getting this answer correct
+                if (!feedbackElement.hasAttribute('data-correct')) {
+                    correctAnswers++;
+                    feedbackElement.setAttribute('data-correct', 'true');
+                    updateProgress();
+                }
+            } else {
+                feedbackElement.textContent = "Not quite. Try again! ✗";
+                feedbackElement.className = "feedback incorrect";
+            }
+        }
+        
+        function updateProgress() {
+            const progressPercentage = Math.round((correctAnswers / totalProblems) * 100);
+            const progressBar = document.getElementById('progress-bar');
+            progressBar.style.width = `${progressPercentage}%`;
+            progressBar.textContent = `${progressPercentage}%`;
+            
+            // Save progress to localStorage
+            localStorage.setItem('mathWordProblemsProgress', correctAnswers);
+            
+            if (correctAnswers === totalProblems) {
+                alert('🎉 Congratulations! You solved all the word problems! 🎉');
+            }
+        }
+        
+        // Load saved progress on page load
+        window.onload = function() {
+            const savedProgress = localStorage.getItem('mathWordProblemsProgress');
+            if (savedProgress) {
+                correctAnswers = parseInt(savedProgress);
+                updateProgress();
+                
+                // Mark previously correct answers
+                for (let i = 1; i <= totalProblems; i++) {
+                    const feedbackElement = document.getElementById(`feedback${i}`);
+                    if (feedbackElement.hasAttribute('data-correct')) {
+                        feedbackElement.textContent = "Correct! Great job! ✓";
+                        feedbackElement.className = "feedback correct";
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 3 Math - Geometry Shapes & Properties</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f0f8ff; }
+        .worksheet-container { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c5aa0; text-align: center; }
+        .problem { margin: 20px 0; padding: 15px; border: 2px solid #2c5aa0; border-radius: 10px; background-color: #f8f9fa; display: flex; align-items: center; }
+        .shape-svg { width: 60px; height: 60px; margin-right: 20px; }
+        .problem input, .problem select { width: 100px; padding: 5px; margin: 0 10px; border: 2px solid #2c5aa0; border-radius: 5px; }
+        .feedback { margin-top: 10px; font-weight: bold; }
+        .correct { color: green; }
+        .incorrect { color: red; }
+        .controls { text-align: center; margin: 20px 0; }
+        button { background-color: #2c5aa0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; margin: 0 10px; }
+        button:hover { background-color: #1e3f7d; }
+        .progress { text-align: center; margin: 20px 0; font-size: 18px; }
+        .stars { text-align: center; font-size: 24px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <h1>🔷 Geometry Shapes & Properties 🔷</h1>
+        <div class="progress">Progress: <span id="score">0</span>/10</div>
+        <div class="stars" id="stars">⭐</div>
+        <div id="problems"></div>
+        <div class="controls">
+            <button onclick="checkAnswers()">Check Answers</button>
+            <button onclick="generateProblems()">New Problems</button>
+        </div>
+    </div>
+    <script>
+        let currentProblems = [];
+        let score = 0;
+        const shapes = [
+            {name:'Circle', svg:'<svg class="shape-svg"><circle cx="30" cy="30" r="28" fill="#90caf9" stroke="#1976d2" stroke-width="3"/></svg>', sides:0, corners:0},
+            {name:'Square', svg:'<svg class="shape-svg"><rect x="8" y="8" width="44" height="44" fill="#a5d6a7" stroke="#388e3c" stroke-width="3"/></svg>', sides:4, corners:4},
+            {name:'Triangle', svg:'<svg class="shape-svg"><polygon points="30,6 54,54 6,54" fill="#fff176" stroke="#fbc02d" stroke-width="3"/></svg>', sides:3, corners:3},
+            {name:'Rectangle', svg:'<svg class="shape-svg"><rect x="5" y="15" width="50" height="30" fill="#ffab91" stroke="#d84315" stroke-width="3"/></svg>', sides:4, corners:4},
+            {name:'Pentagon', svg:'<svg class="shape-svg"><polygon points="30,8 54,24 44,52 16,52 6,24" fill="#ce93d8" stroke="#6a1b9a" stroke-width="3"/></svg>', sides:5, corners:5},
+            {name:'Hexagon', svg:'<svg class="shape-svg"><polygon points="30,6 54,21 54,49 30,64 6,49 6,21" fill="#b0bec5" stroke="#37474f" stroke-width="3"/></svg>', sides:6, corners:6}
+        ];
+        function generateProblems() {
+            currentProblems = [];
+            const problemsDiv = document.getElementById('problems');
+            problemsDiv.innerHTML = '';
+            for (let i = 0; i < 10; i++) {
+                let prob;
+                if (i < 3) {
+                    // Identify shape
+                    const s = shapes[Math.floor(Math.random()*shapes.length)];
+                    prob = {type:'identify', shape:s};
+                    currentProblems.push(prob);
+                    problemsDiv.innerHTML += `<div class='problem'>${s.svg}<span>What shape is this?</span><input type='text' id='answer${i}' placeholder='Shape name'><div class='feedback' id='feedback${i}'></div></div>`;
+                } else if (i < 7) {
+                    // Count sides/corners
+                    const s = shapes[Math.floor(Math.random()*shapes.length)];
+                    const ask = Math.random()<0.5?'sides':'corners';
+                    prob = {type:ask, shape:s};
+                    currentProblems.push(prob);
+                    problemsDiv.innerHTML += `<div class='problem'>${s.svg}<span>How many ${ask} does this shape have?</span><input type='number' id='answer${i}' min='0'><div class='feedback' id='feedback${i}'></div></div>`;
+                } else {
+                    // Match shape to property
+                    const s = shapes[Math.floor(Math.random()*shapes.length)];
+                    const prop = Math.random()<0.5?'sides':'corners';
+                    prob = {type:'match', shape:s, prop:prop};
+                    currentProblems.push(prob);
+                    problemsDiv.innerHTML += `<div class='problem'>Which shape has ${s[prop]} ${prop}? <select id='answer${i}'><option value=''>Select</option>${shapes.map(sh=>`<option value='${sh.name}'>${sh.name}</option>`).join('')}</select><div class='feedback' id='feedback${i}'></div></div>`;
+                }
+            }
+            score = 0;
+            updateScore();
+        }
+        function checkAnswers() {
+            let correctCount = 0;
+            currentProblems.forEach((prob, i) => {
+                const feedback = document.getElementById(`feedback${i}`);
+                let correct = false;
+                if (prob.type==='identify') {
+                    const ans = document.getElementById(`answer${i}`).value.trim().toLowerCase();
+                    correct = ans === prob.shape.name.toLowerCase();
+                } else if (prob.type==='sides') {
+                    const ans = parseInt(document.getElementById(`answer${i}`).value);
+                    correct = ans === prob.shape.sides;
+                } else if (prob.type==='corners') {
+                    const ans = parseInt(document.getElementById(`answer${i}`).value);
+                    correct = ans === prob.shape.corners;
+                } else if (prob.type==='match') {
+                    const ans = document.getElementById(`answer${i}`).value;
+                    correct = ans === prob.shape.name;
+                }
+                if (correct) {
+                    feedback.textContent = '✅ Correct!';
+                    feedback.className = 'feedback correct';
+                    correctCount++;
+                } else {
+                    feedback.textContent = '❌ Try again!';
+                    feedback.className = 'feedback incorrect';
+                }
+            });
+            score = correctCount;
+            updateScore();
+        }
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('stars').textContent = '⭐'.repeat(score);
+        }
+        window.onload = generateProblems;
+    </script>
+</body>
+</html> 

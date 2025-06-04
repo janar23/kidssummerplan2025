@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 8 Math - Simple Algorithms</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f0f8ff; }
+        .worksheet-container { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c5aa0; text-align: center; }
+        .problem { margin: 20px 0; padding: 15px; border: 2px solid #2c5aa0; border-radius: 10px; background-color: #f8f9fa; }
+        .algorithm-box { background: linear-gradient(135deg, #e8f5e8, #c8e6c9); padding: 15px; border-radius: 10px; margin: 15px 0; }
+        .step { background: #fff3e0; padding: 10px; margin: 5px 0; border-radius: 5px; border-left: 4px solid #ff9800; }
+        .robot { text-align: center; font-size: 48px; margin: 15px 0; }
+        input[type="number"], input[type="text"] { padding: 8px; border: 2px solid #2c5aa0; border-radius: 5px; font-size: 16px; width: 120px; }
+        button { background-color: #2c5aa0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; margin: 0 10px; }
+        button:hover { background-color: #1e3f7d; }
+        .feedback { margin-top: 10px; font-weight: bold; }
+        .correct { color: green; }
+        .incorrect { color: red; }
+        .controls { text-align: center; margin: 20px 0; }
+        .progress { text-align: center; margin: 20px 0; font-size: 18px; }
+        .stars { text-align: center; font-size: 24px; margin: 20px 0; }
+        .intro { background: #e8f5e8; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <h1>🤖 Simple Algorithms 🤖</h1>
+        
+        <div class="intro">
+            <h3>What is an Algorithm?</h3>
+            <p>Hey future computer scientist! An algorithm is like a recipe! It's a set of steps that tells you exactly what to do to solve a problem. Just like how a robot follows instructions! You and your friends Sanha, Sanav, Sai Vittal, Aadhi, and Sanvi can all become algorithm experts!</p>
+            <div class="robot">🤖</div>
+        </div>
+        
+        <div class="progress">Progress: <span id="score">0</span>/10</div>
+        <div class="stars" id="stars">⭐</div>
+        <div id="problems"></div>
+        <div class="controls">
+            <button onclick="checkAnswers()">Check Answers</button>
+            <button onclick="generateProblems()">New Problems</button>
+        </div>
+    </div>
+    <script>
+        let currentProblems = [];
+        let score = 0;
+        
+        function generateProblems() {
+            currentProblems = [];
+            const problemsDiv = document.getElementById('problems');
+            problemsDiv.innerHTML = '';
+            
+            const problems = [
+                {
+                    title: "Find the Largest Number",
+                    description: "Algorithm: Compare numbers to find the biggest one",
+                    numbers: [23, 45, 12, 67, 34],
+                    question: "What is the largest number?",
+                    answer: 67,
+                    steps: ["Step 1: Look at the first number", "Step 2: Compare it with the next number", "Step 3: Keep the larger one", "Step 4: Repeat until you've checked all numbers"]
+                },
+                {
+                    title: "Count Even Numbers", 
+                    description: "Algorithm: Count how many numbers can be divided by 2",
+                    numbers: [2, 7, 4, 9, 6, 11, 8],
+                    question: "How many even numbers are there?",
+                    answer: 4,
+                    steps: ["Step 1: Look at each number", "Step 2: Check if it's divisible by 2", "Step 3: If yes, count it", "Step 4: Give the total count"]
+                },
+                {
+                    title: "Add All Numbers",
+                    description: "Algorithm: Add numbers one by one",
+                    numbers: [5, 3, 2, 4],
+                    question: "What is the sum of all numbers?",
+                    answer: 14,
+                    steps: ["Step 1: Start with 0", "Step 2: Add the first number", "Step 3: Add the next number to your total", "Step 4: Repeat until all numbers are added"]
+                },
+                {
+                    title: "Find Missing Number",
+                    description: "Algorithm: Find what number is missing from 1-10",
+                    numbers: [1, 2, 3, 5, 6, 7, 8, 9, 10],
+                    question: "What number is missing?",
+                    answer: 4,
+                    steps: ["Step 1: Start counting from 1", "Step 2: Check if each number is in the list", "Step 3: When you find a gap, that's your answer"]
+                },
+                {
+                    title: "Count Backwards",
+                    description: "Algorithm: Count down from a number",
+                    start: 8,
+                    question: "If we count backwards from 8 by 2s, what are the first 3 numbers? (Write the third number)",
+                    answer: 4,
+                    steps: ["Step 1: Start with 8", "Step 2: Subtract 2 to get 6", "Step 3: Subtract 2 to get 4", "Step 4: Continue the pattern"]
+                },
+                {
+                    title: "Sort Numbers",
+                    description: "Algorithm: Put numbers in order from smallest to largest",
+                    numbers: [9, 2, 7, 1, 5],
+                    question: "What is the second smallest number?",
+                    answer: 2,
+                    steps: ["Step 1: Find the smallest number", "Step 2: Find the next smallest", "Step 3: Continue until all are ordered"]
+                },
+                {
+                    title: "Double and Add",
+                    description: "Algorithm: Double each number then add them all",
+                    numbers: [3, 4, 2],
+                    question: "Double each number, then add them all. What's the total?",
+                    answer: 18,
+                    steps: ["Step 1: Double 3 = 6", "Step 2: Double 4 = 8", "Step 3: Double 2 = 4", "Step 4: Add: 6 + 8 + 4 = 18"]
+                },
+                {
+                    title: "Pattern Recognition",
+                    description: "Algorithm: Find the pattern and predict next number",
+                    numbers: [2, 4, 6, 8],
+                    question: "What comes next in this pattern?",
+                    answer: 10,
+                    steps: ["Step 1: Look at the difference between numbers", "Step 2: See that each increases by 2", "Step 3: Add 2 to the last number"]
+                },
+                {
+                    title: "Greater Than 5",
+                    description: "Algorithm: Count how many numbers are greater than 5",
+                    numbers: [3, 7, 2, 8, 6, 1, 9],
+                    question: "How many numbers are greater than 5?",
+                    answer: 4,
+                    steps: ["Step 1: Look at each number", "Step 2: Ask: Is this > 5?", "Step 3: If yes, count it", "Step 4: Give total count"]
+                },
+                {
+                    title: "Find Average",
+                    description: "Algorithm: Add all numbers, then divide by how many there are",
+                    numbers: [4, 6, 8, 2],
+                    question: "What is the average of these numbers?",
+                    answer: 5,
+                    steps: ["Step 1: Add all: 4+6+8+2=20", "Step 2: Count how many: 4 numbers", "Step 3: Divide: 20÷4=5"]
+                }
+            ];
+            
+            problems.forEach((problem, i) => {
+                currentProblems.push(problem);
+                
+                let numbersDisplay = "";
+                if (problem.numbers) {
+                    numbersDisplay = `<p><strong>Numbers:</strong> ${problem.numbers.join(", ")}</p>`;
+                } else if (problem.start) {
+                    numbersDisplay = `<p><strong>Starting number:</strong> ${problem.start}</p>`;
+                }
+                
+                problemsDiv.innerHTML += `
+                    <div class='problem'>
+                        <h4>${i + 1}. ${problem.title}</h4>
+                        <div class='algorithm-box'>
+                            <p><strong>${problem.description}</strong></p>
+                            ${numbersDisplay}
+                            <div class='steps'>
+                                ${problem.steps.map(step => `<div class='step'>${step}</div>`).join('')}
+                            </div>
+                        </div>
+                        <p><strong>${problem.question}</strong></p>
+                        <input type='number' id='answer${i}' placeholder='Answer' min='0' max='100'>
+                        <div class='feedback' id='feedback${i}'></div>
+                    </div>
+                `;
+            });
+            
+            score = 0;
+            updateScore();
+        }
+        
+        function checkAnswers() {
+            let correctCount = 0;
+            
+            currentProblems.forEach((problem, i) => {
+                const userAnswer = parseInt(document.getElementById(`answer${i}`).value);
+                const feedback = document.getElementById(`feedback${i}`);
+                
+                if (userAnswer === problem.answer) {
+                    feedback.textContent = '✅ Perfect algorithm thinking!';
+                    feedback.className = 'feedback correct';
+                    correctCount++;
+                } else {
+                    feedback.textContent = `❌ Try following the steps again! Answer: ${problem.answer}`;
+                    feedback.className = 'feedback incorrect';
+                }
+            });
+            
+            score = correctCount;
+            updateScore();
+        }
+        
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('stars').textContent = '⭐'.repeat(score);
+        }
+        
+        window.onload = generateProblems;
+    </script>
+</body>
+</html> 

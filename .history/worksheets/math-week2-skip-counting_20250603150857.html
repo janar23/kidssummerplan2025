@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 2 Math - Skip Counting Adventure</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f8ff;
+        }
+        .worksheet-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c5aa0;
+            text-align: center;
+        }
+        .section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 2px solid #2c5aa0;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+        }
+        .section h2 {
+            color: #2c5aa0;
+            margin-top: 0;
+        }
+        .number-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .number-cell {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #2c5aa0;
+            border-radius: 5px;
+            background-color: white;
+        }
+        .number-cell input {
+            width: 40px;
+            text-align: center;
+            border: 2px solid #2c5aa0;
+            border-radius: 5px;
+            padding: 5px;
+        }
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+        button {
+            background-color: #2c5aa0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 0 10px;
+        }
+        button:hover {
+            background-color: #1e3f7d;
+        }
+        .feedback {
+            text-align: center;
+            margin: 15px 0;
+            font-weight: bold;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+        .progress {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 18px;
+        }
+        .stars {
+            text-align: center;
+            font-size: 24px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <h1>🌟 Skip Counting Adventure 🌟</h1>
+        <div class="progress">Progress: <span id="score">0</span>/3</div>
+        <div class="stars" id="stars">⭐</div>
+
+        <div class="section">
+            <h2>Count by 2s</h2>
+            <div class="number-grid" id="countBy2">
+                <!-- Numbers will be generated here -->
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Count by 5s</h2>
+            <div class="number-grid" id="countBy5">
+                <!-- Numbers will be generated here -->
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Count by 10s</h2>
+            <div class="number-grid" id="countBy10">
+                <!-- Numbers will be generated here -->
+            </div>
+        </div>
+
+        <div class="feedback" id="feedback"></div>
+
+        <div class="controls">
+            <button onclick="checkAnswers()">Check Answers</button>
+            <button onclick="generateNewProblems()">New Problems</button>
+        </div>
+    </div>
+
+    <script>
+        let currentProblems = {
+            by2: [],
+            by5: [],
+            by10: []
+        };
+        let score = 0;
+
+        function generateSkipCountingProblem(start, step, count) {
+            const numbers = [];
+            for (let i = 0; i < count; i++) {
+                numbers.push(start + (i * step));
+            }
+            return numbers;
+        }
+
+        function generateNewProblems() {
+            // Generate problems for counting by 2s
+            const start2 = Math.floor(Math.random() * 10) * 2;
+            currentProblems.by2 = generateSkipCountingProblem(start2, 2, 10);
+            
+            // Generate problems for counting by 5s
+            const start5 = Math.floor(Math.random() * 10) * 5;
+            currentProblems.by5 = generateSkipCountingProblem(start5, 5, 10);
+            
+            // Generate problems for counting by 10s
+            const start10 = Math.floor(Math.random() * 10) * 10;
+            currentProblems.by10 = generateSkipCountingProblem(start10, 10, 10);
+
+            // Create the number grids
+            createNumberGrid('countBy2', currentProblems.by2);
+            createNumberGrid('countBy5', currentProblems.by5);
+            createNumberGrid('countBy10', currentProblems.by10);
+
+            score = 0;
+            updateScore();
+            document.getElementById('feedback').textContent = '';
+        }
+
+        function createNumberGrid(containerId, numbers) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            
+            numbers.forEach((num, index) => {
+                const cell = document.createElement('div');
+                cell.className = 'number-cell';
+                if (index % 2 === 0) {
+                    cell.innerHTML = `<input type="number" id="${containerId}-${index}" min="0">`;
+                } else {
+                    cell.textContent = num;
+                }
+                container.appendChild(cell);
+            });
+        }
+
+        function checkAnswers() {
+            let correctCount = 0;
+            const feedback = document.getElementById('feedback');
+            
+            // Check counting by 2s
+            let by2Correct = true;
+            for (let i = 0; i < currentProblems.by2.length; i += 2) {
+                const answer = parseInt(document.getElementById(`countBy2-${i}`).value);
+                if (answer !== currentProblems.by2[i]) {
+                    by2Correct = false;
+                    break;
+                }
+            }
+            if (by2Correct) correctCount++;
+            
+            // Check counting by 5s
+            let by5Correct = true;
+            for (let i = 0; i < currentProblems.by5.length; i += 2) {
+                const answer = parseInt(document.getElementById(`countBy5-${i}`).value);
+                if (answer !== currentProblems.by5[i]) {
+                    by5Correct = false;
+                    break;
+                }
+            }
+            if (by5Correct) correctCount++;
+            
+            // Check counting by 10s
+            let by10Correct = true;
+            for (let i = 0; i < currentProblems.by10.length; i += 2) {
+                const answer = parseInt(document.getElementById(`countBy10-${i}`).value);
+                if (answer !== currentProblems.by10[i]) {
+                    by10Correct = false;
+                    break;
+                }
+            }
+            if (by10Correct) correctCount++;
+            
+            // Update feedback
+            if (correctCount === 3) {
+                feedback.textContent = '🎉 Excellent! You got all the patterns right!';
+                feedback.className = 'feedback correct';
+            } else {
+                feedback.textContent = `Keep trying! You got ${correctCount} out of 3 patterns correct.`;
+                feedback.className = 'feedback incorrect';
+            }
+            
+            score = correctCount;
+            updateScore();
+        }
+
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            const starsDiv = document.getElementById('stars');
+            starsDiv.textContent = '⭐'.repeat(score);
+        }
+
+        // Generate initial problems when the page loads
+        window.onload = generateNewProblems;
+    </script>
+</body>
+</html> 

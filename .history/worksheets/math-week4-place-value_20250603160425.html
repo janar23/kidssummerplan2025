@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 4 Math - Place Value Games</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f0f8ff; }
+        .worksheet-container { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c5aa0; text-align: center; }
+        .problem { margin: 20px 0; padding: 15px; border: 2px solid #2c5aa0; border-radius: 10px; background-color: #f8f9fa; }
+        .place-value-chart { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 15px 0; max-width: 300px; }
+        .place-header { background-color: #2c5aa0; color: white; padding: 10px; text-align: center; font-weight: bold; border-radius: 5px; }
+        .place-box { background-color: #e3f2fd; padding: 20px; text-align: center; border: 2px solid #90caf9; border-radius: 5px; font-size: 24px; font-weight: bold; }
+        .number-display { font-size: 36px; color: #2c5aa0; font-weight: bold; text-align: center; margin: 15px 0; }
+        .blocks-container { display: flex; gap: 10px; align-items: center; margin: 15px 0; flex-wrap: wrap; }
+        .hundreds-block { width: 80px; height: 80px; background-color: #4caf50; border: 2px solid #2e7d2e; border-radius: 5px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
+        .tens-stick { width: 60px; height: 15px; background-color: #2196f3; border: 1px solid #1565c0; margin: 2px; border-radius: 2px; }
+        .ones-dot { width: 12px; height: 12px; background-color: #ff9800; border-radius: 50%; margin: 2px; }
+        input[type="number"] { padding: 8px; border: 2px solid #2c5aa0; border-radius: 5px; font-size: 16px; width: 80px; }
+        button { background-color: #2c5aa0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; margin: 0 10px; }
+        button:hover { background-color: #1e3f7d; }
+        .feedback { margin-top: 10px; font-weight: bold; }
+        .correct { color: green; }
+        .incorrect { color: red; }
+        .controls { text-align: center; margin: 20px 0; }
+        .progress { text-align: center; margin: 20px 0; font-size: 18px; }
+        .stars { text-align: center; font-size: 24px; margin: 20px 0; }
+        .intro { background: #e8f5e8; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <h1>🔢 Place Value Games 🔢</h1>
+        
+        <div class="intro">
+            <h3>Understanding Place Value</h3>
+            <p>Hey there, place value detective! Each digit in a number has a special place value!</p>
+            <ul>
+                <li><strong>Ones place:</strong> Individual units (1, 2, 3...)</li>
+                <li><strong>Tens place:</strong> Groups of 10 (10, 20, 30...)</li>
+                <li><strong>Hundreds place:</strong> Groups of 100 (100, 200, 300...)</li>
+            </ul>
+            <p>You and your friends are going to become place value experts! 🎯</p>
+        </div>
+        
+        <div class="progress">Progress: <span id="score">0</span>/10</div>
+        <div class="stars" id="stars">⭐</div>
+        <div id="problems"></div>
+        <div class="controls">
+            <button onclick="checkAnswers()">Check Answers</button>
+            <button onclick="generateProblems()">New Problems</button>
+        </div>
+    </div>
+    <script>
+        let currentProblems = [];
+        let score = 0;
+        
+        function createBlocks(hundreds, tens, ones) {
+            let blocksHtml = '<div class="blocks-container">';
+            
+            // Hundreds blocks
+            for (let i = 0; i < hundreds; i++) {
+                blocksHtml += `<div class="hundreds-block">100</div>`;
+            }
+            
+            // Tens sticks
+            const tensContainer = document.createElement('div');
+            for (let i = 0; i < tens; i++) {
+                blocksHtml += `<div class="tens-stick"></div>`;
+            }
+            
+            // Ones dots
+            for (let i = 0; i < ones; i++) {
+                blocksHtml += `<div class="ones-dot"></div>`;
+            }
+            
+            blocksHtml += '</div>';
+            return blocksHtml;
+        }
+        
+        function createPlaceValueChart(number) {
+            const numStr = number.toString().padStart(3, '0');
+            const hundreds = parseInt(numStr[0]);
+            const tens = parseInt(numStr[1]);
+            const ones = parseInt(numStr[2]);
+            
+            return `
+                <div class="place-value-chart">
+                    <div class="place-header">Hundreds</div>
+                    <div class="place-header">Tens</div>
+                    <div class="place-header">Ones</div>
+                    <div class="place-box">${hundreds}</div>
+                    <div class="place-box">${tens}</div>
+                    <div class="place-box">${ones}</div>
+                </div>
+            `;
+        }
+        
+        function generateProblems() {
+            currentProblems = [];
+            const problemsDiv = document.getElementById('problems');
+            problemsDiv.innerHTML = '';
+            
+            const numbers = [23, 45, 67, 89, 134, 256, 347, 189, 205, 378];
+            
+            numbers.forEach((number, i) => {
+                const numStr = number.toString().padStart(3, '0');
+                const hundreds = parseInt(numStr[0]);
+                const tens = parseInt(numStr[1]);
+                const ones = parseInt(numStr[2]);
+                
+                currentProblems.push({ hundreds, tens, ones, number });
+                
+                if (i < 5) {
+                    // First 5: Show place value chart, ask for individual place values
+                    problemsDiv.innerHTML += `
+                        <div class='problem'>
+                            <h4>Problem ${i + 1}: What is the place value of each digit?</h4>
+                            <div class='number-display'>${number}</div>
+                            ${createPlaceValueChart(number)}
+                            <p>How many hundreds? <input type='number' id='answer${i}h' min='0' max='9'></p>
+                            <p>How many tens? <input type='number' id='answer${i}t' min='0' max='9'></p>
+                            <p>How many ones? <input type='number' id='answer${i}o' min='0' max='9'></p>
+                            <div class='feedback' id='feedback${i}'></div>
+                        </div>
+                    `;
+                } else {
+                    // Last 5: Show blocks, ask for the number
+                    problemsDiv.innerHTML += `
+                        <div class='problem'>
+                            <h4>Problem ${i + 1}: What number do these blocks represent?</h4>
+                            ${createBlocks(hundreds, tens, ones)}
+                            <p>This represents the number: <input type='number' id='answer${i}n' min='0' max='999'></p>
+                            <div class='feedback' id='feedback${i}'></div>
+                        </div>
+                    `;
+                }
+            });
+            
+            score = 0;
+            updateScore();
+        }
+        
+        function checkAnswers() {
+            let correctCount = 0;
+            
+            currentProblems.forEach((problem, i) => {
+                const feedback = document.getElementById(`feedback${i}`);
+                let correct = false;
+                
+                if (i < 5) {
+                    // Check place value inputs
+                    const userH = parseInt(document.getElementById(`answer${i}h`).value || 0);
+                    const userT = parseInt(document.getElementById(`answer${i}t`).value || 0);
+                    const userO = parseInt(document.getElementById(`answer${i}o`).value || 0);
+                    
+                    if (userH === problem.hundreds && userT === problem.tens && userO === problem.ones) {
+                        feedback.textContent = '✅ Perfect! You understand place value!';
+                        feedback.className = 'feedback correct';
+                        correct = true;
+                    } else {
+                        feedback.textContent = `❌ Try again! Hundreds: ${problem.hundreds}, Tens: ${problem.tens}, Ones: ${problem.ones}`;
+                        feedback.className = 'feedback incorrect';
+                    }
+                } else {
+                    // Check number input
+                    const userNumber = parseInt(document.getElementById(`answer${i}n`).value || 0);
+                    
+                    if (userNumber === problem.number) {
+                        feedback.textContent = '✅ Excellent! You read the blocks correctly!';
+                        feedback.className = 'feedback correct';
+                        correct = true;
+                    } else {
+                        feedback.textContent = `❌ Try again! Answer: ${problem.number}`;
+                        feedback.className = 'feedback incorrect';
+                    }
+                }
+                
+                if (correct) correctCount++;
+            });
+            
+            score = correctCount;
+            updateScore();
+        }
+        
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('stars').textContent = '⭐'.repeat(score);
+        }
+        
+        window.onload = generateProblems;
+    </script>
+</body>
+</html> 

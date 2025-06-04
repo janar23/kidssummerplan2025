@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 3 Math - Estimation Games</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f0f8ff; }
+        .worksheet-container { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c5aa0; text-align: center; }
+        .problem { margin: 20px 0; padding: 15px; border: 2px solid #2c5aa0; border-radius: 10px; background-color: #f8f9fa; }
+        .estimation-img { font-size: 28px; margin-bottom: 8px; }
+        .number-line { width: 220px; height: 30px; position: relative; background: #fff; border: 1px solid #2c5aa0; margin: 10px 0; }
+        .tick { position: absolute; width: 2px; background: #2c5aa0; height: 16px; bottom: 0; }
+        .label { position: absolute; font-size: 12px; color: #2c5aa0; bottom: -18px; }
+        .dot { position: absolute; width: 12px; height: 12px; background: #ff7043; border-radius: 50%; top: 8px; }
+        .problem input { width: 100px; padding: 5px; margin: 0 10px; border: 2px solid #2c5aa0; border-radius: 5px; }
+        .feedback { margin-top: 10px; font-weight: bold; }
+        .correct { color: green; }
+        .incorrect { color: red; }
+        .controls { text-align: center; margin: 20px 0; }
+        button { background-color: #2c5aa0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; margin: 0 10px; }
+        button:hover { background-color: #1e3f7d; }
+        .progress { text-align: center; margin: 20px 0; font-size: 18px; }
+        .stars { text-align: center; font-size: 24px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <h1>🔢 Estimation Games 🔢</h1>
+        <div class="progress">Progress: <span id="score">0</span>/10</div>
+        <div class="stars" id="stars">⭐</div>
+        <div id="problems"></div>
+        <div class="controls">
+            <button onclick="checkAnswers()">Check Answers</button>
+            <button onclick="generateProblems()">New Problems</button>
+        </div>
+    </div>
+    <script>
+        let currentProblems = [];
+        let score = 0;
+        function estimationImg(n) {
+            return `<div class='estimation-img'>${'🍎'.repeat(n)}</div>`;
+        }
+        function numberLine(min, max, dot) {
+            let ticks = '';
+            for (let i = 0; i <= 10; i++) {
+                const left = i*20;
+                ticks += `<div class='tick' style='left:${left}px; height:${i%5===0?16:10}px;'></div><div class='label' style='left:${left-6}px;'>${min+Math.round((max-min)*i/10)}</div>`;
+            }
+            const dotLeft = ((dot-min)/(max-min))*200+10;
+            return `<div class='number-line'>${ticks}<div class='dot' style='left:${dotLeft}px;'></div></div>`;
+        }
+        function generateProblems() {
+            currentProblems = [];
+            const problemsDiv = document.getElementById('problems');
+            problemsDiv.innerHTML = '';
+            for (let i = 0; i < 10; i++) {
+                if (i < 3) {
+                    // Visual estimation
+                    const n = Math.floor(Math.random()*8)+3;
+                    currentProblems.push({type:'visual', n});
+                    problemsDiv.innerHTML += `<div class='problem'>${estimationImg(n)}<span>About how many apples are there?</span><input type='number' id='answer${i}' min='0'><div class='feedback' id='feedback${i}'></div></div>`;
+                } else if (i < 7) {
+                    // Number line estimation
+                    const min = Math.floor(Math.random()*20);
+                    const max = min + 50;
+                    const dot = min + Math.floor(Math.random()*(max-min));
+                    currentProblems.push({type:'line', min, max, dot});
+                    problemsDiv.innerHTML += `<div class='problem'>${numberLine(min,max,dot)}<span>Estimate the value of the dot on the number line.</span><input type='number' id='answer${i}' min='0'><div class='feedback' id='feedback${i}'></div></div>`;
+                } else {
+                    // Word problems
+                    const baskets = Math.floor(Math.random()*3)+2;
+                    const apples = Math.floor(Math.random()*6)+5;
+                    currentProblems.push({type:'word', baskets, apples});
+                    problemsDiv.innerHTML += `<div class='problem'><span>About how many apples in ${baskets} baskets if each has about ${apples}?</span><input type='number' id='answer${i}' min='0'><div class='feedback' id='feedback${i}'></div></div>`;
+                }
+            }
+            score = 0;
+            updateScore();
+        }
+        function checkAnswers() {
+            let correctCount = 0;
+            currentProblems.forEach((prob, i) => {
+                const feedback = document.getElementById(`feedback${i}`);
+                let correct = false;
+                if (prob.type==='visual') {
+                    const ans = parseInt(document.getElementById(`answer${i}`).value);
+                    correct = Math.abs(ans-prob.n)<=1;
+                } else if (prob.type==='line') {
+                    const ans = parseInt(document.getElementById(`answer${i}`).value);
+                    correct = Math.abs(ans-prob.dot)<=3;
+                } else if (prob.type==='word') {
+                    const ans = parseInt(document.getElementById(`answer${i}`).value);
+                    correct = Math.abs(ans-(prob.baskets*prob.apples))<=3;
+                }
+                if (correct) {
+                    feedback.textContent = '✅ Correct!';
+                    feedback.className = 'feedback correct';
+                    correctCount++;
+                } else {
+                    feedback.textContent = '❌ Try again!';
+                    feedback.className = 'feedback incorrect';
+                }
+            });
+            score = correctCount;
+            updateScore();
+        }
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('stars').textContent = '⭐'.repeat(score);
+        }
+        window.onload = generateProblems;
+    </script>
+</body>
+</html> 

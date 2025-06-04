@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 4 Math - Problem Solving Challenges</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f0f8ff; }
+        .worksheet-container { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c5aa0; text-align: center; }
+        .problem { margin: 20px 0; padding: 15px; border: 2px solid #2c5aa0; border-radius: 10px; background-color: #f8f9fa; }
+        .story-problem { background: linear-gradient(135deg, #fffde7, #fff9c4); padding: 15px; border-radius: 10px; margin: 10px 0; }
+        .logic-problem { background: linear-gradient(135deg, #e8f5e8, #c8e6c9); padding: 15px; border-radius: 10px; margin: 10px 0; }
+        .pattern-problem { background: linear-gradient(135deg, #e3f2fd, #bbdefb); padding: 15px; border-radius: 10px; margin: 10px 0; }
+        .visual-elements { display: flex; gap: 10px; margin: 15px 0; flex-wrap: wrap; align-items: center; }
+        .shape { width: 40px; height: 40px; display: inline-block; margin: 5px; border: 2px solid #333; }
+        .circle { border-radius: 50%; background-color: #ff6b6b; }
+        .square { background-color: #4ecdc4; }
+        .triangle { width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent; border-bottom: 35px solid #45b7d1; }
+        input[type="number"], input[type="text"] { padding: 8px; border: 2px solid #2c5aa0; border-radius: 5px; font-size: 16px; width: 120px; }
+        button { background-color: #2c5aa0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; margin: 0 10px; }
+        button:hover { background-color: #1e3f7d; }
+        .feedback { margin-top: 10px; font-weight: bold; }
+        .correct { color: green; }
+        .incorrect { color: red; }
+        .controls { text-align: center; margin: 20px 0; }
+        .progress { text-align: center; margin: 20px 0; font-size: 18px; }
+        .stars { text-align: center; font-size: 24px; margin: 20px 0; }
+        .intro { background: #e8f5e8; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+        .hint { background: #fff3e0; padding: 10px; border-radius: 5px; margin: 10px 0; border-left: 4px solid #ff9800; }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <h1>🧩 Problem Solving Challenges 🧩</h1>
+        
+        <div class="intro">
+            <h3>Problem Solving Steps</h3>
+            <ol>
+                <li><strong>Read carefully</strong> - Understand what the problem is asking</li>
+                <li><strong>Find the important information</strong> - What numbers and facts do you need?</li>
+                <li><strong>Think about what to do</strong> - Add, subtract, multiply, or divide?</li>
+                <li><strong>Solve</strong> - Do the math</li>
+                <li><strong>Check</strong> - Does your answer make sense?</li>
+            </ol>
+        </div>
+        
+        <div class="progress">Progress: <span id="score">0</span>/10</div>
+        <div class="stars" id="stars">⭐</div>
+        <div id="problems"></div>
+        <div class="controls">
+            <button onclick="checkAnswers()">Check Answers</button>
+            <button onclick="generateProblems()">New Problems</button>
+        </div>
+    </div>
+    <script>
+        let currentProblems = [];
+        let score = 0;
+        
+        function generateProblems() {
+            currentProblems = [];
+            const problemsDiv = document.getElementById('problems');
+            problemsDiv.innerHTML = '';
+            
+            const problems = [
+                {
+                    type: 'story',
+                    text: "Emma has 24 stickers. She gives 8 stickers to her friend and buys 15 more stickers. How many stickers does Emma have now?",
+                    answer: 31,
+                    hint: "Start with 24, subtract 8, then add 15"
+                },
+                {
+                    type: 'logic',
+                    text: "I am a number between 20 and 30. When you add my digits together, you get 9. What number am I?",
+                    answer: 27,
+                    hint: "Think: 2 + 7 = 9, and 27 is between 20 and 30"
+                },
+                {
+                    type: 'story',
+                    text: "A robot can count 5 objects per second. How many objects can it count in 6 seconds?",
+                    answer: 30,
+                    hint: "Multiply: 5 objects × 6 seconds"
+                },
+                {
+                    type: 'pattern',
+                    text: "Look at this pattern: 3, 6, 9, 12, ?, 18. What number comes next?",
+                    answer: 15,
+                    hint: "Add 3 each time: 3+3=6, 6+3=9, 9+3=12..."
+                },
+                {
+                    type: 'story',
+                    text: "There are 36 cookies to share equally among 6 children. How many cookies does each child get?",
+                    answer: 6,
+                    hint: "Divide: 36 ÷ 6"
+                },
+                {
+                    type: 'logic',
+                    text: "I have 4 legs, but I'm not an animal. People sit on me. What am I?",
+                    answer: "chair",
+                    hint: "Think about furniture in your house"
+                },
+                {
+                    type: 'story',
+                    text: "Jake reads 2 pages every day. If he keeps reading at this rate, how many pages will he read in 2 weeks (14 days)?",
+                    answer: 28,
+                    hint: "Multiply: 2 pages × 14 days"
+                },
+                {
+                    type: 'pattern',
+                    text: "Complete the pattern: 50, 45, 40, 35, ?, 25. What's the missing number?",
+                    answer: 30,
+                    hint: "Subtract 5 each time: 50-5=45, 45-5=40..."
+                },
+                {
+                    type: 'story',
+                    text: "A computer program has 25 lines of code. The programmer adds 17 more lines, then deletes 9 lines. How many lines are there now?",
+                    answer: 33,
+                    hint: "Start with 25, add 17, then subtract 9"
+                },
+                {
+                    type: 'logic',
+                    text: "I am thinking of a number. If you multiply it by 3, you get 21. What number am I thinking of?",
+                    answer: 7,
+                    hint: "What number times 3 equals 21? Try 21 ÷ 3"
+                }
+            ];
+            
+            problems.forEach((problem, i) => {
+                currentProblems.push(problem);
+                const problemClass = problem.type + '-problem';
+                const inputType = typeof problem.answer === 'string' ? 'text' : 'number';
+                const placeholder = typeof problem.answer === 'string' ? 'Word answer' : 'Number';
+                
+                problemsDiv.innerHTML += `
+                    <div class='problem'>
+                        <h4>Challenge ${i + 1}</h4>
+                        <div class='${problemClass}'>
+                            <p><strong>${problem.text}</strong></p>
+                            <div class='hint'>💡 Hint: ${problem.hint}</div>
+                            <p>Answer: <input type='${inputType}' id='answer${i}' placeholder='${placeholder}' style='margin-top: 10px;'></p>
+                            <div class='feedback' id='feedback${i}'></div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            score = 0;
+            updateScore();
+        }
+        
+        function checkAnswers() {
+            let correctCount = 0;
+            
+            currentProblems.forEach((problem, i) => {
+                const userInput = document.getElementById(`answer${i}`).value.trim();
+                const userAnswer = typeof problem.answer === 'string' ? userInput.toLowerCase() : parseInt(userInput);
+                const correctAnswer = typeof problem.answer === 'string' ? problem.answer.toLowerCase() : problem.answer;
+                const feedback = document.getElementById(`feedback${i}`);
+                
+                if (userAnswer === correctAnswer) {
+                    feedback.textContent = '✅ Excellent problem solving!';
+                    feedback.className = 'feedback correct';
+                    correctCount++;
+                } else {
+                    feedback.textContent = `❌ Try again! Answer: ${problem.answer}`;
+                    feedback.className = 'feedback incorrect';
+                }
+            });
+            
+            score = correctCount;
+            updateScore();
+        }
+        
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('stars').textContent = '⭐'.repeat(score);
+        }
+        
+        window.onload = generateProblems;
+    </script>
+</body>
+</html> 

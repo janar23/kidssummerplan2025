@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 4 Math - Calendar Activities</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f0f8ff; }
+        .worksheet-container { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c5aa0; text-align: center; }
+        .problem { margin: 20px 0; padding: 15px; border: 2px solid #2c5aa0; border-radius: 10px; background-color: #f8f9fa; }
+        .calendar { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; margin: 15px 0; max-width: 350px; }
+        .calendar-header { background-color: #2c5aa0; color: white; padding: 8px; text-align: center; font-weight: bold; }
+        .calendar-day { background-color: #e3f2fd; padding: 8px; text-align: center; border: 1px solid #90caf9; }
+        .weekend { background-color: #ffcdd2; }
+        .today { background-color: #4caf50; color: white; font-weight: bold; }
+        input[type="text"], input[type="number"] { padding: 8px; border: 2px solid #2c5aa0; border-radius: 5px; font-size: 16px; width: 120px; }
+        button { background-color: #2c5aa0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; margin: 0 10px; }
+        button:hover { background-color: #1e3f7d; }
+        .feedback { margin-top: 10px; font-weight: bold; }
+        .correct { color: green; }
+        .incorrect { color: red; }
+        .controls { text-align: center; margin: 20px 0; }
+        .progress { text-align: center; margin: 20px 0; font-size: 18px; }
+        .stars { text-align: center; font-size: 24px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <h1>📅 Calendar Math Activities 📅</h1>
+        <p style="text-align: center; font-size: 18px; color: #2c5aa0; margin-bottom: 20px;" id="personal-greeting">
+            Hi there! Let's explore the calendar together and solve some fun math problems! 🗓️
+        </p>
+        <div class="progress">Progress: <span id="score">0</span>/10</div>
+        <div class="stars" id="stars">⭐</div>
+        
+        <div class="problem">
+            <h3>July 2025 Calendar</h3>
+            <div class="calendar" id="calendar">
+                <div class="calendar-header">Sun</div>
+                <div class="calendar-header">Mon</div>
+                <div class="calendar-header">Tue</div>
+                <div class="calendar-header">Wed</div>
+                <div class="calendar-header">Thu</div>
+                <div class="calendar-header">Fri</div>
+                <div class="calendar-header">Sat</div>
+                <!-- July 2025 starts on Tuesday -->
+                <div class="calendar-day weekend"></div>
+                <div class="calendar-day weekend"></div>
+                <div class="calendar-day">1</div>
+                <div class="calendar-day">2</div>
+                <div class="calendar-day">3</div>
+                <div class="calendar-day">4</div>
+                <div class="calendar-day weekend">5</div>
+                <div class="calendar-day weekend">6</div>
+                <div class="calendar-day">7</div>
+                <div class="calendar-day">8</div>
+                <div class="calendar-day">9</div>
+                <div class="calendar-day">10</div>
+                <div class="calendar-day">11</div>
+                <div class="calendar-day weekend">12</div>
+                <div class="calendar-day weekend">13</div>
+                <div class="calendar-day">14</div>
+                <div class="calendar-day today">15</div>
+                <div class="calendar-day">16</div>
+                <div class="calendar-day">17</div>
+                <div class="calendar-day">18</div>
+                <div class="calendar-day weekend">19</div>
+                <div class="calendar-day weekend">20</div>
+                <div class="calendar-day">21</div>
+                <div class="calendar-day">22</div>
+                <div class="calendar-day">23</div>
+                <div class="calendar-day">24</div>
+                <div class="calendar-day">25</div>
+                <div class="calendar-day weekend">26</div>
+                <div class="calendar-day weekend">27</div>
+                <div class="calendar-day">28</div>
+                <div class="calendar-day">29</div>
+                <div class="calendar-day">30</div>
+                <div class="calendar-day">31</div>
+            </div>
+        </div>
+        
+        <div id="problems"></div>
+        <div class="controls">
+            <button onclick="checkAnswers()">Check Answers</button>
+            <button onclick="generateProblems()">New Problems</button>
+        </div>
+    </div>
+    <script>
+        let currentProblems = [];
+        let score = 0;
+        
+        // Get the selected child's name from URL parameters or localStorage
+        function getSelectedChildName() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let childName = urlParams.get('child');
+            
+            if (!childName) {
+                // Try to get from localStorage if not in URL
+                const savedChild = localStorage.getItem('selectedChild');
+                if (savedChild) {
+                    childName = savedChild;
+                }
+            }
+            
+            // Capitalize first letter
+            if (childName) {
+                return childName.charAt(0).toUpperCase() + childName.slice(1);
+            }
+            return 'there'; // fallback
+        }
+        
+        // Set personalized greeting
+        function setPersonalizedGreeting() {
+            const childName = getSelectedChildName();
+            const greeting = document.getElementById('personal-greeting');
+            greeting.textContent = `Hi ${childName}! Let's explore the calendar together and solve some fun math problems! 🗓️`;
+        }
+        
+        function generateProblems() {
+            currentProblems = [];
+            const problemsDiv = document.getElementById('problems');
+            problemsDiv.innerHTML = '';
+            
+            const problems = [
+                {
+                    question: "How many days are in July?",
+                    answer: "31",
+                    type: "number"
+                },
+                {
+                    question: "What day of the week is July 4th?",
+                    answer: "friday",
+                    type: "text"
+                },
+                {
+                    question: "How many Mondays are in July 2025?",
+                    answer: "4",
+                    type: "number"
+                },
+                {
+                    question: "What date is the third Wednesday in July?",
+                    answer: "16",
+                    type: "number"
+                },
+                {
+                    question: "How many weekend days (Saturday and Sunday) are in July?",
+                    answer: "9",
+                    type: "number"
+                },
+                {
+                    question: "If today is July 15th, how many days until July 31st?",
+                    answer: "16",
+                    type: "number"
+                },
+                {
+                    question: "What day of the week is July 1st?",
+                    answer: "tuesday",
+                    type: "text"
+                },
+                {
+                    question: "How many days from July 1st to July 15th?",
+                    answer: "14",
+                    type: "number"
+                },
+                {
+                    question: "If there are 4 weeks in July, how many days is that? (4 × 7)",
+                    answer: "28",
+                    type: "number"
+                },
+                {
+                    question: "How many more days are there after 4 full weeks in July?",
+                    answer: "3",
+                    type: "number"
+                }
+            ];
+            
+            problems.forEach((problem, i) => {
+                currentProblems.push(problem);
+                const inputType = problem.type === 'number' ? 'number' : 'text';
+                const placeholder = problem.type === 'number' ? 'Number' : 'Day name';
+                
+                problemsDiv.innerHTML += `
+                    <div class='problem'>
+                        <span>${i + 1}. ${problem.question}</span><br>
+                        <input type='${inputType}' id='answer${i}' placeholder='${placeholder}' style='margin-top: 10px;'>
+                        <div class='feedback' id='feedback${i}'></div>
+                    </div>
+                `;
+            });
+            
+            score = 0;
+            updateScore();
+        }
+        
+        function checkAnswers() {
+            let correctCount = 0;
+            
+            currentProblems.forEach((problem, i) => {
+                const userAnswer = document.getElementById(`answer${i}`).value.trim().toLowerCase();
+                const correctAnswer = problem.answer.toLowerCase();
+                const feedback = document.getElementById(`feedback${i}`);
+                
+                if (userAnswer === correctAnswer) {
+                    feedback.textContent = '✅ Correct!';
+                    feedback.className = 'feedback correct';
+                    correctCount++;
+                } else {
+                    feedback.textContent = `❌ Try again! Answer: ${problem.answer}`;
+                    feedback.className = 'feedback incorrect';
+                }
+            });
+            
+            score = correctCount;
+            updateScore();
+        }
+        
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('stars').textContent = '⭐'.repeat(score);
+        }
+        
+        window.onload = generateProblems;
+    </script>
+</body>
+</html> 

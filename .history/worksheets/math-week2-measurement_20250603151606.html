@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 2 Math - Measurement with Rulers</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f0f8ff; }
+        .worksheet-container { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c5aa0; text-align: center; }
+        .problem { margin: 20px 0; padding: 15px; border: 2px solid #2c5aa0; border-radius: 10px; background-color: #f8f9fa; }
+        .problem img { vertical-align: middle; margin-right: 10px; }
+        .problem input { width: 60px; padding: 5px; margin: 0 10px; border: 2px solid #2c5aa0; border-radius: 5px; }
+        .feedback { margin-top: 10px; font-weight: bold; }
+        .correct { color: green; }
+        .incorrect { color: red; }
+        .controls { text-align: center; margin: 20px 0; }
+        button { background-color: #2c5aa0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; margin: 0 10px; }
+        button:hover { background-color: #1e3f7d; }
+        .progress { text-align: center; margin: 20px 0; font-size: 18px; }
+        .stars { text-align: center; font-size: 24px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <h1>📏 Measurement with Rulers 📏</h1>
+        <div class="progress">Progress: <span id="score">0</span>/5</div>
+        <div class="stars" id="stars">⭐</div>
+        <div id="problems"></div>
+        <div class="controls">
+            <button onclick="checkAnswers()">Check Answers</button>
+            <button onclick="generateProblems()">New Problems</button>
+        </div>
+    </div>
+    <script>
+        let currentProblems = [];
+        let score = 0;
+        function generateProblems() {
+            currentProblems = [];
+            const problemsDiv = document.getElementById('problems');
+            problemsDiv.innerHTML = '';
+            for (let i = 0; i < 5; i++) {
+                const length = Math.floor(Math.random() * 10) + 1;
+                currentProblems.push(length);
+                const problemDiv = document.createElement('div');
+                problemDiv.className = 'problem';
+                problemDiv.innerHTML = `
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Ruler_12inch.svg/200px-Ruler_12inch.svg.png" alt="Ruler" width="100" height="20">
+                    <span>How many centimeters is this object? (Object length: <b>${length} cm</b>)</span>
+                    <input type="number" id="answer${i}" min="0">
+                    <div class="feedback" id="feedback${i}"></div>
+                `;
+                problemsDiv.appendChild(problemDiv);
+            }
+            score = 0;
+            updateScore();
+        }
+        function checkAnswers() {
+            let correctCount = 0;
+            currentProblems.forEach((length, index) => {
+                const answer = parseInt(document.getElementById(`answer${index}`).value);
+                const feedback = document.getElementById(`feedback${index}`);
+                if (answer === length) {
+                    feedback.textContent = '✅ Correct!';
+                    feedback.className = 'feedback correct';
+                    correctCount++;
+                } else {
+                    feedback.textContent = `❌ Try again! The answer is ${length} cm`;
+                    feedback.className = 'feedback incorrect';
+                }
+            });
+            score = correctCount;
+            updateScore();
+        }
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('stars').textContent = '⭐'.repeat(score);
+        }
+        window.onload = generateProblems;
+    </script>
+</body>
+</html> 

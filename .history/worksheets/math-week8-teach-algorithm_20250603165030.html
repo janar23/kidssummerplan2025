@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 8 Math - Teach a Simple Algorithm to Family</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f0f8ff; }
+        .worksheet-container { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c5aa0; text-align: center; }
+        .problem { margin: 20px 0; padding: 15px; border: 2px solid #2c5aa0; border-radius: 10px; background-color: #f8f9fa; }
+        .teaching-card { background: linear-gradient(135deg, #e1f5fe, #b3e5fc); padding: 20px; border-radius: 15px; margin: 15px 0; border: 3px solid #03a9f4; }
+        .algorithm-steps { background: #fff3e0; padding: 20px; border-radius: 10px; margin: 15px 0; border: 3px solid #ff9800; }
+        .step { display: flex; align-items: center; margin: 10px 0; padding: 10px; background: white; border-radius: 8px; border: 2px solid #4caf50; }
+        .step-number { background: #4caf50; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 15px; }
+        .practice-area { background: #f3e5f5; padding: 20px; border-radius: 10px; margin: 15px 0; border: 3px solid #9c27b0; }
+        .algorithm-demo { display: flex; justify-content: center; gap: 20px; margin: 20px 0; flex-wrap: wrap; }
+        .demo-box { width: 80px; height: 80px; border: 3px solid #333; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 24px; background: white; }
+        .teacher-tips { background: #e8f5e8; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 5px solid #4caf50; }
+        .family-member { display: inline-block; background: #ffeb3b; padding: 5px 15px; border-radius: 20px; margin: 5px; font-weight: bold; }
+        input[type="number"], input[type="text"] { padding: 8px; border: 2px solid #2c5aa0; border-radius: 5px; font-size: 16px; width: 120px; }
+        button { background-color: #2c5aa0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; margin: 0 10px; }
+        button:hover { background-color: #1e3f7d; }
+        .feedback { margin-top: 10px; font-weight: bold; }
+        .correct { color: green; }
+        .incorrect { color: red; }
+        .controls { text-align: center; margin: 20px 0; }
+        .progress { text-align: center; margin: 20px 0; font-size: 18px; }
+        .stars { text-align: center; font-size: 24px; margin: 20px 0; }
+        .intro { background: #e8f5e8; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+        .teach-emoji { font-size: 24px; margin-right: 10px; }
+        .celebration { text-align: center; font-size: 48px; margin: 15px 0; animation: spin 3s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <h1>👨‍🏫 Teach a Simple Algorithm to Family 👩‍🏫</h1>
+        
+        <p style="text-align: center; font-size: 18px; color: #2c5aa0; margin-bottom: 20px;" id="personal-greeting">
+            Hi there! You're now the teacher! Let's learn how to teach simple algorithms to your family! You're going to be an amazing teacher! 🎓
+        </p>
+        
+        <div class="intro">
+            <h3>Become a Young Algorithm Teacher!</h3>
+            <p>Teaching is one of the best ways to learn! Today you'll learn simple algorithms and practice explaining them to your family.</p>
+            
+            <div class="teacher-tips">
+                <h4>🌟 Tips for Teaching Algorithms:</h4>
+                <ul>
+                    <li><strong>Break it down:</strong> Explain one step at a time</li>
+                    <li><strong>Use examples:</strong> Show how it works with real things</li>
+                    <li><strong>Be patient:</strong> Let your family ask questions</li>
+                    <li><strong>Practice together:</strong> Do the algorithm together</li>
+                    <li><strong>Celebrate:</strong> Praise them when they get it!</li>
+                </ul>
+            </div>
+            
+            <div class="celebration">📚</div>
+        </div>
+        
+        <div class="progress">Progress: <span id="score">0</span>/10</div>
+        <div class="stars" id="stars">⭐</div>
+        <div id="problems"></div>
+        <div class="controls">
+            <button onclick="checkAnswers()">Check Answers</button>
+            <button onclick="generateProblems()">New Problems</button>
+        </div>
+    </div>
+    <script>
+        let currentProblems = [];
+        let score = 0;
+        
+        // Get the selected child's name from URL parameters or localStorage
+        function getSelectedChildName() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let childName = urlParams.get('child');
+            
+            if (!childName) {
+                // Try to get from localStorage if not in URL
+                const savedChild = localStorage.getItem('selectedChild');
+                if (savedChild) {
+                    childName = savedChild;
+                }
+            }
+            
+            // Capitalize first letter
+            if (childName) {
+                return childName.charAt(0).toUpperCase() + childName.slice(1);
+            }
+            return 'there'; // fallback
+        }
+        
+        // Set personalized greeting
+        function setPersonalizedGreeting() {
+            const childName = getSelectedChildName();
+            const greeting = document.getElementById('personal-greeting');
+            greeting.textContent = `Hi ${childName}! You're now the teacher! Let's learn how to teach simple algorithms to your family! You're going to be an amazing teacher! 🎓`;
+        }
+        
+        function createAlgorithmSteps(steps) {
+            let stepsHtml = '<div class="algorithm-steps">';
+            steps.forEach((step, index) => {
+                stepsHtml += `
+                    <div class="step">
+                        <div class="step-number">${index + 1}</div>
+                        <div>${step}</div>
+                    </div>
+                `;
+            });
+            stepsHtml += '</div>';
+            return stepsHtml;
+        }
+        
+        function createDemo(items) {
+            let demoHtml = '<div class="algorithm-demo">';
+            items.forEach(item => {
+                demoHtml += `<div class="demo-box">${item}</div>`;
+            });
+            demoHtml += '</div>';
+            return demoHtml;
+        }
+        
+        function generateProblems() {
+            currentProblems = [];
+            const problemsDiv = document.getElementById('problems');
+            problemsDiv.innerHTML = '';
+            
+            const problems = [
+                {
+                    type: "sorting",
+                    title: "Sanha Teaches Number Sorting",
+                    algorithm: "Bubble Sort (Simple Version)",
+                    steps: [
+                        "Look at two numbers next to each other",
+                        "If the left number is bigger, swap them",
+                        "Move to the next pair",
+                        "Repeat until all numbers are in order"
+                    ],
+                    demo: ["3", "1", "4", "2"],
+                    question: "After teaching this to mom, what should be the first step?",
+                    answer: "Look at two numbers next to each other",
+                    familyMember: "Mom"
+                },
+                {
+                    type: "counting",
+                    title: "Sanav Teaches Counting Algorithm",
+                    algorithm: "Count to 10",
+                    steps: [
+                        "Start with the number 1",
+                        "Say the number out loud",
+                        "Add 1 to get the next number", 
+                        "Repeat until you reach 10"
+                    ],
+                    question: "If dad forgets step 3, what should you remind him?",
+                    answer: "Add 1 to get the next number",
+                    familyMember: "Dad"
+                },
+                {
+                    type: "search",
+                    title: "Aadhi Teaches Finding Algorithm",
+                    algorithm: "Find the Biggest Number",
+                    steps: [
+                        "Start with the first number",
+                        "Compare it to the next number",
+                        "If the next number is bigger, remember it",
+                        "Keep going until you've checked all numbers"
+                    ],
+                    demo: ["7", "3", "9", "5"],
+                    question: "What number should grandma find as the biggest?",
+                    answer: "9",
+                    familyMember: "Grandma"
+                },
+                {
+                    type: "pattern",
+                    title: "Sai Vittal Teaches Pattern Making",
+                    algorithm: "Make a Color Pattern",
+                    steps: [
+                        "Choose 2 colors (like red and blue)",
+                        "Start with the first color",
+                        "Add the second color next",
+                        "Repeat: first color, second color, first color..."
+                    ],
+                    question: "How many colors does this pattern algorithm use?",
+                    answer: "2",
+                    familyMember: "Sister"
+                },
+                {
+                    type: "math",
+                    title: "Sanvi Teaches Addition Algorithm",
+                    algorithm: "Add Two Numbers",
+                    steps: [
+                        "Write down the first number",
+                        "Write down the second number below it",
+                        "Add the ones place first",
+                        "Then add the tens place"
+                    ],
+                    question: "When teaching brother 25 + 13, which place do you add first?",
+                    answer: "ones",
+                    familyMember: "Brother"
+                },
+                {
+                    type: "sequence",
+                    title: "Teaching Step Counting",
+                    algorithm: "Count Steps Algorithm",
+                    steps: [
+                        "Start counting at 0",
+                        "Take one step forward",
+                        "Add 1 to your count",
+                        "Repeat until you reach your destination"
+                    ],
+                    question: "If you take 8 steps, what number should you count to?",
+                    answer: "8",
+                    familyMember: "Cousin"
+                },
+                {
+                    type: "ordering",
+                    title: "Teaching Size Ordering",
+                    algorithm: "Put Toys in Size Order",
+                    steps: [
+                        "Look at all the toys",
+                        "Find the smallest toy",
+                        "Put it first in line",
+                        "Repeat with remaining toys"
+                    ],
+                    question: "In step 2, what toy should you find first?",
+                    answer: "smallest",
+                    familyMember: "Aunt"
+                },
+                {
+                    type: "decision",
+                    title: "Teaching Yes/No Decisions",
+                    algorithm: "Is It Bigger Than 5?",
+                    steps: [
+                        "Look at the number",
+                        "Compare it to 5",
+                        "If it's bigger than 5, say 'Yes'",
+                        "If it's 5 or smaller, say 'No'"
+                    ],
+                    question: "When teaching this with number 7, what should uncle say?",
+                    answer: "Yes",
+                    familyMember: "Uncle"
+                },
+                {
+                    type: "building",
+                    title: "Teaching Block Stacking",
+                    algorithm: "Stack Blocks High",
+                    steps: [
+                        "Put the biggest block on the bottom",
+                        "Put the next biggest block on top",
+                        "Keep stacking from biggest to smallest",
+                        "Stop when you use all blocks"
+                    ],
+                    question: "What size block goes on the bottom?",
+                    answer: "biggest",
+                    familyMember: "Grandpa"
+                },
+                {
+                    type: "review",
+                    title: "Teaching Review Check",
+                    algorithm: "Check Your Work",
+                    steps: [
+                        "Look at your answer",
+                        "Go through the steps again",
+                        "Check if your answer makes sense",
+                        "If not, try again"
+                    ],
+                    question: "How many steps are in this checking algorithm?",
+                    answer: "4",
+                    familyMember: "All Family"
+                }
+            ];
+            
+            problems.forEach((problem, i) => {
+                currentProblems.push(problem);
+                
+                let stepsHtml = '';
+                if (problem.steps) {
+                    stepsHtml = createAlgorithmSteps(problem.steps);
+                }
+                
+                let demoHtml = '';
+                if (problem.demo) {
+                    demoHtml = `<h5>Example:</h5>${createDemo(problem.demo)}`;
+                }
+                
+                const inputType = isNaN(problem.answer) ? "text" : "number";
+                const placeholder = inputType === "text" ? "word/phrase" : "number";
+                
+                problemsDiv.innerHTML += `
+                    <div class='problem'>
+                        <h4>Teaching Challenge ${i + 1}</h4>
+                        <div class='teaching-card'>
+                            <h4><span class='teach-emoji'>👨‍🏫</span>${problem.title}</h4>
+                            <p><strong>Algorithm:</strong> ${problem.algorithm}</p>
+                            <div class='family-member'>Teaching: ${problem.familyMember}</div>
+                            ${stepsHtml}
+                            ${demoHtml}
+                            <div class='practice-area'>
+                                <p><strong>Teaching Question: ${problem.question}</strong></p>
+                            </div>
+                        </div>
+                        <p><strong>Answer:</strong> <input type='${inputType}' id='answer${i}' placeholder='${placeholder}' ${inputType === "number" ? "min='0' max='50'" : ""}></p>
+                        <div class='feedback' id='feedback${i}'></div>
+                    </div>
+                `;
+            });
+            
+            score = 0;
+            updateScore();
+        }
+        
+        function checkAnswers() {
+            let correctCount = 0;
+            
+            currentProblems.forEach((problem, i) => {
+                const userInput = document.getElementById(`answer${i}`).value.trim();
+                const userAnswer = isNaN(problem.answer) ? userInput.toLowerCase() : parseInt(userInput);
+                const correctAnswer = isNaN(problem.answer) ? problem.answer.toLowerCase() : parseInt(problem.answer);
+                const feedback = document.getElementById(`feedback${i}`);
+                
+                if (userAnswer === correctAnswer) {
+                    feedback.textContent = '✅ Perfect teaching! Your family will understand this algorithm!';
+                    feedback.className = 'feedback correct';
+                    correctCount++;
+                } else {
+                    feedback.textContent = `❌ Try again! Answer: ${problem.answer}`;
+                    feedback.className = 'feedback incorrect';
+                }
+            });
+            
+            score = correctCount;
+            updateScore();
+            
+            if (score === currentProblems.length) {
+                setTimeout(() => {
+                    alert('🎉 AMAZING! You\'re ready to be a family algorithm teacher! Your family is so lucky to learn from you! 👨‍🏫⭐');
+                }, 500);
+            }
+        }
+        
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('stars').textContent = '⭐'.repeat(score);
+        }
+        
+        window.onload = function() {
+            setPersonalizedGreeting();
+            generateProblems();
+        };
+    </script>
+</body>
+</html> 

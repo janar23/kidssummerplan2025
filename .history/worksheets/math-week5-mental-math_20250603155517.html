@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 5 Math - Mental Math Strategies</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f0f8ff; }
+        .worksheet-container { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c5aa0; text-align: center; }
+        .problem { margin: 20px 0; padding: 15px; border: 2px solid #2c5aa0; border-radius: 10px; background-color: #f8f9fa; }
+        .strategy { background: #e8f5e8; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #4caf50; }
+        .brain-visual { text-align: center; font-size: 48px; margin: 15px 0; }
+        .step-by-step { background: #fff3e0; padding: 10px; border-radius: 5px; margin: 10px 0; }
+        input[type="number"] { padding: 8px; border: 2px solid #2c5aa0; border-radius: 5px; font-size: 16px; width: 80px; }
+        button { background-color: #2c5aa0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; margin: 0 10px; }
+        button:hover { background-color: #1e3f7d; }
+        .feedback { margin-top: 10px; font-weight: bold; }
+        .correct { color: green; }
+        .incorrect { color: red; }
+        .controls { text-align: center; margin: 20px 0; }
+        .progress { text-align: center; margin: 20px 0; font-size: 18px; }
+        .stars { text-align: center; font-size: 24px; margin: 20px 0; }
+        .intro { background: #e8f5e8; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+        .timer { background: #e1f5fe; padding: 10px; border-radius: 5px; text-align: center; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <h1>🧠 Mental Math Strategies 🧠</h1>
+        
+        <div class="intro">
+            <h3>Mental Math Tricks</h3>
+            <div class="strategy">
+                <h4>Strategy 1: Adding by Breaking Apart</h4>
+                <p>For 27 + 15: Think 27 + 10 = 37, then 37 + 5 = 42</p>
+            </div>
+            <div class="strategy">
+                <h4>Strategy 2: Doubles and Near Doubles</h4>
+                <p>For 8 + 9: Think 8 + 8 = 16, then add 1 more = 17</p>
+            </div>
+            <div class="strategy">
+                <h4>Strategy 3: Make 10 First</h4>
+                <p>For 7 + 5: Think 7 + 3 = 10, then 10 + 2 = 12</p>
+            </div>
+        </div>
+        
+        <div class="brain-visual">🧠</div>
+        <div class="timer" id="timer">Ready to start mental math!</div>
+        
+        <div class="progress">Progress: <span id="score">0</span>/10</div>
+        <div class="stars" id="stars">⭐</div>
+        <div id="problems"></div>
+        <div class="controls">
+            <button onclick="checkAnswers()">Check Answers</button>
+            <button onclick="generateProblems()">New Problems</button>
+            <button onclick="startTimer()">Start Speed Round!</button>
+        </div>
+    </div>
+    <script>
+        let currentProblems = [];
+        let score = 0;
+        let timeLeft = 60;
+        let timerInterval;
+        
+        function generateProblems() {
+            currentProblems = [];
+            const problemsDiv = document.getElementById('problems');
+            problemsDiv.innerHTML = '';
+            
+            const problems = [
+                { problem: "25 + 17", answer: 42, strategy: "Break apart: 25 + 10 = 35, then 35 + 7 = 42" },
+                { problem: "8 + 7", answer: 15, strategy: "Near double: 8 + 8 = 16, then subtract 1 = 15" },
+                { problem: "6 + 9", answer: 15, strategy: "Make 10: 6 + 4 = 10, then 10 + 5 = 15" },
+                { problem: "34 + 28", answer: 62, strategy: "Break apart: 34 + 20 = 54, then 54 + 8 = 62" },
+                { problem: "9 + 9", answer: 18, strategy: "Double: 9 × 2 = 18" },
+                { problem: "47 + 15", answer: 62, strategy: "Break apart: 47 + 10 = 57, then 57 + 5 = 62" },
+                { problem: "8 + 6", answer: 14, strategy: "Make 10: 8 + 2 = 10, then 10 + 4 = 14" },
+                { problem: "23 + 19", answer: 42, strategy: "Round up: 23 + 20 = 43, then subtract 1 = 42" },
+                { problem: "7 + 8", answer: 15, strategy: "Near double: 7 + 7 = 14, then add 1 = 15" },
+                { problem: "36 + 26", answer: 62, strategy: "Break apart: 36 + 20 = 56, then 56 + 6 = 62" }
+            ];
+            
+            problems.forEach((prob, i) => {
+                currentProblems.push(prob);
+                
+                problemsDiv.innerHTML += `
+                    <div class='problem'>
+                        <h4>Problem ${i + 1}: ${prob.problem} = ?</h4>
+                        <div class='step-by-step'>
+                            <strong>Try this strategy:</strong> ${prob.strategy}
+                        </div>
+                        <p>Answer: <input type='number' id='answer${i}' placeholder='?' min='0' max='100'></p>
+                        <div class='feedback' id='feedback${i}'></div>
+                    </div>
+                `;
+            });
+            
+            score = 0;
+            updateScore();
+            resetTimer();
+        }
+        
+        function checkAnswers() {
+            let correctCount = 0;
+            
+            currentProblems.forEach((problem, i) => {
+                const userAnswer = parseInt(document.getElementById(`answer${i}`).value);
+                const feedback = document.getElementById(`feedback${i}`);
+                
+                if (userAnswer === problem.answer) {
+                    feedback.textContent = '✅ Great mental math!';
+                    feedback.className = 'feedback correct';
+                    correctCount++;
+                } else {
+                    feedback.textContent = `❌ Try again! Answer: ${problem.answer}`;
+                    feedback.className = 'feedback incorrect';
+                }
+            });
+            
+            score = correctCount;
+            updateScore();
+        }
+        
+        function startTimer() {
+            timeLeft = 60;
+            clearInterval(timerInterval);
+            
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').textContent = `Speed Round: ${timeLeft} seconds left!`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    document.getElementById('timer').textContent = "Time's up! Check your answers!";
+                    checkAnswers();
+                }
+            }, 1000);
+        }
+        
+        function resetTimer() {
+            clearInterval(timerInterval);
+            document.getElementById('timer').textContent = "Ready to start mental math!";
+        }
+        
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('stars').textContent = '⭐'.repeat(score);
+        }
+        
+        window.onload = generateProblems;
+    </script>
+</body>
+</html> 

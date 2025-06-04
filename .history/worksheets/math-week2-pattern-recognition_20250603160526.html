@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 2 Math - Pattern Recognition Games</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f0f8ff; }
+        .worksheet-container { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c5aa0; text-align: center; }
+        .problem { margin: 20px 0; padding: 15px; border: 2px solid #2c5aa0; border-radius: 10px; background-color: #f8f9fa; display: flex; align-items: center; }
+        .pattern-seq { font-size: 24px; margin-right: 20px; }
+        .problem input { width: 60px; padding: 5px; margin: 0 10px; border: 2px solid #2c5aa0; border-radius: 5px; }
+        .feedback { margin-top: 10px; font-weight: bold; }
+        .correct { color: green; }
+        .incorrect { color: red; }
+        .controls { text-align: center; margin: 20px 0; }
+        button { background-color: #2c5aa0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; margin: 0 10px; }
+        button:hover { background-color: #1e3f7d; }
+        .progress { text-align: center; margin: 20px 0; font-size: 18px; }
+        .stars { text-align: center; font-size: 24px; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <h1>🔍 Pattern Recognition Games 🔍</h1>
+        <p style="text-align: center; font-size: 18px; color: #2c5aa0; margin-bottom: 20px;">
+            Hey pattern detective! Let's find and complete amazing patterns together! You're going to be great at this! 🔍
+        </p>
+        <div class="progress">Progress: <span id="score">0</span>/10</div>
+        <div class="stars" id="stars">⭐</div>
+        <div id="problems"></div>
+        <div class="controls">
+            <button onclick="checkAnswers()">Check Answers</button>
+            <button onclick="generateProblems()">New Problems</button>
+        </div>
+    </div>
+    <script>
+        let currentProblems = [];
+        let score = 0;
+        function generateProblems() {
+            currentProblems = [];
+            const problemsDiv = document.getElementById('problems');
+            problemsDiv.innerHTML = '';
+            let used = [];
+            for (let i = 0; i < 10; i++) {
+                let pat;
+                if (i < 3) {
+                    // Simple AB patterns
+                    const abPatterns = [
+                        { seq: ['🔴','🟢','🔴','🟢'], next: '🔴', type: 'color' },
+                        { seq: ['⬛','⬜','⬛','⬜'], next: '⬛', type: 'color' },
+                        { seq: ['🟣','🟢','🟣','🟢'], next: '🟣', type: 'color' }
+                    ];
+                    pat = abPatterns[Math.floor(Math.random() * abPatterns.length)];
+                } else if (i < 7) {
+                    // Number patterns
+                    const numPatterns = [
+                        { seq: [2,4,6,8], next: 10, type: 'number' },
+                        { seq: [1,3,5,7], next: 9, type: 'number' },
+                        { seq: [5,10,15,20], next: 25, type: 'number' },
+                        { seq: [10,20,30,40], next: 50, type: 'number' }
+                    ];
+                    pat = numPatterns[Math.floor(Math.random() * numPatterns.length)];
+                } else {
+                    // More complex patterns
+                    const complexPatterns = [
+                        { seq: ['🔴','🔴','🟢','🔴','🔴','🟢'], next: '🔴', type: 'color' },
+                        { seq: [3,6,9,12], next: 15, type: 'number' },
+                        { seq: ['🔵','🟡','🔵','🟡','🔵'], next: '🟡', type: 'color' }
+                    ];
+                    pat = complexPatterns[Math.floor(Math.random() * complexPatterns.length)];
+                }
+                currentProblems.push(pat);
+                const problemDiv = document.createElement('div');
+                problemDiv.className = 'problem';
+                problemDiv.innerHTML = `
+                    <span class='pattern-seq'>${pat.seq.join(', ')}, ...</span>
+                    <input type="text" id="answer${i}" placeholder="Next?">
+                    <div class="feedback" id="feedback${i}"></div>
+                `;
+                problemsDiv.appendChild(problemDiv);
+            }
+            score = 0;
+            updateScore();
+        }
+        function checkAnswers() {
+            let correctCount = 0;
+            currentProblems.forEach((pat, index) => {
+                const answer = document.getElementById(`answer${index}`).value.trim();
+                const feedback = document.getElementById(`feedback${index}`);
+                if (answer == pat.next) {
+                    feedback.textContent = '✅ Correct!';
+                    feedback.className = 'feedback correct';
+                    correctCount++;
+                } else {
+                    feedback.textContent = `❌ Try again! The answer is ${pat.next}`;
+                    feedback.className = 'feedback incorrect';
+                }
+            });
+            score = correctCount;
+            updateScore();
+        }
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('stars').textContent = '⭐'.repeat(score);
+        }
+        window.onload = generateProblems;
+    </script>
+</body>
+</html> 

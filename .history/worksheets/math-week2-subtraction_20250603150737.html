@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 2 Math - Subtraction Adventure</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f8ff;
+        }
+        .worksheet-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c5aa0;
+            text-align: center;
+        }
+        .problem {
+            margin: 20px 0;
+            padding: 15px;
+            border: 2px solid #2c5aa0;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+        }
+        .problem input {
+            width: 60px;
+            padding: 5px;
+            margin: 0 10px;
+            border: 2px solid #2c5aa0;
+            border-radius: 5px;
+        }
+        .feedback {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+        button {
+            background-color: #2c5aa0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 0 10px;
+        }
+        button:hover {
+            background-color: #1e3f7d;
+        }
+        .progress {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 18px;
+        }
+        .stars {
+            text-align: center;
+            font-size: 24px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <h1>🌟 Subtraction Adventure 🌟</h1>
+        <div class="progress">Progress: <span id="score">0</span>/10</div>
+        <div class="stars" id="stars">⭐</div>
+
+        <div id="problems">
+            <!-- Problems will be generated here -->
+        </div>
+
+        <div class="controls">
+            <button onclick="checkAnswers()">Check Answers</button>
+            <button onclick="generateNewProblems()">New Problems</button>
+        </div>
+    </div>
+
+    <script>
+        let currentProblems = [];
+        let score = 0;
+
+        function generateProblem() {
+            const num1 = Math.floor(Math.random() * 50) + 1;
+            const num2 = Math.floor(Math.random() * num1) + 1;
+            return {
+                num1: num1,
+                num2: num2,
+                answer: num1 - num2
+            };
+        }
+
+        function generateNewProblems() {
+            currentProblems = [];
+            const problemsDiv = document.getElementById('problems');
+            problemsDiv.innerHTML = '';
+            
+            for (let i = 0; i < 10; i++) {
+                const problem = generateProblem();
+                currentProblems.push(problem);
+                
+                const problemDiv = document.createElement('div');
+                problemDiv.className = 'problem';
+                problemDiv.innerHTML = `
+                    <span>${i + 1}. ${problem.num1} - ${problem.num2} = </span>
+                    <input type="number" id="answer${i}" min="0">
+                    <div class="feedback" id="feedback${i}"></div>
+                `;
+                problemsDiv.appendChild(problemDiv);
+            }
+            
+            score = 0;
+            updateScore();
+        }
+
+        function checkAnswers() {
+            let correctCount = 0;
+            
+            currentProblems.forEach((problem, index) => {
+                const answer = parseInt(document.getElementById(`answer${index}`).value);
+                const feedback = document.getElementById(`feedback${index}`);
+                
+                if (answer === problem.answer) {
+                    feedback.textContent = '✅ Correct!';
+                    feedback.className = 'feedback correct';
+                    correctCount++;
+                } else {
+                    feedback.textContent = `❌ Try again! The answer is ${problem.answer}`;
+                    feedback.className = 'feedback incorrect';
+                }
+            });
+            
+            score = correctCount;
+            updateScore();
+        }
+
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            const starsDiv = document.getElementById('stars');
+            const starCount = Math.ceil(score / 2);
+            starsDiv.textContent = '⭐'.repeat(starCount);
+        }
+
+        // Generate initial problems when the page loads
+        window.onload = generateNewProblems;
+    </script>
+</body>
+</html>

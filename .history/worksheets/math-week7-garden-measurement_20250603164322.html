@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 7 Math - Measuring Garden/Outdoor Spaces</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f0f8ff; }
+        .worksheet-container { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c5aa0; text-align: center; }
+        .problem { margin: 20px 0; padding: 15px; border: 2px solid #2c5aa0; border-radius: 10px; background-color: #f8f9fa; }
+        .garden-card { background: linear-gradient(135deg, #e8f5e8, #c8e6c9); padding: 20px; border-radius: 15px; margin: 15px 0; border: 3px solid #4caf50; }
+        .measurement-visual { display: flex; align-items: center; justify-content: center; margin: 20px 0; gap: 10px; }
+        .ruler { width: 300px; height: 40px; background: #ffeb3b; border: 3px solid #f57c00; border-radius: 5px; position: relative; }
+        .ruler-marks { display: flex; justify-content: space-between; align-items: center; height: 100%; padding: 0 5px; }
+        .ruler-mark { font-size: 10px; font-weight: bold; color: #333; }
+        .garden-plot { border: 3px solid #4caf50; border-radius: 10px; margin: 15px 0; position: relative; background: linear-gradient(45deg, #81c784, #a5d6a7); }
+        .plot-small { width: 120px; height: 80px; }
+        .plot-medium { width: 180px; height: 120px; }
+        .plot-large { width: 240px; height: 160px; }
+        .plant-icon { font-size: 24px; position: absolute; }
+        .measuring-tool { background: #fff3e0; padding: 15px; border-radius: 10px; margin: 15px 0; border: 2px solid #ff9800; }
+        input[type="number"] { padding: 8px; border: 2px solid #2c5aa0; border-radius: 5px; font-size: 16px; width: 100px; }
+        button { background-color: #2c5aa0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; margin: 0 10px; }
+        button:hover { background-color: #1e3f7d; }
+        .feedback { margin-top: 10px; font-weight: bold; }
+        .correct { color: green; }
+        .incorrect { color: red; }
+        .controls { text-align: center; margin: 20px 0; }
+        .progress { text-align: center; margin: 20px 0; font-size: 18px; }
+        .stars { text-align: center; font-size: 24px; margin: 20px 0; }
+        .intro { background: #e8f5e8; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+        .garden-emoji { font-size: 24px; margin-right: 10px; }
+        .measurement-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; margin: 15px 0; }
+        .grid-square { width: 40px; height: 40px; border: 2px solid #4caf50; background: #e8f5e8; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <h1>🌻 Measuring Garden/Outdoor Spaces 📏</h1>
+        
+        <p style="text-align: center; font-size: 18px; color: #2c5aa0; margin-bottom: 20px;" id="personal-greeting">
+            Hi there! Let's become garden mathematicians! We'll measure outdoor spaces like real landscape designers! 🌱
+        </p>
+        
+        <div class="intro">
+            <h3>Garden Math Adventures!</h3>
+            <p>Gardens and outdoor spaces are full of math! We measure length, width, area, and plan how much space plants need.</p>
+            <p><strong>Garden Measurement Tools:</strong></p>
+            <ul>
+                <li><strong>Rulers:</strong> Measure small distances in inches or centimeters</li>
+                <li><strong>Yard sticks:</strong> Measure longer distances in feet or meters</li>
+                <li><strong>Steps:</strong> Count steps to estimate bigger areas</li>
+                <li><strong>Grid counting:</strong> Count squares to find area</li>
+            </ul>
+            <div class="measurement-visual">
+                <div class="ruler">
+                    <div class="ruler-marks">
+                        <span class="ruler-mark">0</span>
+                        <span class="ruler-mark">3</span>
+                        <span class="ruler-mark">6</span>
+                        <span class="ruler-mark">9</span>
+                        <span class="ruler-mark">12</span>
+                    </div>
+                </div>
+                <span>📏 inches</span>
+            </div>
+        </div>
+        
+        <div class="progress">Progress: <span id="score">0</span>/10</div>
+        <div class="stars" id="stars">⭐</div>
+        <div id="problems"></div>
+        <div class="controls">
+            <button onclick="checkAnswers()">Check Answers</button>
+            <button onclick="generateProblems()">New Problems</button>
+        </div>
+    </div>
+    <script>
+        let currentProblems = [];
+        let score = 0;
+        
+        // Get the selected child's name from URL parameters or localStorage
+        function getSelectedChildName() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let childName = urlParams.get('child');
+            
+            if (!childName) {
+                // Try to get from localStorage if not in URL
+                const savedChild = localStorage.getItem('selectedChild');
+                if (savedChild) {
+                    childName = savedChild;
+                }
+            }
+            
+            // Capitalize first letter
+            if (childName) {
+                return childName.charAt(0).toUpperCase() + childName.slice(1);
+            }
+            return 'there'; // fallback
+        }
+        
+        // Set personalized greeting
+        function setPersonalizedGreeting() {
+            const childName = getSelectedChildName();
+            const greeting = document.getElementById('personal-greeting');
+            greeting.textContent = `Hi ${childName}! Let's become garden mathematicians! We'll measure outdoor spaces like real landscape designers! 🌱`;
+        }
+        
+        function createGardenPlot(width, height, plants = []) {
+            let plotHtml = `<div class="garden-plot" style="width: ${width}px; height: ${height}px; position: relative;">`;
+            
+            plants.forEach(plant => {
+                plotHtml += `<div class="plant-icon" style="left: ${plant.x}px; top: ${plant.y}px;">${plant.icon}</div>`;
+            });
+            
+            plotHtml += '</div>';
+            return plotHtml;
+        }
+        
+        function createMeasurementGrid(rows, cols, filledSquares = []) {
+            let gridHtml = '<div class="measurement-grid" style="grid-template-columns: repeat(' + cols + ', 40px);">';
+            
+            for (let i = 0; i < rows * cols; i++) {
+                const isPlanted = filledSquares.includes(i);
+                const icon = isPlanted ? '🌱' : '';
+                gridHtml += `<div class="grid-square">${icon}</div>`;
+            }
+            
+            gridHtml += '</div>';
+            return gridHtml;
+        }
+        
+        function generateProblems() {
+            currentProblems = [];
+            const problemsDiv = document.getElementById('problems');
+            problemsDiv.innerHTML = '';
+            
+            const problems = [
+                {
+                    type: "length",
+                    title: "Sanha's Flower Bed",
+                    description: "Sanha's flower bed is 8 feet long and 4 feet wide.",
+                    visual: createGardenPlot(160, 80, [
+                        {icon: '🌸', x: 20, y: 10},
+                        {icon: '🌻', x: 60, y: 15},
+                        {icon: '🌷', x: 100, y: 12},
+                        {icon: '🌺', x: 140, y: 8}
+                    ]),
+                    question: "What is the perimeter of the flower bed? (Add all 4 sides: 8+4+8+4)",
+                    answer: 24
+                },
+                {
+                    type: "area",
+                    title: "Sanav's Vegetable Garden",
+                    description: "Sanav's garden is 5 feet long and 3 feet wide.",
+                    question: "What is the area of the garden? (Length × Width = 5 × 3)",
+                    answer: 15
+                },
+                {
+                    type: "counting",
+                    title: "Aadhi's Garden Grid",
+                    description: "Aadhi planted seeds in this grid. Each square is 1 foot.",
+                    visual: createMeasurementGrid(4, 6, [0, 1, 2, 6, 7, 8, 12, 13, 14, 18, 19, 20]),
+                    question: "How many squares have plants? Count the 🌱 symbols.",
+                    answer: 12
+                },
+                {
+                    type: "comparison",
+                    title: "Sai Vittal's Two Gardens",
+                    description: "Garden A is 6 feet × 4 feet. Garden B is 5 feet × 5 feet.",
+                    question: "Which garden has a bigger area? What is Garden A's area minus Garden B's area?",
+                    answer: 1
+                },
+                {
+                    type: "planning",
+                    title: "Sanvi's Fence Planning",
+                    description: "Sanvi wants to put a fence around her 7-foot × 6-foot garden.",
+                    question: "How many feet of fence does she need? (Perimeter = 7+6+7+6)",
+                    answer: 26
+                },
+                {
+                    type: "spacing",
+                    title: "Plant Spacing Math",
+                    description: "In a 12-foot row, plants need to be 3 feet apart.",
+                    question: "How many plants can fit? (12 ÷ 3 = ?)",
+                    answer: 4
+                },
+                {
+                    type: "steps",
+                    title: "Measuring with Steps",
+                    description: "Sanha's garden is 15 steps long. Each step is about 2 feet.",
+                    question: "About how many feet long is the garden? (15 × 2)",
+                    answer: 30
+                },
+                {
+                    type: "square",
+                    title: "Square Garden Design",
+                    description: "Sanav wants a square garden with each side 6 feet long.",
+                    question: "What is the area of his square garden? (6 × 6)",
+                    answer: 36
+                },
+                {
+                    type: "path",
+                    title: "Garden Path Math",
+                    description: "A path through the garden is 20 feet long and 2 feet wide.",
+                    question: "What is the area of the path? (20 × 2)",
+                    answer: 40
+                },
+                {
+                    type: "total",
+                    title: "Total Garden Area",
+                    description: "Aadhi has 3 garden beds: 4×3 feet, 5×2 feet, and 6×4 feet.",
+                    question: "What is the total area of all three beds? (12 + 10 + 24)",
+                    answer: 46
+                }
+            ];
+            
+            problems.forEach((problem, i) => {
+                currentProblems.push(problem);
+                
+                let visualHtml = '';
+                if (problem.visual) {
+                    visualHtml = `<div class="measuring-tool">${problem.visual}</div>`;
+                }
+                
+                problemsDiv.innerHTML += `
+                    <div class='problem'>
+                        <h4>Garden Math ${i + 1}</h4>
+                        <div class='garden-card'>
+                            <h4><span class='garden-emoji'>🌿</span>${problem.title}</h4>
+                            <p>${problem.description}</p>
+                            ${visualHtml}
+                            <p><strong>${problem.question}</strong></p>
+                        </div>
+                        <p><strong>Answer:</strong> <input type='number' id='answer${i}' placeholder='?' min='0' max='200'> feet or square feet</p>
+                        <div class='feedback' id='feedback${i}'></div>
+                    </div>
+                `;
+            });
+            
+            score = 0;
+            updateScore();
+        }
+        
+        function checkAnswers() {
+            let correctCount = 0;
+            
+            currentProblems.forEach((problem, i) => {
+                const userAnswer = parseInt(document.getElementById(`answer${i}`).value);
+                const feedback = document.getElementById(`feedback${i}`);
+                
+                if (userAnswer === problem.answer) {
+                    feedback.textContent = '✅ Excellent garden math! You\'re a great landscape mathematician!';
+                    feedback.className = 'feedback correct';
+                    correctCount++;
+                } else {
+                    feedback.textContent = `❌ Try again! Answer: ${problem.answer}`;
+                    feedback.className = 'feedback incorrect';
+                }
+            });
+            
+            score = correctCount;
+            updateScore();
+        }
+        
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('stars').textContent = '⭐'.repeat(score);
+        }
+        
+        window.onload = function() {
+            setPersonalizedGreeting();
+            generateProblems();
+        };
+    </script>
+</body>
+</html> 

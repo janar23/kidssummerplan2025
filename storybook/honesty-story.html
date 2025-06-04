@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Honest Friends - A Story about Sanav, Sanha, and Sai Vittal</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #87CEEB, #98FB98);
+        }
+        
+        .storybook {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .page {
+            padding: 40px;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            page-break-after: always;
+            border-bottom: 3px solid #FFD700;
+        }
+        
+        .cover {
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4, #45B7D1);
+            color: white;
+            text-align: center;
+        }
+        
+        .cover h1 {
+            font-size: 3em;
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .cover h2 {
+            font-size: 1.5em;
+            margin: 10px 0;
+            font-weight: normal;
+        }
+        
+        .page-content {
+            text-align: center;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .page-number {
+            position: absolute;
+            bottom: 20px;
+            right: 30px;
+            background: #FFD700;
+            color: #333;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        
+        .story-text {
+            font-size: 1.4em;
+            line-height: 1.6;
+            color: #333;
+            margin: 20px 0;
+            max-width: 600px;
+            text-align: center;
+        }
+        
+        /* Character illustration containers */
+        .character-illustration {
+            width: 550px;
+            height: 420px;
+            margin: 30px auto;
+            border-radius: 15px;
+            border: 5px solid #FFD700;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #FF69B4, #FFB6C1);
+        }
+        
+        .character-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        
+        .image-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+            font-size: 1.3em;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        .placeholder-text {
+            margin: 12px 0;
+            font-weight: bold;
+        }
+        
+        .placeholder-instructions {
+            font-size: 1em;
+            font-style: italic;
+            opacity: 0.8;
+        }
+        
+        .school {
+            background: linear-gradient(135deg, #8B4513, #DEB887);
+        }
+        
+        .classroom {
+            background: linear-gradient(135deg, #4169E1, #87CEEB);
+        }
+        
+        .playground {
+            background: linear-gradient(135deg, #32CD32, #98FB98);
+        }
+        
+        .home {
+            background: linear-gradient(135deg, #FF6347, #FFA07A);
+        }
+        
+        .thinking {
+            background: linear-gradient(135deg, #9370DB, #DDA0DD);
+        }
+        
+        .honest {
+            background: linear-gradient(135deg, #FFD700, #FFF8DC);
+        }
+        
+        .friends {
+            background: linear-gradient(135deg, #FF69B4, #FFB6C1);
+        }
+        
+        .character-name {
+            font-weight: bold;
+            color: #FF6B6B;
+        }
+        
+        .dialogue {
+            background: #F0F8FF;
+            padding: 15px;
+            border-radius: 20px;
+            border-left: 5px solid #4ECDC4;
+            margin: 15px 0;
+            font-style: italic;
+        }
+        
+        .moral {
+            background: #FFF8DC;
+            padding: 20px;
+            border-radius: 15px;
+            border: 3px solid #FFD700;
+            font-weight: bold;
+            color: #8B4513;
+        }
+
+        /* Special character placeholders */
+        .sanav-sanha {
+            background: linear-gradient(135deg, #4ECDC4, #45B7D1);
+        }
+        
+        .sai-vittal {
+            background: linear-gradient(135deg, #98FB98, #32CD32);
+        }
+        
+        .all-three {
+            background: linear-gradient(135deg, #FF69B4, #FFB6C1, #45B7D1);
+        }
+
+        @media print {
+            body { background: white; }
+            .page { page-break-after: always; min-height: 90vh; }
+        }
+    </style>
+</head>
+<body>
+    <div class="storybook">
+        <!-- Page 1: Cover -->
+        <div class="page cover">
+            <h1>🌟 The Honest Friends 🌟</h1>
+            <h2>A Story about Sanav, Sanha, and Sai Vittal</h2>
+            <div class="character-illustration all-three">
+                <!-- Replace this div with actual cartoon image -->
+                <img src="images/cover-all-three-friends.jpg" alt="Sanav, Sanha, and Sai Vittal" class="character-image" style="display: none;">
+                <div class="image-placeholder">
+                    <div class="placeholder-text">👦🏽👧🏽👦🏽</div>
+                    <div class="placeholder-text">Sanav, Sanha & Sai Vittal</div>
+                    <div class="placeholder-text">Three Best Friends</div>
+                    <div class="placeholder-instructions">Insert cartoon image of all three friends here</div>
+                </div>
+            </div>
+            <h3>Set in Prosper, Texas</h3>
+            <h4>A tale about the power of honesty</h4>
+        </div>
+
+        <!-- Page 2: Introduction -->
+        <div class="page">
+            <div class="page-content">
+                <div class="character-illustration sanav-sanha">
+                    <!-- Replace this div with actual cartoon image -->
+                    <img src="images/sanav-sanha-twins.jpg" alt="Sanav and Sanha twins" class="character-image" style="display: none;">
+                    <div class="image-placeholder">
+                        <div class="placeholder-text">👦🏽👧🏽</div>
+                        <div class="placeholder-text">Sanav & Sanha</div>
+                        <div class="placeholder-text">The Twins</div>
+                        <div class="placeholder-instructions">Insert cartoon image of the twins here</div>
+                    </div>
+                </div>
+                <div class="story-text">
+                    In the sunny town of Prosper, Texas, at Somtherman Elementary School, lived three best friends: <span class="character-name">Sanav</span>, <span class="character-name">Sanha</span>, and <span class="character-name">Sai Vittal</span>. 
+                    <br><br>
+                    Sanav and Sanha were twins who loved to learn and play together. Sai Vittal was their closest friend, and the three of them were inseparable!
+                </div>
+            </div>
+            <div class="page-number">2</div>
+        </div>
+
+        <!-- Page 3: The Problem Begins -->
+        <div class="page">
+            <div class="page-content">
+                <div class="character-illustration all-three">
+                    <!-- Replace this div with actual cartoon image -->
+                    <img src="images/classroom-scene.jpg" alt="Friends in classroom" class="character-image" style="display: none;">
+                    <div class="image-placeholder">
+                        <div class="placeholder-text">📝✏️📚</div>
+                        <div class="placeholder-text">Study Time Together</div>
+                        <div class="placeholder-instructions">Insert cartoon image of friends studying together</div>
+                    </div>
+                </div>
+                <div class="story-text">
+                    One morning, their teacher Ms. Johnson announced a surprise math test. All the students groaned, but the three friends had studied hard together the night before.
+                    <br><br>
+                    <div class="dialogue">
+                        "Don't worry," whispered <span class="character-name">Sanha</span> to her brother. "We studied all those addition and subtraction problems together!"
+                    </div>
+                </div>
+            </div>
+            <div class="page-number">3</div>
+        </div>
+
+        <!-- Page 4: The Temptation -->
+        <div class="page">
+            <div class="page-content">
+                <div class="character-illustration sai-vittal">
+                    <!-- Replace this div with actual cartoon image -->
+                    <img src="images/sai-vittal-thinking.jpg" alt="Sai Vittal thinking" class="character-image" style="display: none;">
+                    <div class="image-placeholder">
+                        <div class="placeholder-text">👦🏽🤔</div>
+                        <div class="placeholder-text">Sai Vittal</div>
+                        <div class="placeholder-text">Facing a Difficult Choice</div>
+                        <div class="placeholder-instructions">Insert cartoon image of Sai Vittal looking thoughtful/conflicted</div>
+                    </div>
+                </div>
+                <div class="story-text">
+                    During the test, <span class="character-name">Sai Vittal</span> got stuck on a really hard problem. He could see <span class="character-name">Sanav's</span> paper clearly and noticed that Sanav had already solved the same problem.
+                    <br><br>
+                    <div class="dialogue">
+                        Sai Vittal thought to himself: "I could just peek at Sanav's answer. No one would know..."
+                    </div>
+                </div>
+            </div>
+            <div class="page-number">4</div>
+        </div>
+
+        <!-- Page 5: The Choice -->
+        <div class="page">
+            <div class="page-content">
+                <div class="character-illustration sai-vittal">
+                    <!-- Replace this div with actual cartoon image -->
+                    <img src="images/sai-vittal-honest-choice.jpg" alt="Sai Vittal making honest choice" class="character-image" style="display: none;">
+                    <div class="image-placeholder">
+                        <div class="placeholder-text">👦🏽✨</div>
+                        <div class="placeholder-text">Sai Vittal</div>
+                        <div class="placeholder-text">Choosing Honesty</div>
+                        <div class="placeholder-instructions">Insert cartoon image of Sai Vittal making the right choice</div>
+                    </div>
+                </div>
+                <div class="story-text">
+                    But then <span class="character-name">Sai Vittal</span> remembered what his parents and teachers always said about being honest. He took a deep breath and decided to try his best on his own.
+                    <br><br>
+                    <div class="dialogue">
+                        "Even if I get it wrong," he thought, "at least I'll know I was honest and tried my best."
+                    </div>
+                </div>
+            </div>
+            <div class="page-number">5</div>
+        </div>
+
+        <!-- Page 6: After the Test -->
+        <div class="page">
+            <div class="page-content">
+                <div class="character-illustration all-three">
+                    <!-- Replace this div with actual cartoon image -->
+                    <img src="images/friends-under-tree.jpg" alt="Friends talking under tree" class="character-image" style="display: none;">
+                    <div class="image-placeholder">
+                        <div class="placeholder-text">👦🏽👧🏽👦🏽🌳</div>
+                        <div class="placeholder-text">Friends Under the Oak Tree</div>
+                        <div class="placeholder-instructions">Insert cartoon image of all three friends sitting under a tree</div>
+                    </div>
+                </div>
+                <div class="story-text">
+                    After the test, the three friends sat under their favorite oak tree during recess. <span class="character-name">Sai Vittal</span> looked worried.
+                    <br><br>
+                    <div class="dialogue">
+                        "I think I got that last problem wrong," he admitted to <span class="character-name">Sanav</span> and <span class="character-name">Sanha</span>. "I could have copied from Sanav, but I didn't want to cheat."
+                    </div>
+                </div>
+            </div>
+            <div class="page-number">6</div>
+        </div>
+
+        <!-- Page 7: Friends' Support -->
+        <div class="page">
+            <div class="page-content">
+                <div class="character-illustration all-three">
+                    <!-- Replace this div with actual cartoon image -->
+                    <img src="images/friends-supporting.jpg" alt="Friends supporting each other" class="character-image" style="display: none;">
+                    <div class="image-placeholder">
+                        <div class="placeholder-text">👦🏽👧🏽👦🏽🤝</div>
+                        <div class="placeholder-text">True Friendship</div>
+                        <div class="placeholder-text">Supporting Each Other</div>
+                        <div class="placeholder-instructions">Insert cartoon image of friends showing support and encouragement</div>
+                    </div>
+                </div>
+                <div class="story-text">
+                    <span class="character-name">Sanav</span> and <span class="character-name">Sanha</span> smiled proudly at their friend.
+                    <br><br>
+                    <div class="dialogue">
+                        "You did the right thing, Sai Vittal!" said <span class="character-name">Sanha</span>. "We're proud of you for being honest."
+                    </div>
+                    <br>
+                    <div class="dialogue">
+                        "Yeah!" added <span class="character-name">Sanav</span>. "Getting a wrong answer honestly is better than getting a right answer by cheating."
+                    </div>
+                </div>
+            </div>
+            <div class="page-number">7</div>
+        </div>
+
+        <!-- Page 8: The Surprise -->
+        <div class="page">
+            <div class="page-content">
+                <div class="character-illustration sai-vittal">
+                    <!-- Replace this div with actual cartoon image -->
+                    <img src="images/sai-vittal-happy.jpg" alt="Sai Vittal happy with results" class="character-image" style="display: none;">
+                    <div class="image-placeholder">
+                        <div class="placeholder-text">👦🏽😊📝</div>
+                        <div class="placeholder-text">Sai Vittal</div>
+                        <div class="placeholder-text">Happy with His Results</div>
+                        <div class="placeholder-instructions">Insert cartoon image of Sai Vittal smiling with his test paper</div>
+                    </div>
+                </div>
+                <div class="story-text">
+                    The next day, Ms. Johnson handed back the tests. <span class="character-name">Sai Vittal</span> was nervous to look at his grade.
+                    <br><br>
+                    To his surprise, he had gotten the problem right after all! His honest effort and careful thinking had paid off.
+                    <br><br>
+                    <div class="dialogue">
+                        "I'm so glad I trusted myself and stayed honest," he said with a big smile.
+                    </div>
+                </div>
+            </div>
+            <div class="page-number">8</div>
+        </div>
+
+        <!-- Page 9: The Lesson -->
+        <div class="page">
+            <div class="page-content">
+                <div class="character-illustration all-three">
+                    <!-- Replace this div with actual cartoon image -->
+                    <img src="images/family-proud.jpg" alt="Families proud of the children" class="character-image" style="display: none;">
+                    <div class="image-placeholder">
+                        <div class="placeholder-text">👨‍👩‍👧‍👦💝</div>
+                        <div class="placeholder-text">Proud Families</div>
+                        <div class="placeholder-text">Celebrating Good Choices</div>
+                        <div class="placeholder-instructions">Insert cartoon image of families celebrating the children's honesty</div>
+                    </div>
+                </div>
+                <div class="story-text">
+                    That evening, all three friends told their families about what happened. Their parents were very proud of <span class="character-name">Sai Vittal</span> for choosing honesty over an easy answer.
+                    <br><br>
+                    <div class="dialogue">
+                        "Honesty always makes us feel good about ourselves," said Sanha and Sanav's mom. "You three are learning one of life's most important lessons."
+                    </div>
+                </div>
+            </div>
+            <div class="page-number">9</div>
+        </div>
+
+        <!-- Page 10: The Moral -->
+        <div class="page">
+            <div class="page-content">
+                <div class="character-illustration all-three">
+                    <!-- Replace this div with actual cartoon image -->
+                    <img src="images/final-group-happy.jpg" alt="All three friends happy together" class="character-image" style="display: none;">
+                    <div class="image-placeholder">
+                        <div class="placeholder-text">👦🏽👧🏽👦🏽🌟</div>
+                        <div class="placeholder-text">The Three Best Friends</div>
+                        <div class="placeholder-text">Honest, Happy, and True</div>
+                        <div class="placeholder-instructions">Insert final cartoon image of all three friends together, looking happy and proud</div>
+                    </div>
+                </div>
+                <div class="story-text">
+                    From that day forward, <span class="character-name">Sanav</span>, <span class="character-name">Sanha</span>, and <span class="character-name">Sai Vittal</span> always remembered the importance of honesty.
+                    <br><br>
+                    <div class="moral">
+                        💝 The Moral of the Story 💝<br><br>
+                        Being honest might sometimes seem harder, but it always makes us feel proud of ourselves and helps us grow into better people. True friends support each other in making good choices!
+                    </div>
+                </div>
+                <br>
+                <div style="font-style: italic; color: #666;">
+                    The End<br>
+                    🌟 ⭐ 🌟
+                </div>
+            </div>
+            <div class="page-number">10</div>
+        </div>
+    </div>
+
+    <script>
+        // Function to show actual images when they're available
+        function loadCharacterImages() {
+            const images = document.querySelectorAll('.character-image');
+            images.forEach(img => {
+                img.onload = function() {
+                    this.style.display = 'block';
+                    this.parentElement.querySelector('.image-placeholder').style.display = 'none';
+                };
+                img.onerror = function() {
+                    this.style.display = 'none';
+                    this.parentElement.querySelector('.image-placeholder').style.display = 'flex';
+                };
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('The Honest Friends story book loaded successfully!');
+            loadCharacterImages();
+        });
+    </script>
+</body>
+</html> 

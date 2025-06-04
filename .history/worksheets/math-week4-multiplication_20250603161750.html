@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 4 Math - Multiplication Tables (2, 5, 10)</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f0f8ff; }
+        .worksheet-container { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c5aa0; text-align: center; }
+        .problem { margin: 20px 0; padding: 15px; border: 2px solid #2c5aa0; border-radius: 10px; background-color: #f8f9fa; }
+        .multiplication-visual { display: flex; gap: 15px; margin: 15px 0; flex-wrap: wrap; }
+        .group { background-color: #e3f2fd; padding: 10px; border-radius: 10px; border: 2px dashed #2c5aa0; }
+        .dots { display: flex; flex-wrap: wrap; gap: 5px; max-width: 120px; }
+        .dot { width: 15px; height: 15px; background-color: #2c5aa0; border-radius: 50%; }
+        input[type="number"] { padding: 8px; border: 2px solid #2c5aa0; border-radius: 5px; font-size: 16px; width: 80px; }
+        button { background-color: #2c5aa0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; margin: 0 10px; }
+        button:hover { background-color: #1e3f7d; }
+        .feedback { margin-top: 10px; font-weight: bold; }
+        .correct { color: green; }
+        .incorrect { color: red; }
+        .controls { text-align: center; margin: 20px 0; }
+        .progress { text-align: center; margin: 20px 0; font-size: 18px; }
+        .stars { text-align: center; font-size: 24px; margin: 20px 0; }
+        .intro { background: #e8f5e8; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+        .table-chart { background: #fff3e0; padding: 15px; border-radius: 10px; margin: 15px 0; }
+        .table-row { display: flex; justify-content: space-between; margin: 5px 0; font-size: 18px; }
+        .highlight { background-color: #ffeb3b; padding: 2px 5px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <h1>✖️ Multiplication Tables (2, 5, 10) ✖️</h1>
+        
+        <p style="text-align: center; font-size: 18px; color: #2c5aa0; margin-bottom: 20px;" id="personal-greeting">
+            Hi there! Let's learn multiplication tables together! You're going to be a multiplication star! ⭐
+        </p>
+        
+        <div class="intro">
+            <h3>What is Multiplication?</h3>
+            <p>Multiplication is like repeated addition! When we multiply, we add the same number multiple times.</p>
+            <p>For example: 3 × 4 means "add 3 four times" = 3 + 3 + 3 + 3 = 12</p>
+            <p>You can also think of it as groups: 3 × 4 = "3 groups of 4 objects" = 12 objects total</p>
+        </div>
+        
+        <div class="table-chart">
+            <h4>Quick Reference Tables:</h4>
+            <div style="display: flex; gap: 30px; justify-content: center;">
+                <div>
+                    <h5>× 2 Table</h5>
+                    <div class="table-row">2 × 1 = 2</div>
+                    <div class="table-row">2 × 2 = 4</div>
+                    <div class="table-row">2 × 3 = 6</div>
+                    <div class="table-row">2 × 4 = 8</div>
+                    <div class="table-row">2 × 5 = 10</div>
+                </div>
+                <div>
+                    <h5>× 5 Table</h5>
+                    <div class="table-row">5 × 1 = 5</div>
+                    <div class="table-row">5 × 2 = 10</div>
+                    <div class="table-row">5 × 3 = 15</div>
+                    <div class="table-row">5 × 4 = 20</div>
+                    <div class="table-row">5 × 5 = 25</div>
+                </div>
+                <div>
+                    <h5>× 10 Table</h5>
+                    <div class="table-row">10 × 1 = 10</div>
+                    <div class="table-row">10 × 2 = 20</div>
+                    <div class="table-row">10 × 3 = 30</div>
+                    <div class="table-row">10 × 4 = 40</div>
+                    <div class="table-row">10 × 5 = 50</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="progress">Progress: <span id="score">0</span>/10</div>
+        <div class="stars" id="stars">⭐</div>
+        <div id="problems"></div>
+        <div class="controls">
+            <button onclick="checkAnswers()">Check Answers</button>
+            <button onclick="generateProblems()">New Problems</button>
+        </div>
+    </div>
+    <script>
+        let currentProblems = [];
+        let score = 0;
+        
+        // Get the selected child's name from URL parameters or localStorage
+        function getSelectedChildName() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let childName = urlParams.get('child');
+            
+            if (!childName) {
+                // Try to get from localStorage if not in URL
+                const savedChild = localStorage.getItem('selectedChild');
+                if (savedChild) {
+                    childName = savedChild;
+                }
+            }
+            
+            // Capitalize first letter
+            if (childName) {
+                return childName.charAt(0).toUpperCase() + childName.slice(1);
+            }
+            return 'there'; // fallback
+        }
+        
+        // Set personalized greeting
+        function setPersonalizedGreeting() {
+            const childName = getSelectedChildName();
+            const greeting = document.getElementById('personal-greeting');
+            greeting.textContent = `Hi ${childName}! Let's learn multiplication tables together! You're going to be a multiplication star! ⭐`;
+        }
+        
+        function createVisualGroups(number, groups) {
+            let visualHtml = '<div class="multiplication-visual">';
+            for (let g = 0; g < groups; g++) {
+                visualHtml += '<div class="group">';
+                visualHtml += '<div class="dots">';
+                for (let i = 0; i < number; i++) {
+                    visualHtml += '<div class="dot"></div>';
+                }
+                visualHtml += '</div>';
+                visualHtml += `<div style="text-align: center; margin-top: 5px; font-weight: bold;">${number}</div>`;
+                visualHtml += '</div>';
+            }
+            visualHtml += '</div>';
+            return visualHtml;
+        }
+        
+        function generateProblems() {
+            currentProblems = [];
+            const problemsDiv = document.getElementById('problems');
+            problemsDiv.innerHTML = '';
+            
+            const problems = [
+                { num1: 2, num2: 3, table: 2 },
+                { num1: 5, num2: 2, table: 5 },
+                { num1: 10, num2: 1, table: 10 },
+                { num1: 2, num2: 5, table: 2 },
+                { num1: 5, num2: 4, table: 5 },
+                { num1: 10, num2: 3, table: 10 },
+                { num1: 2, num2: 4, table: 2 },
+                { num1: 5, num2: 3, table: 5 },
+                { num1: 10, num2: 2, table: 10 },
+                { num1: 2, num2: 2, table: 2 }
+            ];
+            
+            problems.forEach((problem, i) => {
+                const answer = problem.num1 * problem.num2;
+                currentProblems.push(answer);
+                
+                problemsDiv.innerHTML += `
+                    <div class='problem'>
+                        <h4>Problem ${i + 1}: ${problem.num1} × ${problem.num2} = ?</h4>
+                        <p>Think: "${problem.num2} groups of ${problem.num1}"</p>
+                        ${createVisualGroups(problem.num1, problem.num2)}
+                        <p><strong>Answer:</strong> <input type='number' id='answer${i}' placeholder='?' min='0' max='100'></p>
+                        <div class='feedback' id='feedback${i}'></div>
+                    </div>
+                `;
+            });
+            
+            score = 0;
+            updateScore();
+        }
+        
+        function checkAnswers() {
+            let correctCount = 0;
+            
+            currentProblems.forEach((correctAnswer, i) => {
+                const userAnswer = parseInt(document.getElementById(`answer${i}`).value);
+                const feedback = document.getElementById(`feedback${i}`);
+                
+                if (userAnswer === correctAnswer) {
+                    feedback.textContent = '✅ Great job! You understand multiplication!';
+                    feedback.className = 'feedback correct';
+                    correctCount++;
+                } else {
+                    feedback.textContent = `❌ Try again! Answer: ${correctAnswer}`;
+                    feedback.className = 'feedback incorrect';
+                }
+            });
+            
+            score = correctCount;
+            updateScore();
+        }
+        
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('stars').textContent = '⭐'.repeat(score);
+        }
+        
+        window.onload = function() {
+            setPersonalizedGreeting();
+            generateProblems();
+        };
+    </script>
+</body>
+</html>

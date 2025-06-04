@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 3 Math - Graphing Favorite Colors/Foods</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f0f8ff; }
+        .worksheet-container { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c5aa0; text-align: center; }
+        .problem { margin: 20px 0; padding: 15px; border: 2px solid #2c5aa0; border-radius: 10px; background-color: #f8f9fa; }
+        .bar-graph, .tally-chart { margin: 10px 0; }
+        .bar { height: 24px; display: inline-block; margin-right: 8px; vertical-align: bottom; }
+        .bar-label { display: inline-block; width: 60px; text-align: center; }
+        .tally-row { margin: 4px 0; }
+        .feedback { margin-top: 10px; font-weight: bold; }
+        .correct { color: green; }
+        .incorrect { color: red; }
+        .controls { text-align: center; margin: 20px 0; }
+        button { background-color: #2c5aa0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; margin: 0 10px; }
+        button:hover { background-color: #1e3f7d; }
+        .progress { text-align: center; margin: 20px 0; font-size: 18px; }
+        .stars { text-align: center; font-size: 24px; margin: 20px 0; }
+        select { padding: 5px; border-radius: 5px; border: 2px solid #2c5aa0; }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <h1>📊 Graphing Favorite Colors/Foods 📊</h1>
+        <div class="instructions" style="background:#e3f2fd; border-radius:10px; padding:15px; margin-bottom:20px;">
+            <b>How to Answer:</b><br>
+            <ul style="margin:10px 0 0 20px;">
+                <li><b>Bar Graph Questions (1–3):</b> Look at the colored bars. The longest bar shows the favorite color. Type that color's name in the box.</li>
+                <li><b>Tally Chart Questions (4–7):</b> Look at the tally marks for each food. The food with the most tally marks is the favorite. Type that food's name in the box.</li>
+                <li><b>Create Your Own (8–10):</b> Pick your favorite color and food from the dropdowns, click "Show Graph," and see your choices on a graph!</li>
+            </ul>
+        </div>
+        <div class="progress">Progress: <span id="score">0</span>/10</div>
+        <div class="stars" id="stars">⭐</div>
+        <div id="problems"></div>
+        <div class="controls">
+            <button onclick="checkAnswers()">Check Answers</button>
+            <button onclick="generateProblems()">New Problems</button>
+        </div>
+    </div>
+    <script>
+        let currentProblems = [];
+        let score = 0;
+        const colors = ['Red','Blue','Green','Yellow'];
+        const foods = ['Pizza','Burger','Pasta','Salad'];
+        function barGraph(data, labels) {
+            return `<div class='bar-graph'>` + labels.map((l,i)=>`<div class='bar-label'>${l}<div class='bar' style='width:${data[i]*30}px; background:${l.toLowerCase()};'>${data[i]}</div></div>`).join('') + `</div>`;
+        }
+        function tallyChart(data, labels) {
+            return `<div class='tally-chart'>` + labels.map((l,i)=>`<div class='tally-row'>${l}: ${'|||| '.repeat(Math.floor(data[i]/5))}${'|'.repeat(data[i]%5)} (${data[i]})</div>`).join('') + `</div>`;
+        }
+        function generateProblems() {
+            currentProblems = [];
+            const problemsDiv = document.getElementById('problems');
+            problemsDiv.innerHTML = '';
+            for (let i = 0; i < 10; i++) {
+                if (i < 3) {
+                    // Bar graph reading
+                    const data = [Math.floor(Math.random()*6)+1,Math.floor(Math.random()*6)+1,Math.floor(Math.random()*6)+1,Math.floor(Math.random()*6)+1];
+                    const maxIdx = data.indexOf(Math.max(...data));
+                    currentProblems.push({type:'bar', data, labels:colors, answer:colors[maxIdx]});
+                    problemsDiv.innerHTML += `<div class='problem'>${barGraph(data,colors)}<span>Which color is the favorite?</span><input type='text' id='answer${i}' placeholder='Color'><div class='feedback' id='feedback${i}'></div></div>`;
+                } else if (i < 7) {
+                    // Tally chart reading
+                    const data = [Math.floor(Math.random()*6)+1,Math.floor(Math.random()*6)+1,Math.floor(Math.random()*6)+1,Math.floor(Math.random()*6)+1];
+                    const maxIdx = data.indexOf(Math.max(...data));
+                    currentProblems.push({type:'tally', data, labels:foods, answer:foods[maxIdx]});
+                    problemsDiv.innerHTML += `<div class='problem'>${tallyChart(data,foods)}<span>Which food is the favorite?</span><input type='text' id='answer${i}' placeholder='Food'><div class='feedback' id='feedback${i}'></div></div>`;
+                } else {
+                    // Create your own
+                    currentProblems.push({type:'create'});
+                    problemsDiv.innerHTML += `<div class='problem'><span>Choose your favorite color and food:</span><select id='color${i}'><option value=''>Color</option>${colors.map(c=>`<option value='${c}'>${c}</option>`).join('')}</select><select id='food${i}'><option value=''>Food</option>${foods.map(f=>`<option value='${f}'>${f}</option>`).join('')}</select><button type='button' onclick='showGraph(${i})'>Show Graph</button><div id='graph${i}'></div><div class='feedback' id='feedback${i}'></div></div>`;
+                }
+            }
+            score = 0;
+            updateScore();
+        }
+        window.showGraph = function(i) {
+            const color = document.getElementById(`color${i}`).value;
+            const food = document.getElementById(`food${i}`).value;
+            if (color && food) {
+                // Create data arrays based on user selection
+                const colorIndex = colors.indexOf(color);
+                const foodIndex = foods.indexOf(food);
+                
+                // Create color data array with 1 for selected color, 0 for others
+                const colorData = [0, 0, 0, 0];
+                if (colorIndex >= 0) colorData[colorIndex] = 1;
+                
+                // Create food data array with 1 for selected food, 0 for others
+                const foodData = [0, 0, 0, 0];
+                if (foodIndex >= 0) foodData[foodIndex] = 1;
+                
+                document.getElementById(`graph${i}`).innerHTML = 
+                    `<div style="margin-bottom: 15px;"><strong>Your favorite color:</strong><br>` + 
+                    barGraph(colorData, colors) + `</div>` +
+                    `<div><strong>Your favorite food:</strong><br>` + 
+                    tallyChart(foodData, foods) + `</div>`;
+            }
+        }
+        function checkAnswers() {
+            let correctCount = 0;
+            currentProblems.forEach((prob, i) => {
+                const feedback = document.getElementById(`feedback${i}`);
+                let correct = false;
+                if (prob.type==='bar') {
+                    const ans = document.getElementById(`answer${i}`).value.trim().toLowerCase();
+                    correct = ans === prob.answer.toLowerCase();
+                } else if (prob.type==='tally') {
+                    const ans = document.getElementById(`answer${i}`).value.trim().toLowerCase();
+                    correct = ans === prob.answer.toLowerCase();
+                } else if (prob.type==='create') {
+                    correct = true; // Always correct for create-your-own
+                }
+                if (correct) {
+                    feedback.textContent = '✅ Correct!';
+                    feedback.className = 'feedback correct';
+                    correctCount++;
+                } else {
+                    feedback.textContent = '❌ Try again!';
+                    feedback.className = 'feedback incorrect';
+                }
+            });
+            score = correctCount;
+            updateScore();
+        }
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('stars').textContent = '⭐'.repeat(score);
+        }
+        window.onload = generateProblems;
+    </script>
+</body>
+</html> 

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 6 Math - World Currency</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f0f8ff; }
+        .worksheet-container { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c5aa0; text-align: center; }
+        .problem { margin: 20px 0; padding: 15px; border: 2px solid #2c5aa0; border-radius: 10px; background-color: #f8f9fa; }
+        .currency-card { background: linear-gradient(135deg, #e8f5e8, #c8e6c9); padding: 15px; border-radius: 10px; margin: 15px 0; text-align: center; }
+        .flag { font-size: 36px; margin: 10px 0; }
+        .currency-symbol { font-size: 48px; font-weight: bold; color: #2c5aa0; margin: 10px 0; }
+        input[type="number"], input[type="text"] { padding: 8px; border: 2px solid #2c5aa0; border-radius: 5px; font-size: 16px; width: 120px; }
+        button { background-color: #2c5aa0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; margin: 0 10px; }
+        button:hover { background-color: #1e3f7d; }
+        .feedback { margin-top: 10px; font-weight: bold; }
+        .correct { color: green; }
+        .incorrect { color: red; }
+        .controls { text-align: center; margin: 20px 0; }
+        .progress { text-align: center; margin: 20px 0; font-size: 18px; }
+        .stars { text-align: center; font-size: 24px; margin: 20px 0; }
+        .intro { background: #e8f5e8; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <h1>🌍 World Currency Math 💰</h1>
+        
+        <div class="intro">
+            <h3>Money Around the World</h3>
+            <p style="color: #2c5aa0; font-weight: bold;" id="personal-greeting">Hi! Different countries use different types of money called currency. Let's learn about money from around the world and practice some fun math! You're going to be a world currency expert!</p>
+        </div>
+        
+        <div class="progress">Progress: <span id="score">0</span>/10</div>
+        <div class="stars" id="stars">⭐</div>
+        <div id="problems"></div>
+        <div class="controls">
+            <button onclick="checkAnswers()">Check Answers</button>
+            <button onclick="generateProblems()">New Problems</button>
+        </div>
+    </div>
+    <script>
+        let currentProblems = [];
+        let score = 0;
+        
+        // Get the selected child's name from URL parameters or localStorage
+        function getSelectedChildName() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let childName = urlParams.get('child');
+            
+            if (!childName) {
+                // Try to get from localStorage if not in URL
+                const savedChild = localStorage.getItem('selectedChild');
+                if (savedChild) {
+                    childName = savedChild;
+                }
+            }
+            
+            // Capitalize first letter
+            if (childName) {
+                return childName.charAt(0).toUpperCase() + childName.slice(1);
+            }
+            return 'there'; // fallback
+        }
+        
+        // Set personalized greeting
+        function setPersonalizedGreeting() {
+            const childName = getSelectedChildName();
+            const greeting = document.getElementById('personal-greeting');
+            greeting.textContent = `Hi ${childName}! Different countries use different types of money called currency. Let's learn about money from around the world and practice some fun math! You're going to be a world currency expert!`;
+        }
+        
+        function generateProblems() {
+            currentProblems = [];
+            const problemsDiv = document.getElementById('problems');
+            problemsDiv.innerHTML = '';
+            
+            const currencies = [
+                { country: "United States", currency: "Dollar", symbol: "$", flag: "🇺🇸" },
+                { country: "United Kingdom", currency: "Pound", symbol: "£", flag: "🇬🇧" },
+                { country: "Japan", currency: "Yen", symbol: "¥", flag: "🇯🇵" },
+                { country: "Canada", currency: "Dollar", symbol: "C$", flag: "🇨🇦" },
+                { country: "Australia", currency: "Dollar", symbol: "A$", flag: "🇦🇺" }
+            ];
+            
+            const problems = [
+                {
+                    type: "identify",
+                    country: "United States",
+                    flag: "🇺🇸",
+                    symbol: "$",
+                    question: "What currency is used in the United States?",
+                    answer: "dollar"
+                },
+                {
+                    type: "symbol",
+                    country: "Japan",
+                    flag: "🇯🇵",
+                    currency: "Yen",
+                    question: "What is the symbol for Japanese Yen?",
+                    answer: "¥"
+                },
+                {
+                    type: "math",
+                    problem: "If 1 US Dollar = 5 toy coins, how many toy coins equal 3 US Dollars?",
+                    answer: 15
+                },
+                {
+                    type: "identify",
+                    country: "United Kingdom",
+                    flag: "🇬🇧",
+                    symbol: "£",
+                    question: "What currency is used in the United Kingdom?",
+                    answer: "pound"
+                },
+                {
+                    type: "math",
+                    problem: "Sanha has 4 Canadian Dollars (C$4). If she buys a toy for C$1, how much money does she have left?",
+                    answer: 3
+                },
+                {
+                    type: "symbol",
+                    country: "United Kingdom",
+                    flag: "🇬🇧",
+                    currency: "Pound",
+                    question: "What is the symbol for British Pound?",
+                    answer: "£"
+                },
+                {
+                    type: "identify",
+                    country: "Canada",
+                    flag: "🇨🇦",
+                    symbol: "C$",
+                    question: "What currency is used in Canada?",
+                    answer: "dollar"
+                },
+                {
+                    type: "math",
+                    problem: "If 1 British Pound = 2 toy coins, how many pounds equal 10 toy coins?",
+                    answer: 5
+                },
+                {
+                    type: "identify",
+                    country: "Australia",
+                    flag: "🇦🇺",
+                    symbol: "A$",
+                    question: "What currency is used in Australia?",
+                    answer: "dollar"
+                },
+                {
+                    type: "math",
+                    problem: "Sanav collects coins from 3 different countries. If he has 2 coins from each country, how many coins does he have in total?",
+                    answer: 6
+                }
+            ];
+            
+            problems.forEach((problem, i) => {
+                currentProblems.push(problem);
+                
+                if (problem.type === "identify" || problem.type === "symbol") {
+                    const inputType = problem.type === "symbol" ? "text" : "text";
+                    const placeholder = problem.type === "symbol" ? "Symbol" : "Currency name";
+                    
+                    problemsDiv.innerHTML += `
+                        <div class='problem'>
+                            <div class='currency-card'>
+                                <div class='flag'>${problem.flag}</div>
+                                <h4>${problem.country}</h4>
+                                ${problem.type === "identify" ? `<div class='currency-symbol'>${problem.symbol}</div>` : `<h4>${problem.currency}</h4>`}
+                            </div>
+                            <p><strong>${problem.question}</strong></p>
+                            <input type='${inputType}' id='answer${i}' placeholder='${placeholder}'>
+                            <div class='feedback' id='feedback${i}'></div>
+                        </div>
+                    `;
+                } else {
+                    problemsDiv.innerHTML += `
+                        <div class='problem'>
+                            <p><strong>${problem.problem}</strong></p>
+                            <input type='number' id='answer${i}' placeholder='Number' min='0' max='100'>
+                            <div class='feedback' id='feedback${i}'></div>
+                        </div>
+                    `;
+                }
+            });
+            
+            score = 0;
+            updateScore();
+        }
+        
+        function checkAnswers() {
+            let correctCount = 0;
+            
+            currentProblems.forEach((problem, i) => {
+                const userInput = document.getElementById(`answer${i}`).value.trim().toLowerCase();
+                const userAnswer = problem.type === "math" ? parseInt(userInput) : userInput;
+                const correctAnswer = problem.type === "math" ? problem.answer : problem.answer.toLowerCase();
+                const feedback = document.getElementById(`feedback${i}`);
+                
+                if (userAnswer === correctAnswer) {
+                    feedback.textContent = '✅ Correct! Great job!';
+                    feedback.className = 'feedback correct';
+                    correctCount++;
+                } else {
+                    feedback.textContent = `❌ Try again! Answer: ${problem.answer}`;
+                    feedback.className = 'feedback incorrect';
+                }
+            });
+            
+            score = correctCount;
+            updateScore();
+        }
+        
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('stars').textContent = '⭐'.repeat(score);
+        }
+        
+        window.onload = generateProblems;
+    </script>
+</body>
+</html> 

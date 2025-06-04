@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 5 Math - Number Line Activities</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f0f8ff; }
+        .worksheet-container { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c5aa0; text-align: center; }
+        .problem { margin: 20px 0; padding: 15px; border: 2px solid #2c5aa0; border-radius: 10px; background-color: #f8f9fa; }
+        .number-line { background: white; border: 3px solid #2c5aa0; border-radius: 10px; padding: 20px; margin: 15px 0; position: relative; overflow-x: auto; }
+        .line { width: 100%; height: 4px; background-color: #2c5aa0; position: relative; margin: 20px 0; }
+        .number-marks { display: flex; justify-content: space-between; position: relative; width: 100%; }
+        .mark { position: relative; }
+        .mark::before { content: '|'; position: absolute; bottom: -15px; left: -2px; font-size: 20px; color: #2c5aa0; font-weight: bold; }
+        .mark::after { position: absolute; bottom: -35px; left: -8px; font-size: 14px; color: #333; font-weight: bold; }
+        .frog { font-size: 24px; position: absolute; top: -30px; animation: bounce 2s infinite; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .jump-visual { background: linear-gradient(135deg, #e8f5e8, #c8e6c9); padding: 15px; border-radius: 10px; margin: 15px 0; }
+        input[type="number"] { padding: 8px; border: 2px solid #2c5aa0; border-radius: 5px; font-size: 16px; width: 80px; }
+        button { background-color: #2c5aa0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; margin: 0 10px; }
+        button:hover { background-color: #1e3f7d; }
+        .feedback { margin-top: 10px; font-weight: bold; }
+        .correct { color: green; }
+        .incorrect { color: red; }
+        .controls { text-align: center; margin: 20px 0; }
+        .progress { text-align: center; margin: 20px 0; font-size: 18px; }
+        .stars { text-align: center; font-size: 24px; margin: 20px 0; }
+        .intro { background: #e8f5e8; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <h1>🐸 Number Line Activities 🔢</h1>
+        
+        <p style="text-align: center; font-size: 18px; color: #2c5aa0; margin-bottom: 20px;" id="personal-greeting">
+            Hi there! Let's hop along the number line like a frog! Numbers are everywhere and number lines help us see them! 🐸
+        </p>
+        
+        <div class="intro">
+            <h3>What is a Number Line?</h3>
+            <p>A number line is like a road for numbers! Numbers are arranged in order from smallest to largest.</p>
+            <p>We can use number lines to add, subtract, and understand how numbers relate to each other.</p>
+            <div class="number-line">
+                <div class="line"></div>
+                <div class="number-marks">
+                    <div class="mark" style="--num: '0';">0</div>
+                    <div class="mark" style="--num: '1';">1</div>
+                    <div class="mark" style="--num: '2';">2</div>
+                    <div class="mark" style="--num: '3';">3</div>
+                    <div class="mark" style="--num: '4';">4</div>
+                    <div class="mark" style="--num: '5';">5</div>
+                </div>
+                <div class="frog" style="left: 0%;">🐸</div>
+            </div>
+        </div>
+        
+        <div class="progress">Progress: <span id="score">0</span>/10</div>
+        <div class="stars" id="stars">⭐</div>
+        <div id="problems"></div>
+        <div class="controls">
+            <button onclick="checkAnswers()">Check Answers</button>
+            <button onclick="generateProblems()">New Problems</button>
+        </div>
+    </div>
+    <script>
+        let currentProblems = [];
+        let score = 0;
+        
+        // Get the selected child's name from URL parameters or localStorage
+        function getSelectedChildName() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let childName = urlParams.get('child');
+            
+            if (!childName) {
+                // Try to get from localStorage if not in URL
+                const savedChild = localStorage.getItem('selectedChild');
+                if (savedChild) {
+                    childName = savedChild;
+                }
+            }
+            
+            // Capitalize first letter
+            if (childName) {
+                return childName.charAt(0).toUpperCase() + childName.slice(1);
+            }
+            return 'there'; // fallback
+        }
+        
+        // Set personalized greeting
+        function setPersonalizedGreeting() {
+            const childName = getSelectedChildName();
+            const greeting = document.getElementById('personal-greeting');
+            greeting.textContent = `Hi ${childName}! Let's hop along the number line like a frog! Numbers are everywhere and number lines help us see them! 🐸`;
+        }
+        
+        function createNumberLine(start, end, highlight = null) {
+            const numbers = [];
+            for (let i = start; i <= end; i++) {
+                numbers.push(i);
+            }
+            
+            let numberLineHtml = `
+                <div class="number-line">
+                    <div class="line"></div>
+                    <div class="number-marks">
+            `;
+            
+            numbers.forEach((num, index) => {
+                const isHighlight = highlight === num;
+                numberLineHtml += `
+                    <div class="mark ${isHighlight ? 'highlight' : ''}" style="color: ${isHighlight ? '#e91e63' : '#333'}; font-weight: ${isHighlight ? 'bold' : 'normal'};">
+                        ${num}
+                    </div>
+                `;
+            });
+            
+            numberLineHtml += `
+                    </div>
+                    ${highlight !== null ? `<div class="frog" style="left: ${((highlight - start) / (end - start)) * 100}%;">🐸</div>` : ''}
+                </div>
+            `;
+            
+            return numberLineHtml;
+        }
+        
+        function generateProblems() {
+            currentProblems = [];
+            const problemsDiv = document.getElementById('problems');
+            problemsDiv.innerHTML = '';
+            
+            const problems = [
+                {
+                    type: "find",
+                    question: "What number comes after 7?",
+                    numberLine: createNumberLine(5, 10, 7),
+                    answer: 8,
+                    explanation: "The number after 7 is 8"
+                },
+                {
+                    type: "jump",
+                    question: "Sanha starts at 3 and jumps forward 4 spaces. Where does she land?",
+                    numberLine: createNumberLine(0, 10, 3),
+                    answer: 7,
+                    explanation: "3 + 4 = 7"
+                },
+                {
+                    type: "find",
+                    question: "What number comes before 15?",
+                    numberLine: createNumberLine(12, 18, 15),
+                    answer: 14,
+                    explanation: "The number before 15 is 14"
+                },
+                {
+                    type: "jump",
+                    question: "Sanav starts at 12 and jumps backward 5 spaces. Where does he land?",
+                    numberLine: createNumberLine(5, 15, 12),
+                    answer: 7,
+                    explanation: "12 - 5 = 7"
+                },
+                {
+                    type: "count",
+                    question: "How many numbers are between 4 and 8 (not including 4 and 8)?",
+                    numberLine: createNumberLine(3, 9),
+                    answer: 3,
+                    explanation: "5, 6, and 7 are between 4 and 8"
+                },
+                {
+                    type: "jump",
+                    question: "Aadhi starts at 2 and makes 3 jumps of 2 spaces each. Where does she end up?",
+                    numberLine: createNumberLine(0, 10, 2),
+                    answer: 8,
+                    explanation: "2 + 2 + 2 + 2 = 8 (or 2 + 3×2 = 8)"
+                },
+                {
+                    type: "missing",
+                    question: "What number is missing? 10, 11, ?, 13, 14",
+                    numberLine: createNumberLine(9, 15),
+                    answer: 12,
+                    explanation: "The missing number is 12"
+                },
+                {
+                    type: "distance",
+                    question: "How many spaces apart are 6 and 11 on the number line?",
+                    numberLine: createNumberLine(4, 13),
+                    answer: 5,
+                    explanation: "Count: 6→7→8→9→10→11 = 5 spaces"
+                },
+                {
+                    type: "jump",
+                    question: "Sai Vittal and Sanvi start at 0. They both jump 6 spaces, then Sai Vittal jumps 2 more. Where is Sai Vittal?",
+                    numberLine: createNumberLine(0, 10, 0),
+                    answer: 8,
+                    explanation: "0 + 6 + 2 = 8"
+                },
+                {
+                    type: "pattern",
+                    question: "Continue the pattern: 5, 10, 15, 20, ?",
+                    numberLine: createNumberLine(0, 30),
+                    answer: 25,
+                    explanation: "The pattern increases by 5 each time"
+                }
+            ];
+            
+            problems.forEach((problem, i) => {
+                currentProblems.push(problem);
+                
+                problemsDiv.innerHTML += `
+                    <div class='problem'>
+                        <h4>Number Line Adventure ${i + 1}</h4>
+                        <div class='jump-visual'>
+                            <p><strong>${problem.question}</strong></p>
+                            ${problem.numberLine}
+                        </div>
+                        <p><strong>Answer:</strong> <input type='number' id='answer${i}' placeholder='?' min='0' max='50'></p>
+                        <div class='feedback' id='feedback${i}'></div>
+                    </div>
+                `;
+            });
+            
+            score = 0;
+            updateScore();
+        }
+        
+        function checkAnswers() {
+            let correctCount = 0;
+            
+            currentProblems.forEach((problem, i) => {
+                const userAnswer = parseInt(document.getElementById(`answer${i}`).value);
+                const feedback = document.getElementById(`feedback${i}`);
+                
+                if (userAnswer === problem.answer) {
+                    feedback.textContent = `✅ Excellent! ${problem.explanation}`;
+                    feedback.className = 'feedback correct';
+                    correctCount++;
+                } else {
+                    feedback.textContent = `❌ Try again! Answer: ${problem.answer}. ${problem.explanation}`;
+                    feedback.className = 'feedback incorrect';
+                }
+            });
+            
+            score = correctCount;
+            updateScore();
+        }
+        
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('stars').textContent = '⭐'.repeat(score);
+        }
+        
+        window.onload = function() {
+            setPersonalizedGreeting();
+            generateProblems();
+        };
+    </script>
+</body>
+</html> 

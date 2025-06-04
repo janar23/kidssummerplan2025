@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 7 Math - Distance and Speed Concepts for Robots</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f0f8ff; }
+        .worksheet-container { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c5aa0; text-align: center; }
+        .problem { margin: 20px 0; padding: 15px; border: 2px solid #2c5aa0; border-radius: 10px; background-color: #f8f9fa; }
+        .robot-card { background: linear-gradient(135deg, #e8eaf6, #c5cae9); padding: 20px; border-radius: 15px; margin: 15px 0; border: 3px solid #673ab7; }
+        .track { background: #424242; border-radius: 10px; height: 60px; position: relative; margin: 20px 0; display: flex; align-items: center; }
+        .robot { width: 40px; height: 40px; background: #ff9800; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; position: absolute; transition: left 0.5s ease; }
+        .distance-markers { display: flex; justify-content: space-between; margin: 5px 0; font-size: 12px; font-weight: bold; }
+        .speedometer { width: 100px; height: 100px; border: 5px solid #2c5aa0; border-radius: 50%; position: relative; margin: 15px auto; background: white; }
+        .speed-needle { width: 2px; height: 40px; background: #f44336; position: absolute; top: 10px; left: 50%; transform-origin: bottom center; }
+        .speed-numbers { position: absolute; width: 100%; height: 100%; }
+        .grid-path { display: grid; grid-template-columns: repeat(10, 30px); gap: 2px; margin: 15px 0; }
+        .path-square { width: 30px; height: 30px; border: 2px solid #666; background: #f5f5f5; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+        .start { background: #4caf50; color: white; }
+        .finish { background: #f44336; color: white; }
+        .obstacle { background: #424242; color: white; }
+        .robot-path { background: #ffeb3b; }
+        input[type="number"] { padding: 8px; border: 2px solid #2c5aa0; border-radius: 5px; font-size: 16px; width: 100px; }
+        button { background-color: #2c5aa0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; margin: 0 10px; }
+        button:hover { background-color: #1e3f7d; }
+        .feedback { margin-top: 10px; font-weight: bold; }
+        .correct { color: green; }
+        .incorrect { color: red; }
+        .controls { text-align: center; margin: 20px 0; }
+        .progress { text-align: center; margin: 20px 0; font-size: 18px; }
+        .stars { text-align: center; font-size: 24px; margin: 20px 0; }
+        .intro { background: #e8f5e8; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+        .robot-emoji { font-size: 24px; margin-right: 10px; }
+        .concept-visual { display: flex; justify-content: center; gap: 30px; margin: 15px 0; }
+        .concept-box { text-align: center; padding: 15px; border: 3px solid #673ab7; border-radius: 10px; background: #f3e5f5; }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <h1>🤖 Distance and Speed Concepts for Robots 🏃‍♂️</h1>
+        
+        <p style="text-align: center; font-size: 18px; color: #2c5aa0; margin-bottom: 20px;" id="personal-greeting">
+            Hi there! Let's learn how robots calculate distance and speed to move around! You're going to be a robot engineer! ⚡
+        </p>
+        
+        <div class="intro">
+            <h3>How Robots Think About Movement!</h3>
+            <p>Robots use math to figure out how far to go and how fast to move. They calculate distance and speed just like we do!</p>
+            <p><strong>Robot Movement Math:</strong></p>
+            <ul>
+                <li><strong>Distance:</strong> How far the robot needs to travel (feet, meters, steps)</li>
+                <li><strong>Speed:</strong> How fast the robot moves (feet per second, steps per minute)</li>
+                <li><strong>Time:</strong> How long it takes to get there</li>
+                <li><strong>Path:</strong> The route the robot takes</li>
+            </ul>
+            <div class="concept-visual">
+                <div class="concept-box">
+                    <div>📏</div>
+                    <div><strong>Distance</strong></div>
+                    <div>How Far?</div>
+                </div>
+                <div class="concept-box">
+                    <div>⚡</div>
+                    <div><strong>Speed</strong></div>
+                    <div>How Fast?</div>
+                </div>
+                <div class="concept-box">
+                    <div>⏰</div>
+                    <div><strong>Time</strong></div>
+                    <div>How Long?</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="progress">Progress: <span id="score">0</span>/10</div>
+        <div class="stars" id="stars">⭐</div>
+        <div id="problems"></div>
+        <div class="controls">
+            <button onclick="checkAnswers()">Check Answers</button>
+            <button onclick="generateProblems()">New Problems</button>
+        </div>
+    </div>
+    <script>
+        let currentProblems = [];
+        let score = 0;
+        
+        // Get the selected child's name from URL parameters or localStorage
+        function getSelectedChildName() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let childName = urlParams.get('child');
+            
+            if (!childName) {
+                // Try to get from localStorage if not in URL
+                const savedChild = localStorage.getItem('selectedChild');
+                if (savedChild) {
+                    childName = savedChild;
+                }
+            }
+            
+            // Capitalize first letter
+            if (childName) {
+                return childName.charAt(0).toUpperCase() + childName.slice(1);
+            }
+            return 'there'; // fallback
+        }
+        
+        // Set personalized greeting
+        function setPersonalizedGreeting() {
+            const childName = getSelectedChildName();
+            const greeting = document.getElementById('personal-greeting');
+            greeting.textContent = `Hi ${childName}! Let's learn how robots calculate distance and speed to move around! You're going to be a robot engineer! ⚡`;
+        }
+        
+        function createRobotTrack(startPos, endPos, totalLength = 300) {
+            const robotPosition = (startPos / totalLength) * 100;
+            return `
+                <div class="track" style="width: ${totalLength}px;">
+                    <div class="robot" style="left: ${robotPosition}%;">🤖</div>
+                </div>
+                <div class="distance-markers">
+                    <span>0 ft</span>
+                    <span>5 ft</span>
+                    <span>10 ft</span>
+                    <span>15 ft</span>
+                    <span>20 ft</span>
+                </div>
+            `;
+        }
+        
+        function createGridPath(width, height, path = []) {
+            let gridHtml = `<div class="grid-path" style="grid-template-columns: repeat(${width}, 30px);">`;
+            
+            for (let i = 0; i < width * height; i++) {
+                let cellClass = 'path-square';
+                let symbol = '';
+                
+                if (i === 0) {
+                    cellClass += ' start';
+                    symbol = '🟢';
+                } else if (i === (width * height - 1)) {
+                    cellClass += ' finish';
+                    symbol = '🏁';
+                } else if (path.includes(i)) {
+                    cellClass += ' robot-path';
+                    symbol = '🤖';
+                }
+                
+                gridHtml += `<div class="${cellClass}">${symbol}</div>`;
+            }
+            
+            gridHtml += '</div>';
+            return gridHtml;
+        }
+        
+        function generateProblems() {
+            currentProblems = [];
+            const problemsDiv = document.getElementById('problems');
+            problemsDiv.innerHTML = '';
+            
+            const problems = [
+                {
+                    type: "simple-distance",
+                    title: "Sanha's Robot Journey",
+                    description: "Sanha's robot needs to move from the kitchen to the living room, which is 15 feet away.",
+                    visual: createRobotTrack(0, 15),
+                    question: "How far does the robot need to travel?",
+                    answer: 15
+                },
+                {
+                    type: "speed-calculation",
+                    title: "Sanav's Fast Robot",
+                    description: "Sanav's robot moves 5 feet every second.",
+                    question: "How far will it travel in 4 seconds? (5 × 4)",
+                    answer: 20
+                },
+                {
+                    type: "time-to-travel",
+                    title: "Aadhi's Robot Timer",
+                    description: "Aadhi's robot needs to travel 12 feet. It moves 3 feet per second.",
+                    question: "How many seconds will it take? (12 ÷ 3)",
+                    answer: 4
+                },
+                {
+                    type: "path-counting",
+                    title: "Sai Vittal's Robot Grid",
+                    description: "Sai Vittal's robot follows this path on a grid:",
+                    visual: createGridPath(5, 4, [1, 2, 7, 12, 17, 18]),
+                    question: "How many squares did the robot visit (including start and finish)?",
+                    answer: 8
+                },
+                {
+                    type: "round-trip",
+                    title: "Sanvi's Robot Round Trip",
+                    description: "Sanvi's robot goes to the garage (8 feet away) and comes back home.",
+                    question: "What is the total distance traveled? (8 + 8)",
+                    answer: 16
+                },
+                {
+                    type: "multiple-stops",
+                    title: "Delivery Robot Challenge",
+                    description: "A robot makes 3 deliveries: 6 feet to house 1, 4 feet to house 2, 7 feet to house 3.",
+                    question: "What is the total distance traveled? (6 + 4 + 7)",
+                    answer: 17
+                },
+                {
+                    type: "speed-comparison",
+                    title: "Robot Race",
+                    description: "Robot A moves 8 feet in 2 seconds. Robot B moves 6 feet in 2 seconds.",
+                    question: "How much faster is Robot A? (8 - 6)",
+                    answer: 2
+                },
+                {
+                    type: "obstacle-path",
+                    title: "Robot Navigation",
+                    description: "A robot goes around obstacles: 5 feet forward, 3 feet right, 2 feet forward.",
+                    question: "What is the total distance traveled? (5 + 3 + 2)",
+                    answer: 10
+                },
+                {
+                    type: "battery-time",
+                    title: "Robot Battery Math",
+                    description: "A robot's battery lasts 20 minutes. It moves 2 feet per minute.",
+                    question: "How far can it travel before the battery runs out? (20 × 2)",
+                    answer: 40
+                },
+                {
+                    type: "team-robots",
+                    title: "Robot Team Distance",
+                    description: "5 robots each travel 8 feet to complete their tasks.",
+                    question: "What is the total distance traveled by all robots? (5 × 8)",
+                    answer: 40
+                }
+            ];
+            
+            problems.forEach((problem, i) => {
+                currentProblems.push(problem);
+                
+                let visualHtml = '';
+                if (problem.visual) {
+                    visualHtml = `<div style="text-align: center; margin: 15px 0;">${problem.visual}</div>`;
+                }
+                
+                problemsDiv.innerHTML += `
+                    <div class='problem'>
+                        <h4>Robot Engineering ${i + 1}</h4>
+                        <div class='robot-card'>
+                            <h4><span class='robot-emoji'>🤖</span>${problem.title}</h4>
+                            <p>${problem.description}</p>
+                            ${visualHtml}
+                            <p><strong>${problem.question}</strong></p>
+                        </div>
+                        <p><strong>Answer:</strong> <input type='number' id='answer${i}' placeholder='?' min='0' max='200'> feet, seconds, or squares</p>
+                        <div class='feedback' id='feedback${i}'></div>
+                    </div>
+                `;
+            });
+            
+            score = 0;
+            updateScore();
+        }
+        
+        function checkAnswers() {
+            let correctCount = 0;
+            
+            currentProblems.forEach((problem, i) => {
+                const userAnswer = parseInt(document.getElementById(`answer${i}`).value);
+                const feedback = document.getElementById(`feedback${i}`);
+                
+                if (userAnswer === problem.answer) {
+                    feedback.textContent = '✅ Perfect robot engineering! You understand distance and speed!';
+                    feedback.className = 'feedback correct';
+                    correctCount++;
+                } else {
+                    feedback.textContent = `❌ Try again! Answer: ${problem.answer}`;
+                    feedback.className = 'feedback incorrect';
+                }
+            });
+            
+            score = correctCount;
+            updateScore();
+        }
+        
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('stars').textContent = '⭐'.repeat(score);
+        }
+        
+        window.onload = function() {
+            setPersonalizedGreeting();
+            generateProblems();
+        };
+    </script>
+</body>
+</html> 

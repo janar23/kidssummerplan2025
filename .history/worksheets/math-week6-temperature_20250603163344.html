@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 6 Math - Temperature Tracking Graphs</title>
+    <style>
+        body { font-family: 'Comic Sans MS', cursive, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f0f8ff; }
+        .worksheet-container { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #2c5aa0; text-align: center; }
+        .problem { margin: 20px 0; padding: 15px; border: 2px solid #2c5aa0; border-radius: 10px; background-color: #f8f9fa; }
+        .weather-card { background: linear-gradient(135deg, #e3f2fd, #bbdefb); padding: 20px; border-radius: 15px; margin: 15px 0; border: 3px solid #2196f3; }
+        .thermometer { width: 40px; height: 200px; background: #e0e0e0; border-radius: 20px; position: relative; margin: 20px auto; border: 3px solid #666; }
+        .mercury { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(180deg, #ff4444, #cc0000); border-radius: 0 0 17px 17px; transition: height 0.5s ease; }
+        .temperature-scale { display: flex; flex-direction: column-reverse; justify-content: space-between; height: 200px; margin-left: 10px; }
+        .scale-mark { font-size: 12px; font-weight: bold; color: #333; }
+        .graph-container { background: white; border: 2px solid #2c5aa0; border-radius: 10px; padding: 20px; margin: 15px 0; }
+        .line-graph { display: flex; align-items: end; justify-content: space-around; height: 150px; margin: 20px 0; position: relative; }
+        .graph-point { width: 8px; height: 8px; background: #2196f3; border-radius: 50%; position: relative; }
+        .graph-line { position: absolute; height: 2px; background: #2196f3; }
+        .day-label { text-align: center; margin-top: 10px; font-weight: bold; font-size: 12px; }
+        .weather-icon { font-size: 36px; text-align: center; margin: 10px 0; }
+        input[type="number"] { padding: 8px; border: 2px solid #2c5aa0; border-radius: 5px; font-size: 16px; width: 80px; }
+        button { background-color: #2c5aa0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; margin: 0 10px; }
+        button:hover { background-color: #1e3f7d; }
+        .feedback { margin-top: 10px; font-weight: bold; }
+        .correct { color: green; }
+        .incorrect { color: red; }
+        .controls { text-align: center; margin: 20px 0; }
+        .progress { text-align: center; margin: 20px 0; font-size: 18px; }
+        .stars { text-align: center; font-size: 24px; margin: 20px 0; }
+        .intro { background: #e8f5e8; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+        .temp-display { display: flex; align-items: center; justify-content: center; gap: 20px; }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <h1>🌡️ Temperature Tracking Graphs 📊</h1>
+        
+        <p style="text-align: center; font-size: 18px; color: #2c5aa0; margin-bottom: 20px;" id="personal-greeting">
+            Hi there! Let's track temperature like a weather scientist! You're going to be a temperature detective! 🌡️
+        </p>
+        
+        <div class="intro">
+            <h3>Understanding Temperature</h3>
+            <p>Temperature tells us how hot or cold something is! We measure temperature in degrees (°F or °C).</p>
+            <p><strong>Temperature Facts:</strong></p>
+            <ul>
+                <li><strong>Hot day:</strong> 80°F or higher</li>
+                <li><strong>Nice day:</strong> 65°F - 80°F</li>
+                <li><strong>Cool day:</strong> 50°F - 65°F</li>
+                <li><strong>Cold day:</strong> Below 50°F</li>
+            </ul>
+            <div class="temp-display">
+                <div class="thermometer">
+                    <div class="mercury" style="height: 60%;"></div>
+                </div>
+                <div class="temperature-scale">
+                    <div class="scale-mark">100°F</div>
+                    <div class="scale-mark">80°F</div>
+                    <div class="scale-mark">60°F</div>
+                    <div class="scale-mark">40°F</div>
+                    <div class="scale-mark">20°F</div>
+                    <div class="scale-mark">0°F</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="progress">Progress: <span id="score">0</span>/10</div>
+        <div class="stars" id="stars">⭐</div>
+        <div id="problems"></div>
+        <div class="controls">
+            <button onclick="checkAnswers()">Check Answers</button>
+            <button onclick="generateProblems()">New Problems</button>
+        </div>
+    </div>
+    <script>
+        let currentProblems = [];
+        let score = 0;
+        
+        // Get the selected child's name from URL parameters or localStorage
+        function getSelectedChildName() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let childName = urlParams.get('child');
+            
+            if (!childName) {
+                // Try to get from localStorage if not in URL
+                const savedChild = localStorage.getItem('selectedChild');
+                if (savedChild) {
+                    childName = savedChild;
+                }
+            }
+            
+            // Capitalize first letter
+            if (childName) {
+                return childName.charAt(0).toUpperCase() + childName.slice(1);
+            }
+            return 'there'; // fallback
+        }
+        
+        // Set personalized greeting
+        function setPersonalizedGreeting() {
+            const childName = getSelectedChildName();
+            const greeting = document.getElementById('personal-greeting');
+            greeting.textContent = `Hi ${childName}! Let's track temperature like a weather scientist! You're going to be a temperature detective! 🌡️`;
+        }
+        
+        function createLineGraph(temperatures, days) {
+            const maxTemp = Math.max(...temperatures);
+            const minTemp = Math.min(...temperatures);
+            const tempRange = maxTemp - minTemp || 1;
+            
+            let graphHtml = '<div class="graph-container"><div class="line-graph">';
+            
+            temperatures.forEach((temp, index) => {
+                const height = ((temp - minTemp) / tempRange) * 120 + 10; // Scale to graph height
+                graphHtml += `
+                    <div style="text-align: center;">
+                        <div class="graph-point" style="bottom: ${height}px;"></div>
+                        <div style="position: absolute; bottom: ${height + 15}px; left: -10px; font-size: 12px; font-weight: bold;">${temp}°F</div>
+                        <div class="day-label">${days[index]}</div>
+                    </div>
+                `;
+            });
+            
+            graphHtml += '</div></div>';
+            return graphHtml;
+        }
+        
+        function getWeatherIcon(temp) {
+            if (temp >= 80) return '☀️';
+            if (temp >= 65) return '🌤️';
+            if (temp >= 50) return '⛅';
+            return '🌨️';
+        }
+        
+        function generateProblems() {
+            currentProblems = [];
+            const problemsDiv = document.getElementById('problems');
+            problemsDiv.innerHTML = '';
+            
+            const problems = [
+                {
+                    type: "reading",
+                    title: "Sanha's Weather Journal",
+                    temperatures: [75, 78, 82, 79, 76],
+                    days: ["Mon", "Tue", "Wed", "Thu", "Fri"],
+                    question: "What was the highest temperature this week?",
+                    answer: 82
+                },
+                {
+                    type: "difference",
+                    title: "Sanav's Temperature Tracking",
+                    temperatures: [65, 70, 68, 72, 69],
+                    days: ["Mon", "Tue", "Wed", "Thu", "Fri"],
+                    question: "What is the difference between the highest and lowest temperatures?",
+                    answer: 7
+                },
+                {
+                    type: "average",
+                    title: "Aadhi's Math Project",
+                    description: "Aadhi recorded temperatures: 60°F, 65°F, 70°F. What is the average temperature?",
+                    question: "What is the average temperature? (Add them up and divide by 3)",
+                    answer: 65
+                },
+                {
+                    type: "comparison",
+                    title: "Sai Vittal's Weather Comparison",
+                    description: "Monday was 58°F and Friday was 74°F.",
+                    question: "How many degrees warmer was Friday than Monday?",
+                    answer: 16
+                },
+                {
+                    type: "reading",
+                    title: "Sanvi's School Week",
+                    temperatures: [62, 59, 66, 71, 68],
+                    days: ["Mon", "Tue", "Wed", "Thu", "Fri"],
+                    question: "What was the temperature on Wednesday?",
+                    answer: 66
+                },
+                {
+                    type: "pattern",
+                    title: "Temperature Pattern",
+                    description: "The temperature pattern this week: 50°F, 55°F, 60°F, 65°F, ?",
+                    question: "If the pattern continues, what will Friday's temperature be?",
+                    answer: 70
+                },
+                {
+                    type: "counting",
+                    title: "Hot Days Count",
+                    temperatures: [85, 72, 81, 78, 83],
+                    days: ["Mon", "Tue", "Wed", "Thu", "Fri"],
+                    question: "How many days were 80°F or higher? (Hot days)",
+                    answer: 3
+                },
+                {
+                    type: "change",
+                    title: "Temperature Change",
+                    description: "The temperature was 45°F in the morning and 67°F in the afternoon.",
+                    question: "How many degrees did the temperature rise?",
+                    answer: 22
+                },
+                {
+                    type: "prediction",
+                    title: "Weekend Forecast",
+                    description: "This week's temperatures went up by 3°F each day: 60°F, 63°F, 66°F, 69°F, 72°F.",
+                    question: "If the pattern continues, what will Saturday's temperature be?",
+                    answer: 75
+                },
+                {
+                    type: "total",
+                    title: "Weekly Temperature Sum",
+                    description: "Sanha, Sanav, Aadhi, Sai Vittal, and Sanvi each recorded one temperature: 55°F, 60°F, 65°F, 70°F, and 75°F.",
+                    question: "What is the total of all five temperatures?",
+                    answer: 325
+                }
+            ];
+            
+            problems.forEach((problem, i) => {
+                currentProblems.push(problem);
+                
+                let contentHtml = `
+                    <div class='weather-card'>
+                        <h4>📊 ${problem.title}</h4>
+                `;
+                
+                if (problem.temperatures && problem.days) {
+                    contentHtml += createLineGraph(problem.temperatures, problem.days);
+                    // Add weather icons
+                    contentHtml += '<div style="display: flex; justify-content: space-around; margin: 10px 0;">';
+                    problem.temperatures.forEach(temp => {
+                        contentHtml += `<div class="weather-icon">${getWeatherIcon(temp)}</div>`;
+                    });
+                    contentHtml += '</div>';
+                }
+                
+                if (problem.description) {
+                    contentHtml += `<p>${problem.description}</p>`;
+                }
+                
+                contentHtml += `
+                        <p><strong>${problem.question}</strong></p>
+                    </div>
+                `;
+                
+                problemsDiv.innerHTML += `
+                    <div class='problem'>
+                        <h4>Weather Investigation ${i + 1}</h4>
+                        ${contentHtml}
+                        <p><strong>Answer:</strong> <input type='number' id='answer${i}' placeholder='?' min='-50' max='150'>°F</p>
+                        <div class='feedback' id='feedback${i}'></div>
+                    </div>
+                `;
+            });
+            
+            score = 0;
+            updateScore();
+        }
+        
+        function checkAnswers() {
+            let correctCount = 0;
+            
+            currentProblems.forEach((problem, i) => {
+                const userAnswer = parseInt(document.getElementById(`answer${i}`).value);
+                const feedback = document.getElementById(`feedback${i}`);
+                
+                if (userAnswer === problem.answer) {
+                    feedback.textContent = '✅ Excellent weather detective work!';
+                    feedback.className = 'feedback correct';
+                    correctCount++;
+                } else {
+                    feedback.textContent = `❌ Try again! Answer: ${problem.answer}°F`;
+                    feedback.className = 'feedback incorrect';
+                }
+            });
+            
+            score = correctCount;
+            updateScore();
+        }
+        
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('stars').textContent = '⭐'.repeat(score);
+        }
+        
+        window.onload = function() {
+            setPersonalizedGreeting();
+            generateProblems();
+        };
+    </script>
+</body>
+</html> 
