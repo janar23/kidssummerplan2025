@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize weekly view
     renderWeeklyTasks(currentWeek);
+    updateWeekDisplay();
     updateProgressBars();
     updateWeeklyProgress();
     
