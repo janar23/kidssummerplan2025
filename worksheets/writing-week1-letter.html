@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 1 Wednesday - Writing Letter to Grandparent</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #fff8e1; }
+        .worksheet-container { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #ff6f00; text-align: center; }
+        .activity { margin: 20px 0; padding: 15px; border: 2px solid #ff6f00; border-radius: 10px; background-color: #f8f9fa; }
+        .letter-card { background: linear-gradient(135deg, #fff3e0, #ffe0b2); padding: 20px; border-radius: 15px; margin: 15px 0; border: 3px solid #ff9800; }
+        .sample-card { background: linear-gradient(135deg, #e8f5e8, #c8e6c9); padding: 20px; border-radius: 15px; margin: 15px 0; border: 3px solid #4caf50; }
+        .writing-card { background: linear-gradient(135deg, #e3f2fd, #bbdefb); padding: 20px; border-radius: 15px; margin: 15px 0; border: 3px solid #2196f3; }
+        .sample-letter { background: white; padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 5px solid #4caf50; font-family: 'Comic Sans MS', cursive; line-height: 1.6; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .letter-template { background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 15px 0; border: 2px dashed #ff9800; }
+        .writing-area { width: 100%; min-height: 120px; padding: 15px; border: 2px solid #ff9800; border-radius: 8px; font-size: 16px; font-family: 'Comic Sans MS', cursive; line-height: 1.8; resize: vertical; }
+        .writing-prompt { background: #fff3cd; padding: 15px; border-radius: 10px; margin: 10px 0; border-left: 5px solid #ffc107; }
+        button { background-color: #ff6f00; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-size: 16px; margin: 5px; }
+        button:hover { background-color: #e65100; }
+        .emoji-large { font-size: 48px; text-align: center; margin: 15px 0; }
+        .intro { background: #e8f5e8; padding: 15px; border-radius: 10px; margin-bottom: 20px; border-left: 5px solid #4caf50; }
+        .progress { text-align: center; margin: 20px 0; font-size: 18px; }
+        .stars { text-align: center; font-size: 24px; margin: 20px 0; }
+        .completed { background: #d4edda; border-color: #28a745; }
+        .letter-part { margin: 15px 0; padding: 10px; border-left: 3px solid #ff9800; }
+        .letter-part h4 { color: #ff6f00; margin: 0 0 10px 0; }
+        .hint-button {
+            background: #ff9800;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 10px 0;
+            transition: all 0.3s;
+        }
+        .hint-button:hover {
+            background: #f57c00;
+            transform: scale(1.05);
+        }
+        .hint-content {
+            display: none;
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            border-left: 5px solid #ffc107;
+        }
+        .hint-content.show {
+            display: block;
+        }
+        .congrats-animation { text-align: center; font-size: 36px; margin: 20px 0; animation: bounce 2s infinite; }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } 60% { transform: translateY(-5px); } }
+        input[type="text"] { width: 100%; padding: 10px; border: 2px solid #ff9800; border-radius: 8px; font-size: 16px; margin: 5px 0; font-family: 'Comic Sans MS', cursive; }
+        .choice-button {
+            background: #ff9800;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            margin: 5px;
+        }
+        .choice-button:hover {
+            background: #f57c00;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <h1>✉️ Week 1 Wednesday - Writing Letter to Grandparent 💌</h1>
+        
+        <p style="text-align: center; font-size: 18px; color: #ff6f00; margin-bottom: 20px;" id="personal-greeting">
+            Hi there! Today we're going to write a special letter to your grandparent! They'll love hearing from you! 💕
+        </p>
+        
+        <div class="intro">
+            <h3>💌 Welcome to Letter Writing!</h3>
+            <p>Writing letters is a wonderful way to connect with people you love! Your grandparent will be so happy to receive a letter from you.</p>
+            <p><strong>What makes a great letter:</strong></p>
+            <ul>
+                <li>📅 <strong>Date:</strong> When you wrote the letter</li>
+                <li>👋 <strong>Greeting:</strong> How you say hello</li>
+                <li>💬 <strong>Body:</strong> What you want to tell them</li>
+                <li>💝 <strong>Closing:</strong> How you say goodbye</li>
+                <li>✍️ <strong>Signature:</strong> Your name</li>
+            </ul>
+            <div class="emoji-large">✉️💕</div>
+        </div>
+        
+        <div class="progress">Writing Progress: <span id="completed-steps">0</span>/5 Steps Complete</div>
+        <div class="stars" id="stars">⭐</div>
+        
+        <!-- Step 1: Read Sample Letter -->
+        <div class="activity sample-card" id="step1">
+            <h3>Step 1: Read a Sample Letter! 📖</h3>
+            <button class="hint-button" onclick="toggleLetterHint('sample-tips')">💡 Letter Reading Tips</button>
+            <div id="sample-tips" class="hint-content">
+                <p><strong>Tip:</strong> Read this sample letter carefully to see how letters are organized!</p>
+                <p><strong>Notice:</strong> Look for the date, greeting, body paragraphs, closing, and signature.</p>
+            </div>
+            
+            <div class="sample-letter">
+                <div style="text-align: right; margin-bottom: 20px;">
+                    <em>October 15, 2024</em>
+                </div>
+                
+                <p><strong>Dear Grandma and Grandpa,</strong></p>
+                
+                <p>Hi! I hope you are doing well and feeling happy. I miss you so much and think about you every day.</p>
+                
+                <p>I wanted to tell you about what I've been learning at school. We've been reading fun books about animals, and I learned that dolphins can recognize themselves in mirrors! Isn't that amazing? I also learned how to skip count by 2s, 5s, and 10s in math class.</p>
+                
+                <p>Last weekend, Mom and I made your favorite chocolate chip cookies. I remembered the special trick you taught me about adding extra vanilla. They tasted just like yours! I saved some for when you visit next month.</p>
+                
+                <p>I've been practicing piano every day like you told me to. I can now play "Twinkle, Twinkle, Little Star" with both hands! I can't wait to play it for you when I see you.</p>
+                
+                <p>I hope we can video call soon. I have so many more things to tell you! Give my love to Grandpa, and tell him I still remember the fishing tips he taught me.</p>
+                
+                <p><strong>Love always,</strong></p>
+                <p><strong>Emma</strong></p>
+                
+                <p style="font-size: 12px; color: #666; margin-top: 10px;"><em>P.S. I drew you a picture of our family. Mom will put it in the envelope with this letter!</em></p>
+            </div>
+            
+            <button class="hint-button" onclick="toggleLetterHint('letter-parts')">🔍 Letter Parts Explanation</button>
+            <div id="letter-parts" class="hint-content">
+                <div class="letter-part">
+                    <h4>📅 Date (Top Right)</h4>
+                    <p>When the letter was written - helps grandparents know when you were thinking of them!</p>
+                </div>
+                <div class="letter-part">
+                    <h4>👋 Greeting (Dear...)</h4>
+                    <p>How you start the letter - like saying hello when you see someone!</p>
+                </div>
+                <div class="letter-part">
+                    <h4>💬 Body Paragraphs</h4>
+                    <p>The main part where you share news, ask questions, and tell them what's happening in your life.</p>
+                </div>
+                <div class="letter-part">
+                    <h4>💝 Closing (Love always,)</h4>
+                    <p>How you end the letter - like saying goodbye with love.</p>
+                </div>
+                <div class="letter-part">
+                    <h4>✍️ Signature (Emma)</h4>
+                    <p>Your name - so they know who wrote this wonderful letter!</p>
+                </div>
+            </div>
+            
+            <button onclick="completeStep(1)">Sample Letter Read! ✅</button>
+        </div>
+        
+        <!-- Step 2: Plan Your Letter -->
+        <div class="activity letter-card" id="step2">
+            <h3>Step 2: Plan What You'll Write! 📝</h3>
+            <button class="hint-button" onclick="toggleLetterHint('planning-tips')">💭 Planning Tips</button>
+            <div id="planning-tips" class="hint-content">
+                <p><strong>Tip:</strong> Think about what your grandparent would love to hear about!</p>
+                <p><strong>Ideas:</strong> School, hobbies, family activities, things you've learned, questions for them.</p>
+            </div>
+            
+            <div class="writing-prompt">
+                <h4>Let's plan your letter topics:</h4>
+                
+                <p><strong>1. Something fun that happened recently:</strong></p>
+                <textarea class="writing-area" id="plan-fun" placeholder="Example: I went to the park and saw a squirrel collecting acorns..."></textarea>
+                
+                <p><strong>2. Something you learned or did at school:</strong></p>
+                <textarea class="writing-area" id="plan-school" placeholder="Example: I learned about butterflies in science class..."></textarea>
+                
+                <p><strong>3. A question you want to ask them:</strong></p>
+                <textarea class="writing-area" id="plan-question" placeholder="Example: How did you meet Grandpa? What was your favorite subject in school?"></textarea>
+                
+                <p><strong>4. Something that reminds you of them:</strong></p>
+                <textarea class="writing-area" id="plan-memory" placeholder="Example: I made cookies like you taught me, I saw a beautiful garden like yours..."></textarea>
+            </div>
+            
+            <button onclick="completeStep(2)">Letter Planned! ✅</button>
+        </div>
+        
+        <!-- Step 3: Choose Your Greeting -->
+        <div class="activity writing-card" id="step3">
+            <h3>Step 3: Choose Your Greeting! 👋</h3>
+            <button class="hint-button" onclick="toggleLetterHint('greeting-tips')">👋 Greeting Ideas</button>
+            <div id="greeting-tips" class="hint-content">
+                <p><strong>Tip:</strong> Pick a greeting that feels right for your relationship with your grandparent!</p>
+                <p><strong>Formal:</strong> Dear Grandma, Dear Grandpa</p>
+                <p><strong>Loving:</strong> Dearest Grandma, My Dear Grandpa</p>
+                <p><strong>Fun:</strong> Hi Grandma!, Hello my favorite Grandpa!</p>
+            </div>
+            
+            <h4>Pick or write your greeting:</h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 15px 0;">
+                <button class="choice-button" onclick="selectGreeting('Dear Grandma and Grandpa,')">Dear Grandma and Grandpa,</button>
+                <button class="choice-button" onclick="selectGreeting('Dear Grandma,')">Dear Grandma,</button>
+                <button class="choice-button" onclick="selectGreeting('Dear Grandpa,')">Dear Grandpa,</button>
+                <button class="choice-button" onclick="selectGreeting('Dearest Grandma,')">Dearest Grandma,</button>
+                <button class="choice-button" onclick="selectGreeting('Hi Grandma!')">Hi Grandma!</button>
+                <button class="choice-button" onclick="selectGreeting('Hello Grandpa!')">Hello Grandpa!</button>
+            </div>
+            
+            <p><strong>Or write your own:</strong></p>
+            <input type="text" id="custom-greeting" placeholder="Write your own greeting here..." onchange="selectGreeting(this.value)">
+            
+            <p><strong>Selected Greeting:</strong> <span id="chosen-greeting">None yet</span></p>
+            <button onclick="completeStep(3)" id="greeting-done" style="display:none;">Greeting Chosen! ✅</button>
+        </div>
+        
+        <!-- Step 4: Write Your Letter -->
+        <div class="activity letter-card" id="step4">
+            <h3>Step 4: Write Your Letter! ✍️</h3>
+            <button class="hint-button" onclick="toggleLetterHint('writing-tips')">✍️ Writing Tips</button>
+            <div id="writing-tips" class="hint-content">
+                <p><strong>Tip:</strong> Use the ideas you planned in Step 2 to write your letter!</p>
+                <p><strong>Remember:</strong> Write like you're talking to them - be yourself and share from your heart!</p>
+                <p><strong>Length:</strong> 3-4 paragraphs is perfect for a letter.</p>
+            </div>
+            
+            <div class="letter-template">
+                <h4>Your Letter:</h4>
+                
+                <div style="text-align: right; margin-bottom: 20px;">
+                    <label for="letter-date">Date: </label>
+                    <input type="text" id="letter-date" style="width: 200px;" placeholder="Today's date">
+                </div>
+                
+                <p id="letter-greeting" style="font-weight: bold; margin-bottom: 20px;">Your greeting will appear here</p>
+                
+                <div class="writing-prompt">
+                    <p><strong>First paragraph - Say hello and how you're doing:</strong></p>
+                    <textarea class="writing-area" id="paragraph1" placeholder="Start with something like: Hi! I hope you are doing well..."></textarea>
+                </div>
+                
+                <div class="writing-prompt">
+                    <p><strong>Second paragraph - Share something fun or interesting:</strong></p>
+                    <textarea class="writing-area" id="paragraph2" placeholder="Tell them about something fun that happened or something you learned..."></textarea>
+                </div>
+                
+                <div class="writing-prompt">
+                    <p><strong>Third paragraph - Ask a question or share a memory:</strong></p>
+                    <textarea class="writing-area" id="paragraph3" placeholder="Ask them a question or tell them about something that reminded you of them..."></textarea>
+                </div>
+                
+                <div class="writing-prompt">
+                    <p><strong>Final paragraph - End with love:</strong></p>
+                    <textarea class="writing-area" id="paragraph4" placeholder="End with something like: I miss you and can't wait to see you..."></textarea>
+                </div>
+                
+                <p style="margin: 20px 0;">
+                    <strong>Closing:</strong>
+                    <select id="letter-closing" style="padding: 5px; font-size: 16px; margin-left: 10px;">
+                        <option value="">Choose a closing...</option>
+                        <option value="Love,">Love,</option>
+                        <option value="Love always,">Love always,</option>
+                        <option value="With love,">With love,</option>
+                        <option value="Hugs and kisses,">Hugs and kisses,</option>
+                        <option value="Your loving grandchild,">Your loving grandchild,</option>
+                        <option value="Missing you,">Missing you,</option>
+                    </select>
+                </p>
+                
+                <p><strong>Your signature:</strong> <span id="letter-signature" style="border-bottom: 1px solid #ccc; display: inline-block; min-width: 150px; margin-left: 10px;"></span></p>
+            </div>
+            
+            <button onclick="completeStep(4)">Letter Written! ✅</button>
+        </div>
+        
+        <!-- Step 5: Review and Finalize -->
+        <div class="activity writing-card" id="step5">
+            <h3>Step 5: Review Your Letter! 🔍</h3>
+            <button class="hint-button" onclick="toggleLetterHint('review-tips')">🔍 Review Checklist</button>
+            <div id="review-tips" class="hint-content">
+                <p><strong>Tip:</strong> Read your letter out loud to see how it sounds!</p>
+                <p><strong>Check for:</strong> Complete sentences, spelling, and that it sounds like you!</p>
+                <p><strong>Does it have:</strong> Date, greeting, 3-4 paragraphs, closing, and your signature?</p>
+            </div>
+            
+            <div id="final-letter" class="sample-letter" style="background: #f0f8ff;">
+                <h4 style="text-align: center; color: #ff6f00;">📝 Your Completed Letter Preview</h4>
+                <div id="letter-preview">
+                    <p><em>Complete the steps above to see your letter here!</em></p>
+                </div>
+            </div>
+            
+            <div class="writing-prompt">
+                <h4>✅ Letter Checklist:</h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div>
+                        <label><input type="checkbox" id="check-date"> Date included</label><br>
+                        <label><input type="checkbox" id="check-greeting"> Greeting to grandparent</label><br>
+                        <label><input type="checkbox" id="check-body"> 3-4 paragraphs written</label>
+                    </div>
+                    <div>
+                        <label><input type="checkbox" id="check-closing"> Loving closing</label><br>
+                        <label><input type="checkbox" id="check-signature"> Your signature</label><br>
+                        <label><input type="checkbox" id="check-love"> Written with love</label>
+                    </div>
+                </div>
+            </div>
+            
+            <button onclick="generatePreview()">Preview My Letter! 👀</button>
+            <button onclick="completeStep(5)" id="letter-complete" style="display:none;">Letter Complete! ✅</button>
+        </div>
+        
+        <!-- Completion Celebration -->
+        <div class="activity" id="completion" style="display:none;">
+            <div class="congrats-animation">💌 AMAZING LETTER WRITER! 💌</div>
+            <div id="letter-showcase"></div>
+            <button onclick="celebrateCompletion()">Share Letter Plan! 🏆</button>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <button onclick="showCompletion()" id="show-completion-btn" style="display:none; background: #28a745; font-size: 18px; padding: 15px 30px;">
+                See My Letter Success! ✉️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let completedSteps = 0;
+        let selectedGreeting = '';
+        
+        // Get the selected child's name
+        function getSelectedChildName() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let childName = urlParams.get('child');
+            
+            if (!childName) {
+                const savedChild = localStorage.getItem('selectedChild');
+                if (savedChild) {
+                    childName = savedChild;
+                }
+            }
+            
+            if (childName) {
+                return childName.charAt(0).toUpperCase() + childName.slice(1);
+            }
+            return 'Writer'; // fallback
+        }
+        
+        // Set personalized greeting
+        function setPersonalizedGreeting() {
+            const childName = getSelectedChildName();
+            const greeting = document.getElementById('personal-greeting');
+            greeting.textContent = `Hi ${childName}! Today we're going to write a special letter to your grandparent! They'll love hearing from you! 💕`;
+            
+            // Set signature
+            document.getElementById('letter-signature').textContent = childName;
+            
+            // Set today's date
+            const today = new Date();
+            const dateString = today.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            document.getElementById('letter-date').value = dateString;
+        }
+        
+        function completeStep(stepNumber) {
+            const step = document.getElementById(`step${stepNumber}`);
+            if (!step.classList.contains('completed')) {
+                step.classList.add('completed');
+                completedSteps++;
+                updateProgress();
+                
+                if (completedSteps === 5) {
+                    document.getElementById('show-completion-btn').style.display = 'block';
+                }
+            }
+        }
+        
+        function updateProgress() {
+            document.getElementById('completed-steps').textContent = completedSteps;
+            const stars = document.getElementById('stars');
+            let starString = '';
+            for (let i = 0; i < completedSteps; i++) {
+                starString += '⭐';
+            }
+            if (completedSteps === 5) {
+                starString += ' 💌 LETTER WRITING MASTER! 💌';
+            }
+            stars.textContent = starString;
+        }
+        
+        function selectGreeting(greeting) {
+            selectedGreeting = greeting;
+            document.getElementById('chosen-greeting').textContent = greeting;
+            document.getElementById('letter-greeting').textContent = greeting;
+            document.getElementById('greeting-done').style.display = 'block';
+            
+            // Clear custom input if a button was clicked
+            if (event && event.target.classList.contains('choice-button')) {
+                document.getElementById('custom-greeting').value = '';
+            }
+        }
+        
+        function generatePreview() {
+            const date = document.getElementById('letter-date').value || 'Today';
+            const greeting = selectedGreeting || 'Dear Grandparent,';
+            const para1 = document.getElementById('paragraph1').value || '[First paragraph]';
+            const para2 = document.getElementById('paragraph2').value || '[Second paragraph]';
+            const para3 = document.getElementById('paragraph3').value || '[Third paragraph]';
+            const para4 = document.getElementById('paragraph4').value || '[Final paragraph]';
+            const closing = document.getElementById('letter-closing').value || 'Love,';
+            const signature = getSelectedChildName();
+            
+            const letterHtml = `
+                <div style="text-align: right; margin-bottom: 20px;">
+                    <em>${date}</em>
+                </div>
+                
+                <p><strong>${greeting}</strong></p>
+                
+                <p>${para1}</p>
+                
+                <p>${para2}</p>
+                
+                <p>${para3}</p>
+                
+                <p>${para4}</p>
+                
+                <p><strong>${closing}</strong></p>
+                <p><strong>${signature}</strong></p>
+            `;
+            
+            document.getElementById('letter-preview').innerHTML = letterHtml;
+            document.getElementById('letter-complete').style.display = 'block';
+        }
+        
+        function showCompletion() {
+            const showcaseHtml = `
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; border: 3px solid #28a745;">
+                    <h2 style="text-align: center; color: #ff6f00;">My Letter Writing Success! 💌</h2>
+                    <p><strong>Letter Writer:</strong> ${getSelectedChildName()}</p>
+                    <p><strong>Recipient:</strong> Grandparent</p>
+                    <p><strong>Letter Type:</strong> Personal Family Letter</p>
+                    
+                    <div style="background: white; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <h4>📝 Writing Skills Practiced:</h4>
+                        <ul>
+                            <li>✉️ Proper letter format and structure</li>
+                            <li>📅 Date and greeting conventions</li>
+                            <li>💭 Organizing thoughts into paragraphs</li>
+                            <li>💝 Expressing feelings and sharing news</li>
+                            <li>🔍 Reviewing and editing writing</li>
+                            <li>❤️ Connecting with family through writing</li>
+                        </ul>
+                    </div>
+                    
+                    <button class="hint-button" onclick="toggleLetterHint('next-letter-ideas')">💡 More Letter Ideas</button>
+                    <div id="next-letter-ideas" class="hint-content">
+                        <p><strong>Who else can you write to?</strong></p>
+                        <ul>
+                            <li>📮 Other family members (aunts, uncles, cousins)</li>
+                            <li>👫 Friends who moved away</li>
+                            <li>📚 Favorite authors or characters</li>
+                            <li>🎭 Pen pals from other schools</li>
+                            <li>🌟 Future self (write yourself a letter to open next year!)</li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('letter-showcase').innerHTML = showcaseHtml;
+            document.getElementById('completion').style.display = 'block';
+            document.getElementById('completion').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function celebrateCompletion() {
+            alert(`💌 Wonderful work, ${getSelectedChildName()}! You've written a beautiful letter to your grandparent! 
+
+You've learned important writing skills:
+• How to organize a letter properly
+• How to express your thoughts and feelings
+• How to connect with family through writing
+• How to review and improve your writing
+
+Now you can:
+• Ask a grown-up to help you send the letter
+• Copy it onto nice paper or stationery
+• Add drawings or decorations
+• Write letters to other family members too!
+
+Your grandparent will treasure this letter forever! 💕✨`);
+        }
+        
+        function toggleLetterHint(hintId) {
+            const hintElement = document.getElementById(hintId);
+            const buttonElement = event.target;
+            
+            if (hintElement.classList.contains('show')) {
+                hintElement.classList.remove('show');
+                buttonElement.textContent = buttonElement.textContent.replace('Hide', 'Show');
+            } else {
+                hintElement.classList.add('show');
+                buttonElement.textContent = buttonElement.textContent.replace('Show', 'Hide');
+            }
+        }
+        
+        // Initialize
+        setPersonalizedGreeting();
+    </script>
+</body>
+</html> 

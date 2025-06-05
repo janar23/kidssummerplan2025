@@ -619,7 +619,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Writing worksheets
         const writingWorksheets = {
             1: {
-                "Write about your weekend (20 mins)": "worksheets/writing-week1-weekend.html"
+                "Write about your weekend (20 mins)": "worksheets/writing-week1-weekend.html",
+                "Write a letter to grandparents": "worksheets/writing-week1-letter.html"
             },
             2: {
                 "Write what you know about robots": "worksheets/writing-week2-robots.html"
