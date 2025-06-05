@@ -639,6 +639,17 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         };
         
+        // Creative worksheets
+        const creativeWorksheets = {
+            1: {
+                "Origami animals": "worksheets/creative-week1-origami.html",
+                "Finger painting": "worksheets/creative-week1-finger-painting.html"
+            },
+            7: {
+                "Design a self-driving vehicle": "worksheets/creative-week7-friday.html"
+            }
+        };
+        
         // Check task type and return corresponding worksheet if it exists
         if (taskType === categories.math && mathWorksheets[week]) {
             // Look for a partial match in the task description
@@ -663,6 +674,15 @@ document.addEventListener('DOMContentLoaded', function() {
             for (const key in readingWorksheets[week]) {
                 if (taskDescription.includes(key) || key.includes(taskDescription)) {
                     return readingWorksheets[week][key];
+                }
+            }
+        }
+        
+        if (taskType === categories.creative && creativeWorksheets[week]) {
+            // Look for a partial match in the task description
+            for (const key in creativeWorksheets[week]) {
+                if (taskDescription.includes(key) || key.includes(taskDescription)) {
+                    return creativeWorksheets[week][key];
                 }
             }
         }

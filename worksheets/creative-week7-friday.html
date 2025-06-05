@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 7 Friday - Design a Self-Driving Vehicle</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #e3f2fd; }
+        .worksheet-container { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #1976d2; text-align: center; }
+        .activity { margin: 20px 0; padding: 15px; border: 2px solid #1976d2; border-radius: 10px; background-color: #f8f9fa; }
+        .vehicle-card { background: linear-gradient(135deg, #e1f5fe, #b3e5fc); padding: 20px; border-radius: 15px; margin: 15px 0; border: 3px solid #03a9f4; }
+        .design-card { background: linear-gradient(135deg, #f3e5f5, #e1bee7); padding: 20px; border-radius: 15px; margin: 15px 0; border: 3px solid #9c27b0; }
+        .feature-card { background: linear-gradient(135deg, #e8f5e8, #c8e6c9); padding: 20px; border-radius: 15px; margin: 15px 0; border: 3px solid #4caf50; }
+        .creative-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin: 20px 0; }
+        .choice-button { background: #ff9800; color: white; border: none; padding: 15px; border-radius: 10px; cursor: pointer; font-size: 16px; text-align: center; min-height: 80px; transition: transform 0.2s; }
+        .choice-button:hover { transform: scale(1.05); background: #f57c00; }
+        .design-section { border: 3px dashed #1976d2; padding: 20px; margin: 15px 0; border-radius: 15px; background: #f0f8ff; }
+        .feature-list { display: flex; flex-wrap: wrap; gap: 10px; margin: 15px 0; }
+        .feature-tag { background: #2196f3; color: white; padding: 8px 15px; border-radius: 20px; font-size: 14px; cursor: pointer; transition: all 0.3s; }
+        .feature-tag:hover { background: #1976d2; transform: scale(1.05); }
+        .feature-tag.selected { background: #4caf50; }
+        .drawing-area { width: 100%; height: 250px; border: 3px solid #1976d2; border-radius: 10px; background: white; margin: 15px 0; position: relative; }
+        .drawing-tools { text-align: center; margin: 10px 0; }
+        .color-picker { width: 40px; height: 40px; border-radius: 50%; border: 3px solid #333; margin: 0 5px; cursor: pointer; display: inline-block; }
+        button { background-color: #1976d2; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-size: 16px; margin: 5px; }
+        button:hover { background-color: #1565c0; }
+        .emoji-large { font-size: 48px; text-align: center; margin: 15px 0; }
+        .intro { background: #e8f5e8; padding: 15px; border-radius: 10px; margin-bottom: 20px; border-left: 5px solid #4caf50; }
+        .progress { text-align: center; margin: 20px 0; font-size: 18px; }
+        .stars { text-align: center; font-size: 24px; margin: 20px 0; }
+        .completed { background: #d4edda; border-color: #28a745; }
+        .ai-prompt { background: #fff3cd; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 5px solid #ffc107; }
+        .vehicle-specs { background: #f8f9fa; padding: 15px; border-radius: 10px; margin: 15px 0; border: 2px solid #dee2e6; }
+        textarea { width: 100%; min-height: 80px; padding: 10px; border: 2px solid #1976d2; border-radius: 8px; font-size: 16px; font-family: Arial, sans-serif; }
+        input[type="text"] { width: 100%; padding: 10px; border: 2px solid #1976d2; border-radius: 8px; font-size: 16px; margin: 5px 0; }
+        .car-animation { text-align: center; font-size: 36px; margin: 20px 0; animation: drive 4s linear infinite; }
+        @keyframes drive { 0% { transform: translateX(-100px); } 100% { transform: translateX(100px); } }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <h1>🚗 Week 7 Friday - Design a Self-Driving Vehicle 🤖</h1>
+        
+        <p style="text-align: center; font-size: 18px; color: #1976d2; margin-bottom: 20px;" id="personal-greeting">
+            Hi there! Today you're going to be an AI vehicle engineer! Design your own amazing self-driving vehicle! 🛻
+        </p>
+        
+        <div class="intro">
+            <h3>🚀 Welcome to AI Vehicle Design Lab!</h3>
+            <p>Self-driving vehicles use AI to see, think, and make decisions! Today you'll design your own smart vehicle that can drive itself safely.</p>
+            <p><strong>What makes a vehicle self-driving:</strong></p>
+            <ul>
+                <li>🎥 <strong>Cameras:</strong> To "see" the road and other vehicles</li>
+                <li>🧠 <strong>AI Brain:</strong> To make driving decisions</li>
+                <li>📡 <strong>Sensors:</strong> To detect obstacles and distance</li>
+                <li>🗺️ <strong>GPS:</strong> To know where to go</li>
+            </ul>
+            <div class="car-animation">🚗💨</div>
+        </div>
+        
+        <div class="progress">Design Progress: <span id="completed-tasks">0</span>/5 Steps Complete</div>
+        <div class="stars" id="stars">⭐</div>
+        
+        <!-- Step 1: Vehicle Type -->
+        <div class="activity vehicle-card" id="step1">
+            <h3>Step 1: Choose Your Vehicle Type! 🚙</h3>
+            <div class="ai-prompt">
+                <p>What kind of self-driving vehicle will you design? Each type has different jobs and challenges!</p>
+            </div>
+            
+            <div class="creative-grid">
+                <button class="choice-button" onclick="selectVehicleType('family car')">
+                    🚗<br>Family Car<br>For daily trips
+                </button>
+                <button class="choice-button" onclick="selectVehicleType('delivery truck')">
+                    🚚<br>Delivery Truck<br>Brings packages
+                </button>
+                <button class="choice-button" onclick="selectVehicleType('school bus')">
+                    🚌<br>School Bus<br>Carries kids safely
+                </button>
+                <button class="choice-button" onclick="selectVehicleType('emergency vehicle')">
+                    🚑<br>Emergency Vehicle<br>Helps in emergencies
+                </button>
+                <button class="choice-button" onclick="selectVehicleType('flying car')">
+                    🛸<br>Flying Car<br>Future transport
+                </button>
+                <button class="choice-button" onclick="selectVehicleType('underwater vehicle')">
+                    🚤<br>Underwater Vehicle<br>Ocean explorer
+                </button>
+            </div>
+            
+            <p><strong>Selected Vehicle:</strong> <span id="chosen-vehicle">None yet</span></p>
+            <button onclick="completeStep(1)" id="vehicle-done" style="display:none;">Vehicle Type Ready! ✅</button>
+        </div>
+        
+        <!-- Step 2: AI Features -->
+        <div class="activity feature-card" id="step2">
+            <h3>Step 2: Add Smart AI Features! 🧠</h3>
+            <div class="ai-prompt">
+                <p>What special AI powers will your vehicle have? Click on the features you want to include!</p>
+            </div>
+            
+            <div class="feature-list">
+                <div class="feature-tag" onclick="toggleFeature(this)">🎥 360° Cameras</div>
+                <div class="feature-tag" onclick="toggleFeature(this)">🛡️ Collision Avoidance</div>
+                <div class="feature-tag" onclick="toggleFeature(this)">🗣️ Voice Commands</div>
+                <div class="feature-tag" onclick="toggleFeature(this)">🎵 Music AI</div>
+                <div class="feature-tag" onclick="toggleFeature(this)">🌡️ Climate Control</div>
+                <div class="feature-tag" onclick="toggleFeature(this)">📱 Phone Connection</div>
+                <div class="feature-tag" onclick="toggleFeature(this)">🚦 Traffic Light Reading</div>
+                <div class="feature-tag" onclick="toggleFeature(this)">⛽ Auto Fuel Finding</div>
+                <div class="feature-tag" onclick="toggleFeature(this)">🎯 Auto Parking</div>
+                <div class="feature-tag" onclick="toggleFeature(this)">🆘 Emergency Calling</div>
+            </div>
+            
+            <p><strong>Selected Features:</strong> <span id="feature-count">0</span> features chosen</p>
+            <button onclick="completeStep(2)">AI Features Complete! ✅</button>
+        </div>
+        
+        <!-- Step 3: Safety Systems -->
+        <div class="activity design-card" id="step3">
+            <h3>Step 3: Design Safety Systems! 🛡️</h3>
+            <div class="ai-prompt">
+                <p>Safety is the most important part! How will your AI keep passengers safe?</p>
+            </div>
+            
+            <h4>How will your AI detect obstacles?</h4>
+            <div class="creative-grid">
+                <button class="choice-button" onclick="selectSafety('radar-sensors')">
+                    📡<br>Radar Sensors<br>See in all weather
+                </button>
+                <button class="choice-button" onclick="selectSafety('laser-scanning')">
+                    🔍<br>Laser Scanning<br>Measure exact distances
+                </button>
+                <button class="choice-button" onclick="selectSafety('smart-cameras')">
+                    📹<br>Smart Cameras<br>Recognize objects
+                </button>
+                <button class="choice-button" onclick="selectSafety('all-systems')">
+                    ⚡<br>All Systems<br>Triple protection
+                </button>
+            </div>
+            
+            <h4>What happens in an emergency?</h4>
+            <textarea id="emergency-plan" placeholder="Describe what your AI vehicle does if it detects danger..."></textarea>
+            
+            <button onclick="completeStep(3)">Safety Systems Ready! ✅</button>
+        </div>
+        
+        <!-- Step 4: Name and Design -->
+        <div class="activity design-section" id="step4">
+            <h3>Step 4: Name and Draw Your Vehicle! 🎨</h3>
+            <div class="ai-prompt">
+                <p>Give your self-driving vehicle a cool name and draw what it looks like!</p>
+            </div>
+            
+            <h4>Vehicle Name:</h4>
+            <input type="text" id="vehicle-name" placeholder="What's your vehicle called? (e.g., SafeRide AI, SmartBus 3000...)">
+            
+            <h4>Draw Your Vehicle Design:</h4>
+            <canvas id="drawing-canvas" class="drawing-area" width="700" height="250"></canvas>
+            
+            <div class="drawing-tools">
+                <p>Choose your colors:</p>
+                <div class="color-picker" style="background: black;" onclick="setColor('black')"></div>
+                <div class="color-picker" style="background: red;" onclick="setColor('red')"></div>
+                <div class="color-picker" style="background: blue;" onclick="setColor('blue')"></div>
+                <div class="color-picker" style="background: green;" onclick="setColor('green')"></div>
+                <div class="color-picker" style="background: yellow;" onclick="setColor('yellow')"></div>
+                <div class="color-picker" style="background: purple;" onclick="setColor('purple')"></div>
+                <div class="color-picker" style="background: orange;" onclick="setColor('orange')"></div>
+                <div class="color-picker" style="background: silver;" onclick="setColor('silver')"></div>
+                <button onclick="clearCanvas()">Clear Drawing</button>
+            </div>
+            
+            <button onclick="completeStep(4)">Design Complete! ✅</button>
+        </div>
+        
+        <!-- Step 5: AI Decision Making -->
+        <div class="activity vehicle-card" id="step5">
+            <h3>Step 5: Program AI Decisions! 🤖</h3>
+            <div class="ai-prompt">
+                <p>Your AI needs to make smart decisions! Complete these scenarios for your vehicle.</p>
+            </div>
+            
+            <div class="vehicle-specs">
+                <h4>AI Decision Scenarios:</h4>
+                
+                <p><strong>Scenario 1:</strong> Your AI vehicle sees a red traffic light. What should it do?</p>
+                <textarea id="scenario1" placeholder="The AI should..."></textarea>
+                
+                <p><strong>Scenario 2:</strong> A ball rolls into the street and a child is chasing it. What should the AI do?</p>
+                <textarea id="scenario2" placeholder="The AI should..."></textarea>
+                
+                <p><strong>Scenario 3:</strong> The passenger says "Take me to the park" but doesn't say which park. What should the AI ask?</p>
+                <textarea id="scenario3" placeholder="The AI should ask..."></textarea>
+            </div>
+            
+            <button onclick="completeStep(5)">AI Programming Complete! ✅</button>
+        </div>
+        
+        <!-- Final Vehicle Display -->
+        <div class="activity" id="final-vehicle" style="display:none;">
+            <h3>🎉 Your Amazing Self-Driving Vehicle! 🎉</h3>
+            <div id="vehicle-display"></div>
+            <button onclick="presentVehicle()">Present to Family! 🏆</button>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <button onclick="showCompleteVehicle()" id="show-vehicle-btn" style="display:none; background: #28a745; font-size: 18px; padding: 15px 30px;">
+                See My Self-Driving Vehicle! 🚗
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let completedSteps = 0;
+        let selectedVehicleType = '';
+        let selectedFeatures = [];
+        let selectedSafety = '';
+        let currentColor = 'black';
+        let isDrawing = false;
+        
+        // Get the selected child's name
+        function getSelectedChildName() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let childName = urlParams.get('child');
+            
+            if (!childName) {
+                const savedChild = localStorage.getItem('selectedChild');
+                if (savedChild) {
+                    childName = savedChild;
+                }
+            }
+            
+            if (childName) {
+                return childName.charAt(0).toUpperCase() + childName.slice(1);
+            }
+            return 'Engineer'; // fallback
+        }
+        
+        // Set personalized greeting
+        function setPersonalizedGreeting() {
+            const childName = getSelectedChildName();
+            const greeting = document.getElementById('personal-greeting');
+            greeting.textContent = `Hi ${childName}! Today you're going to be an AI vehicle engineer! Design your own amazing self-driving vehicle! 🛻`;
+        }
+        
+        function completeStep(stepNumber) {
+            const step = document.getElementById(`step${stepNumber}`);
+            if (!step.classList.contains('completed')) {
+                step.classList.add('completed');
+                completedSteps++;
+                updateProgress();
+                
+                if (completedSteps === 5) {
+                    document.getElementById('show-vehicle-btn').style.display = 'block';
+                }
+            }
+        }
+        
+        function updateProgress() {
+            document.getElementById('completed-tasks').textContent = completedSteps;
+            const stars = document.getElementById('stars');
+            let starString = '';
+            for (let i = 0; i < completedSteps; i++) {
+                starString += '⭐';
+            }
+            if (completedSteps === 5) {
+                starString += ' 🎉 AMAZING VEHICLE ENGINEER! 🎉';
+            }
+            stars.textContent = starString;
+        }
+        
+        function selectVehicleType(type) {
+            selectedVehicleType = type;
+            document.getElementById('chosen-vehicle').textContent = type;
+            document.getElementById('vehicle-done').style.display = 'block';
+        }
+        
+        function toggleFeature(element) {
+            const feature = element.textContent;
+            if (element.classList.contains('selected')) {
+                element.classList.remove('selected');
+                selectedFeatures = selectedFeatures.filter(f => f !== feature);
+            } else {
+                element.classList.add('selected');
+                selectedFeatures.push(feature);
+            }
+            document.getElementById('feature-count').textContent = selectedFeatures.length;
+        }
+        
+        function selectSafety(safety) {
+            selectedSafety = safety;
+        }
+        
+        function showCompleteVehicle() {
+            const vehicleName = document.getElementById('vehicle-name').value || 'AI Vehicle 2025';
+            const scenario1 = document.getElementById('scenario1').value || 'Stop safely at the light';
+            const scenario2 = document.getElementById('scenario2').value || 'Stop immediately and honk gently';
+            const scenario3 = document.getElementById('scenario3').value || 'Ask which park they want to visit';
+            const emergencyPlan = document.getElementById('emergency-plan').value || 'Pull over safely and call for help';
+            
+            const vehicleHtml = `
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; border: 3px solid #28a745;">
+                    <h2 style="text-align: center; color: #1976d2;">"${vehicleName}"</h2>
+                    <p><strong>Designed by:</strong> ${getSelectedChildName()}</p>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">
+                        <div>
+                            <h4>🚗 Vehicle Type:</h4>
+                            <p>${selectedVehicleType}</p>
+                            
+                            <h4>🛡️ Safety System:</h4>
+                            <p>${selectedSafety.replace('-', ' ')}</p>
+                            
+                            <h4>🆘 Emergency Plan:</h4>
+                            <p>${emergencyPlan}</p>
+                        </div>
+                        <div>
+                            <h4>🧠 AI Features (${selectedFeatures.length}):</h4>
+                            <ul>
+                                ${selectedFeatures.map(feature => `<li>${feature}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <h4>🤖 AI Decision Making:</h4>
+                    <div style="background: white; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <p><strong>Red light scenario:</strong> ${scenario1}</p>
+                        <p><strong>Child safety scenario:</strong> ${scenario2}</p>
+                        <p><strong>Navigation question:</strong> ${scenario3}</p>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('vehicle-display').innerHTML = vehicleHtml;
+            document.getElementById('final-vehicle').style.display = 'block';
+            document.getElementById('final-vehicle').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function presentVehicle() {
+            alert(`🎉 Incredible work, ${getSelectedChildName()}! Your "${document.getElementById('vehicle-name').value || 'AI Vehicle 2025'}" is an amazing self-driving vehicle design! 
+
+You've learned how AI helps vehicles:
+• See the road with cameras and sensors
+• Make safe driving decisions
+• Respond to emergencies
+• Follow traffic rules
+
+Present your vehicle design to your family and explain how the AI keeps passengers safe! 🚗🤖✨`);
+        }
+        
+        // Drawing functionality
+        const canvas = document.getElementById('drawing-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseout', stopDrawing);
+        
+        function startDrawing(e) {
+            isDrawing = true;
+            draw(e);
+        }
+        
+        function draw(e) {
+            if (!isDrawing) return;
+            
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = currentColor;
+            
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+        
+        function stopDrawing() {
+            if (isDrawing) {
+                isDrawing = false;
+                ctx.beginPath();
+            }
+        }
+        
+        function setColor(color) {
+            currentColor = color;
+        }
+        
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+        
+        // Initialize
+        setPersonalizedGreeting();
+    </script>
+</body>
+</html> 

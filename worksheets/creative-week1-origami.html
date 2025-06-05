@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 1 Wednesday - Origami Animals</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #fff8e1; }
+        .worksheet-container { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #ff5722; text-align: center; }
+        .activity { margin: 20px 0; padding: 15px; border: 2px solid #ff5722; border-radius: 10px; background-color: #f8f9fa; }
+        .origami-card { background: linear-gradient(135deg, #ffe0b2, #ffcc80); padding: 20px; border-radius: 15px; margin: 15px 0; border: 3px solid #ff9800; }
+        .step-card { background: linear-gradient(135deg, #f3e5f5, #e1bee7); padding: 20px; border-radius: 15px; margin: 15px 0; border: 3px solid #9c27b0; }
+        .animal-card { background: linear-gradient(135deg, #e8f5e8, #c8e6c9); padding: 20px; border-radius: 15px; margin: 15px 0; border: 3px solid #4caf50; }
+        .creative-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin: 20px 0; }
+        .choice-button { background: #2196f3; color: white; border: none; padding: 15px; border-radius: 10px; cursor: pointer; font-size: 16px; text-align: center; min-height: 80px; transition: transform 0.2s; }
+        .choice-button:hover { transform: scale(1.05); background: #1976d2; }
+        .choice-button.selected { background: #4caf50; }
+        .step-section { border: 3px dashed #ff5722; padding: 20px; margin: 15px 0; border-radius: 15px; background: #fff3e0; }
+        .step-number { background: #ff5722; color: white; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; margin: 0 auto 15px; }
+        .fold-diagram { width: 100%; max-width: 200px; height: 150px; border: 2px solid #ff5722; border-radius: 10px; background: #f5f5f5; margin: 15px auto; display: block; position: relative; }
+        .fold-line { position: absolute; border-top: 2px dashed #ff5722; width: 80%; top: 50%; left: 10%; }
+        .fold-arrow { position: absolute; font-size: 24px; color: #ff5722; }
+        button { background-color: #ff5722; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-size: 16px; margin: 5px; }
+        button:hover { background-color: #d84315; }
+        .emoji-large { font-size: 48px; text-align: center; margin: 15px 0; }
+        .intro { background: #e8f5e8; padding: 15px; border-radius: 10px; margin-bottom: 20px; border-left: 5px solid #4caf50; }
+        .progress { text-align: center; margin: 20px 0; font-size: 18px; }
+        .stars { text-align: center; font-size: 24px; margin: 20px 0; }
+        .completed { background: #d4edda; border-color: #28a745; }
+        .tip { background: #fff3cd; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 5px solid #ffc107; }
+        .materials-list { background: #f8f9fa; padding: 15px; border-radius: 10px; margin: 15px 0; border: 2px solid #dee2e6; }
+        .photo-area { width: 100%; height: 150px; border: 3px dashed #ff5722; border-radius: 10px; background: #f9f9f9; margin: 15px 0; display: flex; align-items: center; justify-content: center; color: #666; font-size: 16px; text-align: center; }
+        .difficulty-badge { display: inline-block; padding: 5px 15px; border-radius: 20px; font-size: 14px; font-weight: bold; margin: 5px; }
+        .easy { background: #c8e6c9; color: #2e7d32; }
+        .medium { background: #ffe0b2; color: #ef6c00; }
+        .hard { background: #ffcdd2; color: #c62828; }
+        .animal-showcase { text-align: center; margin: 20px 0; }
+        .congrats-animation { text-align: center; font-size: 36px; margin: 20px 0; animation: bounce 2s infinite; }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } 60% { transform: translateY(-5px); } }
+        .hint-button {
+            background: #ff9800;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 10px 0;
+            transition: all 0.3s;
+        }
+        .hint-button:hover {
+            background: #f57c00;
+            transform: scale(1.05);
+        }
+        .hint-content {
+            display: none;
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            border-left: 5px solid #ffc107;
+        }
+        .hint-content.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <h1>🐾 Week 1 Wednesday - Origami Animals 📃</h1>
+        
+        <p style="text-align: center; font-size: 18px; color: #ff5722; margin-bottom: 20px;" id="personal-greeting">
+            Hi there! Today we're going to learn the amazing art of origami and create cute animals! 🦋
+        </p>
+        
+        <div class="intro">
+            <h3>🎨 Welcome to Origami Adventure!</h3>
+            <p>Origami is the Japanese art of paper folding! Today you'll learn to make adorable animals using just paper and your hands.</p>
+            <p><strong>What you'll learn:</strong></p>
+            <ul>
+                <li>📏 <strong>Following directions:</strong> Step-by-step instructions</li>
+                <li>👐 <strong>Fine motor skills:</strong> Precise folding and creasing</li>
+                <li>🧠 <strong>Spatial thinking:</strong> Understanding how shapes transform</li>
+                <li>🎯 <strong>Patience:</strong> Taking time to create something beautiful</li>
+            </ul>
+            <div class="emoji-large">🐕🐸🦢</div>
+        </div>
+        
+        <div class="progress">Progress: <span id="completed-steps">0</span>/5 Steps Complete</div>
+        <div class="stars" id="stars">⭐</div>
+        
+        <!-- Step 1: Choose Your Animal -->
+        <div class="activity origami-card" id="step1">
+            <h3>Step 1: Choose Your Origami Animal! 🐾</h3>
+            <button class="hint-button" onclick="toggleOrigamiHint('animal-selection')">💡 Need Help Choosing?</button>
+            <div id="animal-selection" class="hint-content">
+                <p><strong>Tip:</strong> Pick the animal you'd like to make first! Each has different difficulty levels to help you learn.</p>
+                <p><strong>Beginner suggestion:</strong> Start with Dog or Butterfly - they're the easiest!</p>
+            </div>
+            
+            <div class="creative-grid">
+                <button class="choice-button" onclick="selectAnimal('dog')">
+                    🐕<br>Puppy Dog<br><span class="difficulty-badge easy">Easy</span>
+                </button>
+                <button class="choice-button" onclick="selectAnimal('frog')">
+                    🐸<br>Jumping Frog<br><span class="difficulty-badge medium">Medium</span>
+                </button>
+                <button class="choice-button" onclick="selectAnimal('swan')">
+                    🦢<br>Elegant Swan<br><span class="difficulty-badge medium">Medium</span>
+                </button>
+                <button class="choice-button" onclick="selectAnimal('butterfly')">
+                    🦋<br>Beautiful Butterfly<br><span class="difficulty-badge easy">Easy</span>
+                </button>
+                <button class="choice-button" onclick="selectAnimal('fish')">
+                    🐠<br>Tropical Fish<br><span class="difficulty-badge easy">Easy</span>
+                </button>
+                <button class="choice-button" onclick="selectAnimal('crane')">
+                    🐦<br>Peace Crane<br><span class="difficulty-badge hard">Hard</span>
+                </button>
+            </div>
+            
+            <p><strong>Selected Animal:</strong> <span id="chosen-animal">None yet</span></p>
+            <button onclick="completeStep(1)" id="animal-done" style="display:none;">Animal Selected! ✅</button>
+        </div>
+        
+        <!-- Step 2: Gather Materials -->
+        <div class="activity step-card" id="step2">
+            <h3>Step 2: Gather Your Materials! 📋</h3>
+            <button class="hint-button" onclick="toggleOrigamiHint('materials-tip')">💡 Material Tips</button>
+            <div id="materials-tip" class="hint-content">
+                <p><strong>Tip:</strong> Let's make sure you have everything you need for origami success!</p>
+                <p><strong>No origami paper?</strong> Regular paper works too - just cut it into a square!</p>
+            </div>
+            
+            <div class="materials-list">
+                <h4>📦 Materials Needed:</h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div>
+                        <h5>Essential Items:</h5>
+                        <ul id="essential-materials">
+                            <li>📄 Square paper (6x6 inches works best)</li>
+                            <li>✋ Your hands for folding</li>
+                            <li>📏 Ruler (optional)</li>
+                            <li>✏️ Pencil for marking (optional)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5>Fun Extras:</h5>
+                        <ul>
+                            <li>🎨 Colored paper or origami paper</li>
+                            <li>👁️ Googly eyes for decorating</li>
+                            <li>🖊️ Markers for details</li>
+                            <li>✨ Stickers for decoration</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="hint-button" onclick="toggleOrigamiHint('paper-tip')">💡 How to Make Square Paper</button>
+            <div id="paper-tip" class="hint-content">
+                <p><strong>Pro Tip:</strong> If you don't have square paper, you can make a square from regular paper by folding one corner to the opposite edge and cutting off the extra strip!</p>
+                <p><strong>Step by step:</strong> 1) Take rectangular paper 2) Fold corner to opposite edge 3) Cut off the extra strip 4) Unfold for a perfect square!</p>
+            </div>
+            
+            <button onclick="completeStep(2)">Materials Ready! ✅</button>
+        </div>
+        
+        <!-- Step 2.5: Watch Video Tutorial -->
+        <div class="activity video-card" id="step-video" style="background: linear-gradient(135deg, #ffebee, #ffcdd2); border: 3px solid #f44336;">
+            <h3>🎥 Watch & Learn: Origami Animals Tutorial! 📺</h3>
+            <button class="hint-button" onclick="toggleOrigamiHint('video-help')">📺 Video Learning Tips</button>
+            <div id="video-help" class="hint-content">
+                <p><strong>Tip:</strong> Let's watch a helpful video to see how origami animals are made! This will help you understand the folding techniques.</p>
+                <p><strong>Watch actively:</strong> Try to follow along with your hands as you watch!</p>
+            </div>
+            
+            <div style="text-align: center; margin: 20px 0;">
+                <div style="background: #333; border-radius: 15px; padding: 20px; margin: 15px 0;">
+                    <h4 style="color: white; margin-top: 0;">🌟 Featured Video: "5 Easy Animal Origami Projects for Beginners"</h4>
+                    <p style="color: #ccc;">By Red Ted Art - Perfect for kids!</p>
+                    
+                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px;">
+                        <iframe 
+                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 10px;" 
+                            src="https://www.youtube.com/embed/OUGvUbqCEdE" 
+                            title="5 Easy Animal Origami Projects for Beginners" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    
+                    <div style="color: #ccc; font-size: 14px; margin-top: 10px;">
+                        <p><strong>What you'll see:</strong> Step-by-step folding for Dog, Cat, Pig and more!</p>
+                        <p><strong>Duration:</strong> About 10 minutes of easy-to-follow instructions</p>
+                        <p><strong>Perfect for:</strong> Visual learners who like to see and do!</p>
+                    </div>
+                </div>
+                
+                <button class="hint-button" onclick="toggleOrigamiHint('parent-tips')">👨‍👩‍👧‍👦 Parent & Video Tips</button>
+                <div id="parent-tips" class="hint-content">
+                    <p><strong>For Parents:</strong> Watch together with your child! Pause the video at each step to practice together.</p>
+                    <p><strong>Pro Tip:</strong> You can pause, rewind, and replay any part of the video as many times as you need!</p>
+                    <p><strong>Learning style:</strong> Some kids learn better by watching first, others by doing along!</p>
+                </div>
+                
+                <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin: 15px 0;">
+                    <h4>🎬 More Helpful Videos:</h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: left;">
+                        <div>
+                            <p><strong>🐕 Easy Origami Dog:</strong><br>
+                            <a href="https://www.youtube.com/watch?v=h9u8qZE_K6I" target="_blank" style="color: #f44336;">Red Ted Art Dog Tutorial</a></p>
+                        </div>
+                        <div>
+                            <p><strong>🐸 Jumping Frog:</strong><br>
+                            <a href="https://www.youtube.com/watch?v=RvJRQ62mn7A" target="_blank" style="color: #f44336;">Easy Origami Frog</a></p>
+                        </div>
+                    </div>
+                    <p style="font-size: 12px; color: #666; margin-top: 10px;"><em>These links will open in a new window with parent supervision</em></p>
+                </div>
+            </div>
+            
+            <button onclick="completeVideoStep()">Video Watched! ✅</button>
+        </div>
+
+        <!-- Step 3: Learn Basic Folds -->
+        <div class="activity animal-card" id="step3">
+            <h3>Step 3: Learn Basic Origami Folds! 📐</h3>
+            <button class="hint-button" onclick="toggleOrigamiHint('fold-basics')">📐 Basic Fold Tips</button>
+            <div id="fold-basics" class="hint-content">
+                <p><strong>Tip:</strong> Now that you've watched the video, let's practice the basic folds that all origami uses!</p>
+                <p><strong>Practice first:</strong> Try these folds on scrap paper before starting your animal!</p>
+            </div>
+            
+            <div id="basic-folds">
+                <div class="step-section">
+                    <div class="step-number">1</div>
+                    <h4>Valley Fold ⬇️</h4>
+                    <p>Fold the paper toward you, creating a "valley" or dip in the paper.</p>
+                    <div class="fold-diagram">
+                        <div class="fold-line"></div>
+                        <div class="fold-arrow" style="top: 40%; left: 50%;">⬇️</div>
+                    </div>
+                </div>
+                
+                <div class="step-section">
+                    <div class="step-number">2</div>
+                    <h4>Mountain Fold ⬆️</h4>
+                    <p>Fold the paper away from you, creating a "mountain" or peak in the paper.</p>
+                    <div class="fold-diagram">
+                        <div class="fold-line" style="border-top: 2px solid #ff5722;"></div>
+                        <div class="fold-arrow" style="top: 40%; left: 50%;">⬆️</div>
+                    </div>
+                </div>
+                
+                <div class="step-section">
+                    <div class="step-number">3</div>
+                    <h4>Crease Well! 💪</h4>
+                    <p>After each fold, press down firmly and run your finger along the fold to make a sharp crease.</p>
+                    <div class="emoji-large">👆📄</div>
+                </div>
+            </div>
+            
+            <button onclick="completeStep(3)">Basic Folds Practiced! ✅</button>
+        </div>
+        
+        <!-- Step 4: Create Your Animal -->
+        <div class="activity step-section" id="step4">
+            <h3>Step 4: Create Your Origami Animal! 🎯</h3>
+            <button class="hint-button" onclick="toggleOrigamiHint('creation-tips')">🎯 Creation Success Tips</button>
+            <div id="creation-tips" class="hint-content">
+                <p><strong>Tip:</strong> Now for the fun part! Follow the step-by-step instructions for your chosen animal.</p>
+                <p><strong>Take your time:</strong> Origami is about patience - no rushing!</p>
+            </div>
+            
+            <div id="animal-instructions">
+                <p style="text-align: center; color: #666; font-style: italic;">Select an animal in Step 1 to see detailed instructions here!</p>
+            </div>
+            
+            <div class="photo-area" id="photo-area">
+                📸 Take a photo of your finished origami animal here!<br>
+                (Ask a grown-up to help you take a picture)
+            </div>
+            
+            <button onclick="completeStep(4)">Animal Created! ✅</button>
+        </div>
+        
+        <!-- Completion Celebration -->
+        <div class="activity" id="completion" style="display:none;">
+            <div class="congrats-animation">🎉 AMAZING ORIGAMI ARTIST! 🎉</div>
+            <div class="animal-showcase" id="showcase"></div>
+            <button onclick="celebrateCompletion()">Show Family! 🏆</button>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <button onclick="showCompletion()" id="show-completion-btn" style="display:none; background: #28a745; font-size: 18px; padding: 15px 30px;">
+                See My Origami Success! 🐾
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let completedSteps = 0;
+        let selectedAnimal = '';
+        
+        // Animal instructions database
+        const animalInstructions = {
+            dog: {
+                name: "Puppy Dog 🐕",
+                difficulty: "Easy",
+                steps: [
+                    "Start with a square piece of paper, colored side down",
+                    "Fold the paper in half diagonally to make a triangle",
+                    "Fold the top two corners down to make the ears",
+                    "Fold the bottom point up to make the nose",
+                    "Draw eyes and a nose to complete your puppy!"
+                ]
+            },
+            frog: {
+                name: "Jumping Frog 🐸",
+                difficulty: "Medium", 
+                steps: [
+                    "Start with a square piece of paper",
+                    "Fold in half horizontally, then unfold",
+                    "Fold the top edge down to the center crease",
+                    "Fold the corners down to make triangles",
+                    "Fold the bottom edge up to create the jumping mechanism",
+                    "Press down and let go to make your frog jump!"
+                ]
+            },
+            swan: {
+                name: "Elegant Swan 🦢",
+                difficulty: "Medium",
+                steps: [
+                    "Start with a square piece of paper",
+                    "Fold diagonally to make a triangle",
+                    "Fold the two outer edges to the center line",
+                    "Fold the top point down to make the head",
+                    "Fold the tip back up to make the beak",
+                    "Gently pull the neck up to complete your swan"
+                ]
+            },
+            butterfly: {
+                name: "Beautiful Butterfly 🦋",
+                difficulty: "Easy",
+                steps: [
+                    "Start with a square piece of paper",
+                    "Fold in half horizontally and vertically, then unfold",
+                    "Fold diagonally both ways, then unfold",
+                    "Push the sides together to form a smaller square",
+                    "Fold the top triangles down to make wings",
+                    "Add antennae with a marker!"
+                ]
+            },
+            fish: {
+                name: "Tropical Fish 🐠",
+                difficulty: "Easy",
+                steps: [
+                    "Start with a square piece of paper",
+                    "Fold diagonally to make a triangle",
+                    "Fold one corner over to make the tail fin",
+                    "Fold the other corner to make the head",
+                    "Add an eye and scales with markers",
+                    "Your fish is ready to swim!"
+                ]
+            },
+            crane: {
+                name: "Peace Crane 🐦",
+                difficulty: "Hard",
+                steps: [
+                    "Start with a square piece of paper",
+                    "Make preliminary folds to create a bird base",
+                    "Fold the top flaps down to the center",
+                    "Fold the sides to the center line",
+                    "Pull the neck and tail up and out",
+                    "Fold down the head and spread the wings"
+                ]
+            }
+        };
+        
+        // Get the selected child's name
+        function getSelectedChildName() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let childName = urlParams.get('child');
+            
+            if (!childName) {
+                const savedChild = localStorage.getItem('selectedChild');
+                if (savedChild) {
+                    childName = savedChild;
+                }
+            }
+            
+            if (childName) {
+                return childName.charAt(0).toUpperCase() + childName.slice(1);
+            }
+            return 'Origami Artist'; // fallback
+        }
+        
+        // Set personalized greeting
+        function setPersonalizedGreeting() {
+            const childName = getSelectedChildName();
+            const greeting = document.getElementById('personal-greeting');
+            greeting.textContent = `Hi ${childName}! Today we're going to learn the amazing art of origami and create cute animals! 🦋`;
+        }
+        
+        function completeStep(stepNumber) {
+            const step = document.getElementById(`step${stepNumber}`);
+            if (!step.classList.contains('completed')) {
+                step.classList.add('completed');
+                completedSteps++;
+                updateProgress();
+                
+                if (completedSteps === 5) {
+                    document.getElementById('show-completion-btn').style.display = 'block';
+                }
+            }
+        }
+        
+        function updateProgress() {
+            document.getElementById('completed-steps').textContent = completedSteps;
+            const stars = document.getElementById('stars');
+            let starString = '';
+            for (let i = 0; i < completedSteps; i++) {
+                starString += '⭐';
+            }
+            if (completedSteps === 5) {
+                starString += ' 🎉 ORIGAMI MASTER! 🎉';
+            }
+            stars.textContent = starString;
+        }
+        
+        function completeVideoStep() {
+            const videoStep = document.getElementById('step-video');
+            if (!videoStep.classList.contains('completed')) {
+                videoStep.classList.add('completed');
+                completedSteps++;
+                updateProgress();
+            }
+        }
+        
+        function selectAnimal(animal) {
+            selectedAnimal = animal;
+            
+            // Update UI
+            document.querySelectorAll('.choice-button').forEach(btn => btn.classList.remove('selected'));
+            event.target.classList.add('selected');
+            
+            const animalInfo = animalInstructions[animal];
+            document.getElementById('chosen-animal').textContent = animalInfo.name;
+            document.getElementById('animal-done').style.display = 'block';
+            
+            // Update instructions
+            showAnimalInstructions(animal);
+        }
+        
+        function showAnimalInstructions(animal) {
+            const animalInfo = animalInstructions[animal];
+            const instructionsDiv = document.getElementById('animal-instructions');
+            
+            let instructionsHtml = `
+                <h4>${animalInfo.name} Instructions</h4>
+                <p><span class="difficulty-badge ${animalInfo.difficulty.toLowerCase()}">${animalInfo.difficulty}</span></p>
+                <div class="step-section">
+            `;
+            
+            animalInfo.steps.forEach((step, index) => {
+                instructionsHtml += `
+                    <div style="margin: 15px 0;">
+                        <div class="step-number">${index + 1}</div>
+                        <p><strong>Step ${index + 1}:</strong> ${step}</p>
+                    </div>
+                `;
+            });
+            
+            instructionsHtml += `
+                </div>
+                <button class="hint-button" onclick="toggleOrigamiHint('instruction-tips')">💡 Success Reminders</button>
+                <div id="instruction-tips" class="hint-content">
+                    <p><strong>Remember:</strong> Take your time! Origami is about patience and precision. If something doesn't look right, unfold and try again!</p>
+                    <p><strong>Perfect folds:</strong> Each crease should be sharp and clean for the best results!</p>
+                </div>
+            `;
+            
+            instructionsDiv.innerHTML = instructionsHtml;
+        }
+        
+        function showCompletion() {
+            const animalInfo = animalInstructions[selectedAnimal];
+            const showcaseHtml = `
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; border: 3px solid #28a745;">
+                    <h2 style="text-align: center; color: #ff5722;">My Origami Creation! 🎨</h2>
+                    <p><strong>Artist:</strong> ${getSelectedChildName()}</p>
+                    <p><strong>Animal Created:</strong> ${animalInfo.name}</p>
+                    <p><strong>Difficulty Level:</strong> ${animalInfo.difficulty}</p>
+                    
+                    <div style="background: white; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <h4>🏆 Skills You Practiced:</h4>
+                        <ul>
+                            <li>📏 Following detailed instructions</li>
+                            <li>👐 Fine motor control and precision</li>
+                            <li>🧠 Spatial reasoning and visualization</li>
+                            <li>🎯 Patience and concentration</li>
+                            <li>🎨 Creative expression through paper art</li>
+                        </ul>
+                    </div>
+                    
+                    <button class="hint-button" onclick="toggleOrigamiHint('next-steps')">🌟 What's Next?</button>
+                    <div id="next-steps" class="hint-content">
+                        <p><strong>Next Steps:</strong> Try making another animal! Each one teaches you new folding techniques.</p>
+                        <p><strong>Build skills:</strong> Start with easy animals, then try medium and hard ones!</p>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('showcase').innerHTML = showcaseHtml;
+            document.getElementById('completion').style.display = 'block';
+            document.getElementById('completion').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function celebrateCompletion() {
+            const animalInfo = animalInstructions[selectedAnimal];
+            alert(`🎉 Incredible work, ${getSelectedChildName()}! You've mastered the art of origami! 
+
+Your beautiful ${animalInfo.name} shows amazing:
+• Attention to detail
+• Following instructions 
+• Fine motor skills
+• Creative expression
+
+Show your family your origami creation and teach them how to make one too! 
+
+You're now ready to try more complex origami animals! 🐾✨`);
+        }
+        
+        function toggleOrigamiHint(hintId) {
+            const hintElement = document.getElementById(hintId);
+            const buttonElement = event.target;
+            
+            if (hintElement.classList.contains('show')) {
+                hintElement.classList.remove('show');
+                buttonElement.textContent = buttonElement.textContent.replace('Hide', 'Show');
+            } else {
+                hintElement.classList.add('show');
+                buttonElement.textContent = buttonElement.textContent.replace('Show', 'Hide');
+            }
+        }
+
+        // Initialize
+        setPersonalizedGreeting();
+    </script>
+</body>
+</html> 

@@ -91,6 +91,91 @@
             font-size: 24px;
             margin: 20px 0;
         }
+        .challenge-question {
+            background: white;
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 5px solid #4caf50;
+        }
+        .question-number {
+            display: inline-block;
+            background: #4caf50;
+            color: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        .question-content {
+            display: inline-block;
+            vertical-align: top;
+            width: calc(100% - 50px);
+        }
+        .answer-input {
+            width: 80px;
+            padding: 8px;
+            border: 2px solid #4caf50;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+            margin: 0 5px;
+        }
+        .difficulty-easy { border-left-color: #4caf50; }
+        .difficulty-medium { border-left-color: #ff9800; }
+        .difficulty-hard { border-left-color: #f44336; }
+        .sequence-display {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: monospace;
+            font-size: 18px;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+        .missing-number {
+            display: inline-block;
+            width: 40px;
+            height: 30px;
+            border: 2px dashed #4caf50;
+            background: #e8f5e8;
+            margin: 0 2px;
+            text-align: center;
+            line-height: 26px;
+        }
+        .hint-container {
+            margin-top: 10px;
+        }
+        .hint-button {
+            background: #ff9800;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-right: 10px;
+        }
+        .hint-button:hover {
+            background: #f57c00;
+        }
+        .hint-text {
+            display: none;
+            background: #fff3cd;
+            padding: 8px 12px;
+            border-radius: 5px;
+            margin-top: 5px;
+            border-left: 3px solid #ffc107;
+            font-size: 12px;
+            color: #856404;
+        }
+        .hint-text.show {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -118,6 +203,24 @@
             <div class="number-grid" id="countBy10">
                 <!-- Numbers will be generated here -->
             </div>
+        </div>
+
+        <!-- New Challenge Questions Section -->
+        <div class="section" style="background: linear-gradient(135deg, #e8f5e8, #c8e6c9); border-color: #4caf50;">
+            <h2 style="color: #4caf50;">🧮 Skip Counting Challenge Questions</h2>
+            <p style="color: #2e7d32; font-weight: bold;">Answer these 10 questions with increasing difficulty!</p>
+            
+            <div id="challenge-questions">
+                <!-- Questions will be populated here -->
+            </div>
+            
+            <div class="controls">
+                <button onclick="checkChallengeAnswers()" style="background-color: #4caf50;">Check Challenge Answers</button>
+                <button onclick="generateChallengeQuestions()" style="background-color: #2196f3;">New Challenge Questions</button>
+            </div>
+            
+            <div class="feedback" id="challenge-feedback"></div>
+            <div class="progress" style="color: #4caf50;">Challenge Score: <span id="challenge-score">0</span>/10</div>
         </div>
 
         <div class="feedback" id="feedback"></div>
@@ -239,8 +342,179 @@
             starsDiv.textContent = '⭐'.repeat(score);
         }
 
+        // Challenge Questions Data and Functions
+        let challengeQuestions = [];
+        let challengeAnswers = [];
+        let challengeScore = 0;
+
+        function generateChallengeQuestions() {
+            challengeQuestions = [];
+            challengeAnswers = [];
+            
+            // Question 1: Simple counting by 2s (Easy)
+            challengeQuestions.push({
+                difficulty: 'easy',
+                question: 'Count by 2s: 2, 4, 6, ___',
+                answer: 8,
+                explanation: 'Continue the pattern: add 2 each time'
+            });
+            
+            // Question 2: Simple counting by 5s (Easy)
+            challengeQuestions.push({
+                difficulty: 'easy', 
+                question: 'Count by 5s: 5, 10, 15, ___',
+                answer: 20,
+                explanation: 'Continue the pattern: add 5 each time'
+            });
+            
+            // Question 3: Simple counting by 10s (Easy)
+            challengeQuestions.push({
+                difficulty: 'easy',
+                question: 'Count by 10s: 10, 20, 30, ___',
+                answer: 40,
+                explanation: 'Continue the pattern: add 10 each time'
+            });
+            
+            // Question 4: Missing number in middle - 2s (Medium)
+            challengeQuestions.push({
+                difficulty: 'medium',
+                question: 'Fill in the missing number: 8, 10, ___, 14',
+                answer: 12,
+                explanation: 'Counting by 2s: 8 + 2 = 10, 10 + 2 = 12, 12 + 2 = 14'
+            });
+            
+            // Question 5: Missing number in middle - 5s (Medium)
+            challengeQuestions.push({
+                difficulty: 'medium',
+                question: 'Fill in the missing number: 25, 30, ___, 40',
+                answer: 35,
+                explanation: 'Counting by 5s: 25 + 5 = 30, 30 + 5 = 35, 35 + 5 = 40'
+            });
+            
+            // Question 6: Backwards counting by 2s (Medium)
+            challengeQuestions.push({
+                difficulty: 'medium',
+                question: 'Count backwards by 2s: 20, 18, 16, ___',
+                answer: 14,
+                explanation: 'Count backwards: subtract 2 each time'
+            });
+            
+            // Question 7: Larger numbers - 10s (Medium)
+            challengeQuestions.push({
+                difficulty: 'medium',
+                question: 'Count by 10s: 70, 80, 90, ___',
+                answer: 100,
+                explanation: 'Continue the pattern: 70 + 10 = 80, 80 + 10 = 90, 90 + 10 = 100'
+            });
+            
+            // Question 8: Multiple missing numbers - 5s (Hard)
+            challengeQuestions.push({
+                difficulty: 'hard',
+                question: 'How many numbers are missing? 45, ___, ___, ___, 65',
+                answer: 3,
+                explanation: 'Missing: 50, 55, 60 (counting by 5s)'
+            });
+            
+            // Question 9: Word problem with skip counting (Hard)
+            challengeQuestions.push({
+                difficulty: 'hard',
+                question: 'Emma counts her stickers by 2s: 2, 4, 6, 8, 10. How many stickers does she have?',
+                answer: 10,
+                explanation: 'The last number in skip counting shows the total'
+            });
+            
+            // Question 10: Pattern recognition (Hard)
+            challengeQuestions.push({
+                difficulty: 'hard',
+                question: 'What number comes next in this pattern? 15, 25, 35, 45, ___',
+                answer: 55,
+                explanation: 'This is counting by 10s starting from 15'
+            });
+            
+            displayChallengeQuestions();
+            challengeScore = 0;
+            updateChallengeScore();
+            document.getElementById('challenge-feedback').textContent = '';
+        }
+
+        function displayChallengeQuestions() {
+            const container = document.getElementById('challenge-questions');
+            container.innerHTML = '';
+            
+            challengeQuestions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = `challenge-question difficulty-${q.difficulty}`;
+                questionDiv.innerHTML = `
+                    <span class="question-number">${index + 1}</span>
+                    <div class="question-content">
+                        <p><strong>${q.question}</strong></p>
+                        <div style="margin: 10px 0;">
+                            Answer: <input type="number" id="challenge-${index}" class="answer-input" min="0">
+                        </div>
+                        <div class="hint-container">
+                            <button class="hint-button" onclick="toggleHint(${index})">💡 Show Hint</button>
+                            <div id="hint-${index}" class="hint-text">${q.explanation}</div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(questionDiv);
+            });
+        }
+
+        function checkChallengeAnswers() {
+            let correctCount = 0;
+            const feedback = document.getElementById('challenge-feedback');
+            
+            challengeQuestions.forEach((q, index) => {
+                const userAnswer = parseInt(document.getElementById(`challenge-${index}`).value);
+                if (userAnswer === q.answer) {
+                    correctCount++;
+                    document.getElementById(`challenge-${index}`).style.backgroundColor = '#c8e6c9';
+                } else {
+                    document.getElementById(`challenge-${index}`).style.backgroundColor = '#ffcdd2';
+                }
+            });
+            
+            challengeScore = correctCount;
+            updateChallengeScore();
+            
+            if (correctCount === 10) {
+                feedback.textContent = '🎉 AMAZING! You got all 10 questions correct! You are a Skip Counting Master! 🏆';
+                feedback.className = 'feedback correct';
+            } else if (correctCount >= 7) {
+                feedback.textContent = `🌟 Great job! You got ${correctCount} out of 10 correct! Keep practicing!`;
+                feedback.className = 'feedback correct';
+            } else if (correctCount >= 5) {
+                feedback.textContent = `👍 Good effort! You got ${correctCount} out of 10 correct. Try again to improve!`;
+                feedback.className = 'feedback';
+            } else {
+                feedback.textContent = `💪 Keep practicing! You got ${correctCount} out of 10 correct. Review the patterns and try again!`;
+                feedback.className = 'feedback incorrect';
+            }
+        }
+
+        function updateChallengeScore() {
+            document.getElementById('challenge-score').textContent = challengeScore;
+        }
+
+        function toggleHint(questionIndex) {
+            const hintElement = document.getElementById(`hint-${questionIndex}`);
+            const buttonElement = event.target;
+            
+            if (hintElement.classList.contains('show')) {
+                hintElement.classList.remove('show');
+                buttonElement.textContent = '💡 Show Hint';
+            } else {
+                hintElement.classList.add('show');
+                buttonElement.textContent = '💡 Hide Hint';
+            }
+        }
+
         // Generate initial problems when the page loads
-        window.onload = generateNewProblems;
+        window.onload = function() {
+            generateNewProblems();
+            generateChallengeQuestions();
+        };
     </script>
 </body>
 </html> 

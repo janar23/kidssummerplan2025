@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 1 Thursday - Finger Painting Fun</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f3e5f5; }
+        .worksheet-container { background-color: white; padding: 20px; border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { color: #9c27b0; text-align: center; }
+        .activity { margin: 20px 0; padding: 15px; border: 2px solid #9c27b0; border-radius: 10px; background-color: #f8f9fa; }
+        .paint-card { background: linear-gradient(135deg, #fce4ec, #f8bbd9); padding: 20px; border-radius: 15px; margin: 15px 0; border: 3px solid #e91e63; }
+        .color-card { background: linear-gradient(135deg, #fff3e0, #ffe0b2); padding: 20px; border-radius: 15px; margin: 15px 0; border: 3px solid #ff9800; }
+        .technique-card { background: linear-gradient(135deg, #e1f5fe, #b3e5fc); padding: 20px; border-radius: 15px; margin: 15px 0; border: 3px solid #03a9f4; }
+        .creative-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px; margin: 20px 0; }
+        .color-swatch { width: 80px; height: 80px; border-radius: 50%; border: 4px solid #333; margin: 10px auto; cursor: pointer; transition: transform 0.2s; position: relative; }
+        .color-swatch:hover { transform: scale(1.1); }
+        .color-swatch.selected { border-color: #fff; box-shadow: 0 0 0 4px #9c27b0; }
+        .color-label { text-align: center; font-weight: bold; margin-top: 10px; }
+        .technique-demo { width: 100%; height: 120px; border: 3px solid #9c27b0; border-radius: 10px; background: white; margin: 15px 0; position: relative; overflow: hidden; }
+        .paint-canvas { width: 100%; height: 300px; border: 3px solid #9c27b0; border-radius: 10px; background: white; margin: 15px 0; position: relative; cursor: pointer; }
+        .painting-tools { text-align: center; margin: 15px 0; }
+        .tool-button { background: #ff9800; color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-size: 14px; margin: 5px; }
+        .tool-button:hover { background: #f57c00; }
+        .tool-button.active { background: #4caf50; }
+        button { background-color: #9c27b0; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-size: 16px; margin: 5px; }
+        button:hover { background-color: #7b1fa2; }
+        .emoji-large { font-size: 48px; text-align: center; margin: 15px 0; }
+        .intro { background: #e8f5e8; padding: 15px; border-radius: 10px; margin-bottom: 20px; border-left: 5px solid #4caf50; }
+        .progress { text-align: center; margin: 20px 0; font-size: 18px; }
+        .stars { text-align: center; font-size: 24px; margin: 20px 0; }
+        .completed { background: #d4edda; border-color: #28a745; }
+        .tip { background: #fff3cd; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 5px solid #ffc107; }
+        .materials-list { background: #f8f9fa; padding: 15px; border-radius: 10px; margin: 15px 0; border: 2px solid #dee2e6; }
+        .safety-note { background: #ffebee; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 5px solid #f44336; }
+        .color-red { background: #f44336; }
+        .color-blue { background: #2196f3; }
+        .color-yellow { background: #ffeb3b; }
+        .color-green { background: #4caf50; }
+        .color-orange { background: #ff9800; }
+        .color-purple { background: #9c27b0; }
+        .color-pink { background: #e91e63; }
+        .color-brown { background: #795548; }
+        .mix-result { width: 60px; height: 60px; border-radius: 50%; border: 3px solid #333; margin: 10px auto; }
+        .gallery-frame { border: 4px solid #9c27b0; border-radius: 15px; padding: 10px; margin: 15px; background: white; text-align: center; }
+        .congrats-animation { text-align: center; font-size: 36px; margin: 20px 0; animation: rainbow 3s infinite; }
+        @keyframes rainbow { 0% { color: #f44336; } 16% { color: #ff9800; } 32% { color: #ffeb3b; } 48% { color: #4caf50; } 64% { color: #2196f3; } 80% { color: #9c27b0; } 100% { color: #f44336; } }
+        .hint-button {
+            background: #ff9800;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 10px 0;
+            transition: all 0.3s;
+        }
+        .hint-button:hover {
+            background: #f57c00;
+            transform: scale(1.05);
+        }
+        .hint-content {
+            display: none;
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            border-left: 5px solid #ffc107;
+        }
+        .hint-content.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <h1>🎨 Week 1 Thursday - Finger Painting Fun 🖐️</h1>
+        
+        <p style="text-align: center; font-size: 18px; color: #9c27b0; margin-bottom: 20px;" id="personal-greeting">
+            Hi there! Today we're going to explore the wonderful world of finger painting! Get ready to get messy and creative! 🌈
+        </p>
+        
+        <div class="intro">
+            <h3>🎨 Welcome to Finger Painting Studio!</h3>
+            <p>Finger painting is one of the most fun ways to create art! You'll use your fingers as brushes to paint beautiful pictures.</p>
+            <p><strong>What you'll learn today:</strong></p>
+            <ul>
+                <li>🌈 <strong>Color mixing:</strong> How colors combine to make new colors</li>
+                <li>🖐️ <strong>Finger techniques:</strong> Different ways to use your fingers</li>
+                <li>🎨 <strong>Creative expression:</strong> Making art with your hands</li>
+                <li>🖼️ <strong>Composition:</strong> How to arrange elements in your painting</li>
+            </ul>
+            <div class="emoji-large">🎨🖐️🌈</div>
+        </div>
+        
+        <div class="progress">Progress: <span id="completed-steps">0</span>/5 Steps Complete</div>
+        <div class="stars" id="stars">⭐</div>
+        
+        <!-- Step 1: Safety and Setup -->
+        <div class="activity paint-card" id="step1">
+            <h3>Step 1: Safety First & Setup! 🛡️</h3>
+            <div class="safety-note">
+                <h4>🚨 Important Safety Rules:</h4>
+                <ul>
+                    <li>Always have a grown-up nearby to help</li>
+                    <li>Wear old clothes or an apron</li>
+                    <li>Only use washable, non-toxic finger paints</li>
+                    <li>Wash hands before and after painting</li>
+                    <li>Keep paint away from your mouth and eyes</li>
+                </ul>
+            </div>
+            
+            <div class="materials-list">
+                <h4>📦 Materials You'll Need:</h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div>
+                        <h5>Essential Supplies:</h5>
+                        <ul>
+                            <li>🎨 Washable finger paints (red, blue, yellow)</li>
+                            <li>📄 Large paper or cardboard</li>
+                            <li>💧 Bowl of water for cleaning fingers</li>
+                            <li>🧽 Paper towels or wet wipes</li>
+                            <li>👕 Apron or old clothes</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5>Optional Fun Extras:</h5>
+                        <ul>
+                            <li>🌟 Glitter (with grown-up help)</li>
+                            <li>🧽 Small sponges for texture</li>
+                            <li>🍃 Leaves for printing</li>
+                            <li>📋 Cardboard for easy cleanup</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <button onclick="completeStep(1)">All Set Up! ✅</button>
+        </div>
+        
+        <!-- Step 2: Learn About Colors -->
+        <div class="activity color-card" id="step2">
+            <h3>Step 2: Discover Amazing Colors! 🌈</h3>
+            <button class="hint-button" onclick="togglePaintingHint('color-basics')">💡 Color Mixing Tips</button>
+            <div id="color-basics" class="hint-content">
+                <p><strong>Tip:</strong> Let's learn about primary colors and how they mix to create new colors!</p>
+                <p><strong>Remember:</strong> You only need red, blue, and yellow to make all other colors!</p>
+            </div>
+            
+            <h4>Primary Colors (The Magic Three!):</h4>
+            <div class="creative-grid">
+                <div>
+                    <div class="color-swatch color-red" onclick="selectColor('red')"></div>
+                    <div class="color-label">🔴 Red</div>
+                </div>
+                <div>
+                    <div class="color-swatch color-blue" onclick="selectColor('blue')"></div>
+                    <div class="color-label">🔵 Blue</div>
+                </div>
+                <div>
+                    <div class="color-swatch color-yellow" onclick="selectColor('yellow')"></div>
+                    <div class="color-label">🟡 Yellow</div>
+                </div>
+            </div>
+            
+            <h4>Color Mixing Magic! ✨</h4>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; text-align: center;">
+                <div>
+                    <p>🔴 + 🟡 = </p>
+                    <div class="mix-result color-orange"></div>
+                    <p><strong>Orange!</strong></p>
+                </div>
+                <div>
+                    <p>🔵 + 🟡 = </p>
+                    <div class="mix-result color-green"></div>
+                    <p><strong>Green!</strong></p>
+                </div>
+                <div>
+                    <p>🔴 + 🔵 = </p>
+                    <div class="mix-result color-purple"></div>
+                    <p><strong>Purple!</strong></p>
+                </div>
+            </div>
+            
+            <button class="hint-button" onclick="togglePaintingHint('mixing-experiment')">🧪 Experiment Ideas</button>
+            <div id="mixing-experiment" class="hint-content">
+                <p><strong>Experiment:</strong> Try mixing small amounts of paint on your paper to see what colors you can create!</p>
+                <p><strong>Try this:</strong> Start with tiny amounts - a little paint goes a long way!</p>
+            </div>
+            
+            <button onclick="completeStep(2)">Colors Learned! ✅</button>
+        </div>
+        
+        <!-- Step 3: Finger Painting Techniques -->
+        <div class="activity technique-card" id="step3">
+            <h3>Step 3: Master Finger Techniques! 👆</h3>
+            <button class="hint-button" onclick="togglePaintingHint('technique-basics')">🖐️ Finger Technique Tips</button>
+            <div id="technique-basics" class="hint-content">
+                <p><strong>Tip:</strong> Your fingers are amazing painting tools! Let's learn different ways to use them.</p>
+                <p><strong>Remember:</strong> Different parts of your hand make different marks!</p>
+            </div>
+            
+            <div id="techniques">
+                <div style="margin: 20px 0;">
+                    <h4>🖇️ Finger Tip Dots</h4>
+                    <p>Use just your fingertip to make small dots and circles.</p>
+                    <div class="technique-demo" style="background: radial-gradient(circle, #ff9800 10px, white 11px), radial-gradient(circle, #4caf50 10px, white 11px), radial-gradient(circle, #2196f3 10px, white 11px); background-size: 40px 40px; background-position: 20px 20px, 80px 60px, 140px 30px;"></div>
+                </div>
+                
+                <div style="margin: 20px 0;">
+                    <h4>👆 Finger Dragging</h4>
+                    <p>Drag your finger to make lines, waves, and squiggles.</p>
+                    <div class="technique-demo" style="background: linear-gradient(45deg, #f44336 2px, white 2px, white 8px, #2196f3 8px, #2196f3 10px, white 10px, white 16px, #4caf50 16px, #4caf50 18px, white 18px); background-size: 20px 20px;"></div>
+                </div>
+                
+                <div style="margin: 20px 0;">
+                    <h4>🖐️ Palm Printing</h4>
+                    <p>Use your whole hand to make big shapes and prints.</p>
+                    <div class="technique-demo" style="background: radial-gradient(ellipse, #9c27b0 30%, white 30%); background-size: 100px 80px; background-position: center;"></div>
+                </div>
+                
+                <div style="margin: 20px 0;">
+                    <h4>🌪️ Finger Swirling</h4>
+                    <p>Make circular motions to create swirls and spirals.</p>
+                    <div class="technique-demo" style="background: conic-gradient(from 0deg, #ff9800, #f44336, #9c27b0, #2196f3, #4caf50, #ff9800); border-radius: 50%;"></div>
+                </div>
+            </div>
+            
+            <button class="hint-button" onclick="togglePaintingHint('cleaning-tip')">💡 Pro Painting Tips</button>
+            <div id="cleaning-tip" class="hint-content">
+                <p><strong>Pro Tip:</strong> Clean your finger between colors to keep them bright and clear!</p>
+                <p><strong>How to clean:</strong> Dip in water, wipe on paper towel, then start with your new color!</p>
+            </div>
+            
+            <button onclick="completeStep(3)">Techniques Mastered! ✅</button>
+        </div>
+        
+        <!-- Step 4: Create Your Masterpiece -->
+        <div class="activity paint-card" id="step4">
+            <h3>Step 4: Paint Your Masterpiece! 🖼️</h3>
+            <button class="hint-button" onclick="togglePaintingHint('project-selection')">🎨 Project Ideas Help</button>
+            <div id="project-selection" class="hint-content">
+                <p><strong>Tip:</strong> Now it's time to create your own finger painting! Choose what you'd like to paint.</p>
+                <p><strong>Start simple:</strong> Pick a project that sounds fun and not too complicated for your first try!</p>
+            </div>
+            
+            <h4>🎨 Painting Ideas:</h4>
+            <div class="creative-grid">
+                <div class="gallery-frame" onclick="selectProject('rainbow')">
+                    🌈<br>Rainbow & Clouds
+                </div>
+                <div class="gallery-frame" onclick="selectProject('garden')">
+                    🌸<br>Flower Garden
+                </div>
+                <div class="gallery-frame" onclick="selectProject('ocean')">
+                    🌊<br>Ocean Scene
+                </div>
+                <div class="gallery-frame" onclick="selectProject('sunset')">
+                    🌅<br>Beautiful Sunset
+                </div>
+                <div class="gallery-frame" onclick="selectProject('abstract')">
+                    🎨<br>Abstract Art
+                </div>
+                <div class="gallery-frame" onclick="selectProject('animal')">
+                    🐾<br>Animal Friends
+                </div>
+            </div>
+            
+            <p><strong>Selected Project:</strong> <span id="chosen-project">None yet</span></p>
+            
+            <div id="project-instructions" style="display:none;">
+                <div class="tip">
+                    <h4 id="project-title"></h4>
+                    <div id="project-steps"></div>
+                </div>
+            </div>
+            
+            <div class="paint-canvas" onclick="showPaintingComplete()">
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #666; font-size: 18px; text-align: center;">
+                    🎨 Your painting space! 🎨<br>
+                    <small>(Click here when you're done painting)</small>
+                </div>
+            </div>
+            
+            <button onclick="completeStep(4)" id="painting-done" style="display:none;">Masterpiece Complete! ✅</button>
+        </div>
+        
+        <!-- Step 5: Gallery Display -->
+        <div class="activity technique-card" id="step5">
+            <h3>Step 5: Display in Art Gallery! 🏛️</h3>
+            <button class="hint-button" onclick="togglePaintingHint('gallery-tips')">🏛️ Gallery Display Tips</button>
+            <div id="gallery-tips" class="hint-content">
+                <p><strong>Tip:</strong> Every great artist displays their work! Let's get your painting ready for the gallery.</p>
+                <p><strong>Artist signature:</strong> Sign your name like famous artists do!</p>
+            </div>
+            
+            <h4>🖼️ Finishing Touches:</h4>
+            <div class="materials-list">
+                <ul>
+                    <li>✨ Let your painting dry completely</li>
+                    <li>📝 Sign your name in the corner (with clean fingers!)</li>
+                    <li>🗓️ Write the date on the back</li>
+                    <li>🏷️ Give your artwork a creative title</li>
+                    <li>📸 Take a photo to remember your creation</li>
+                </ul>
+            </div>
+            
+            <div class="gallery-frame">
+                <h4>📝 My Artwork Information:</h4>
+                <p><strong>Title:</strong> <input type="text" id="artwork-title" placeholder="Give your painting a name..." style="border: 2px solid #9c27b0; padding: 5px; border-radius: 5px;"></p>
+                <p><strong>Artist:</strong> <span id="artist-name"></span></p>
+                <p><strong>Date:</strong> <span id="artwork-date"></span></p>
+                <p><strong>Technique:</strong> Finger Painting</p>
+            </div>
+            
+            <button onclick="completeStep(5)">Ready for Gallery! ✅</button>
+        </div>
+        
+        <!-- Completion Celebration -->
+        <div class="activity" id="completion" style="display:none;">
+            <div class="congrats-animation">🎨 AMAZING FINGER PAINTING ARTIST! 🎨</div>
+            <div id="final-gallery"></div>
+            <button onclick="celebrateCompletion()">Show Family Your Art! 🏆</button>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <button onclick="showCompletion()" id="show-completion-btn" style="display:none; background: #28a745; font-size: 18px; padding: 15px 30px;">
+                See My Art Gallery! 🖼️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let completedSteps = 0;
+        let selectedProject = '';
+        
+        // Project instructions database
+        const projectInstructions = {
+            rainbow: {
+                title: "🌈 Rainbow & Clouds",
+                steps: [
+                    "Start with blue finger paint for the sky background",
+                    "Use your fingertip to make white cloud shapes",
+                    "Create rainbow arcs using red, orange, yellow, green, blue, purple",
+                    "Add texture to clouds with gentle finger swirls",
+                    "Finish with sunshine using yellow finger dots"
+                ]
+            },
+            garden: {
+                title: "🌸 Flower Garden",
+                steps: [
+                    "Paint green grass at the bottom with finger strokes",
+                    "Use fingertips to make colorful flower heads",
+                    "Draw stems with green finger lines upward",
+                    "Add leaves with small green finger prints",
+                    "Create a blue sky background and maybe some butterflies!"
+                ]
+            },
+            ocean: {
+                title: "🌊 Ocean Scene",
+                steps: [
+                    "Paint blue waves with horizontal finger strokes",
+                    "Add white foam with fingertip dots on wave tops",
+                    "Create fish using finger prints in different colors",
+                    "Add seaweed with wavy green lines",
+                    "Paint a sandy bottom with yellow finger strokes"
+                ]
+            },
+            sunset: {
+                title: "🌅 Beautiful Sunset",
+                steps: [
+                    "Start with yellow at the horizon line",
+                    "Blend to orange in the middle sky",
+                    "Add red and purple at the top",
+                    "Create a sun circle with yellow finger prints",
+                    "Add silhouette shapes like trees or mountains"
+                ]
+            },
+            abstract: {
+                title: "🎨 Abstract Art",
+                steps: [
+                    "Choose 3-4 favorite colors",
+                    "Make shapes, lines, and patterns however you like",
+                    "Try different finger techniques you learned",
+                    "Mix colors to create new ones",
+                    "Let your creativity flow freely!"
+                ]
+            },
+            animal: {
+                title: "🐾 Animal Friends",
+                steps: [
+                    "Choose your favorite animal to paint",
+                    "Use finger prints for the body shape",
+                    "Add legs, tail, and head with finger strokes",
+                    "Create eyes and nose with small finger dots",
+                    "Add a background like grass, trees, or sky"
+                ]
+            }
+        };
+        
+        // Get the selected child's name
+        function getSelectedChildName() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let childName = urlParams.get('child');
+            
+            if (!childName) {
+                const savedChild = localStorage.getItem('selectedChild');
+                if (savedChild) {
+                    childName = savedChild;
+                }
+            }
+            
+            if (childName) {
+                return childName.charAt(0).toUpperCase() + childName.slice(1);
+            }
+            return 'Artist'; // fallback
+        }
+        
+        // Set personalized greeting
+        function setPersonalizedGreeting() {
+            const childName = getSelectedChildName();
+            const greeting = document.getElementById('personal-greeting');
+            greeting.textContent = `Hi ${childName}! Today we're going to explore the wonderful world of finger painting! Get ready to get messy and creative! 🌈`;
+            
+            // Set artist name and date
+            document.getElementById('artist-name').textContent = childName;
+            document.getElementById('artwork-date').textContent = new Date().toLocaleDateString();
+        }
+        
+        function completeStep(stepNumber) {
+            const step = document.getElementById(`step${stepNumber}`);
+            if (!step.classList.contains('completed')) {
+                step.classList.add('completed');
+                completedSteps++;
+                updateProgress();
+                
+                if (completedSteps === 5) {
+                    document.getElementById('show-completion-btn').style.display = 'block';
+                }
+            }
+        }
+        
+        function updateProgress() {
+            document.getElementById('completed-steps').textContent = completedSteps;
+            const stars = document.getElementById('stars');
+            let starString = '';
+            for (let i = 0; i < completedSteps; i++) {
+                starString += '⭐';
+            }
+            if (completedSteps === 5) {
+                starString += ' 🎨 FINGER PAINTING MASTER! 🎨';
+            }
+            stars.textContent = starString;
+        }
+        
+        function selectColor(color) {
+            // Visual feedback for color selection
+            document.querySelectorAll('.color-swatch').forEach(swatch => swatch.classList.remove('selected'));
+            event.target.classList.add('selected');
+        }
+        
+        function selectProject(project) {
+            selectedProject = project;
+            const projectInfo = projectInstructions[project];
+            
+            document.getElementById('chosen-project').textContent = projectInfo.title;
+            document.getElementById('project-title').textContent = projectInfo.title;
+            
+            let stepsHtml = '<ol>';
+            projectInfo.steps.forEach(step => {
+                stepsHtml += `<li>${step}</li>`;
+            });
+            stepsHtml += '</ol>';
+            
+            document.getElementById('project-steps').innerHTML = stepsHtml;
+            document.getElementById('project-instructions').style.display = 'block';
+        }
+        
+        function showPaintingComplete() {
+            if (selectedProject) {
+                document.getElementById('painting-done').style.display = 'block';
+            }
+        }
+        
+        function showCompletion() {
+            const artworkTitle = document.getElementById('artwork-title').value || 'My Beautiful Finger Painting';
+            const projectInfo = projectInstructions[selectedProject] || {title: 'Amazing Artwork'};
+            
+            const galleryHtml = `
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; border: 3px solid #28a745;">
+                    <h2 style="text-align: center; color: #9c27b0;">My Art Gallery 🖼️</h2>
+                    
+                    <div class="gallery-frame" style="border: 4px solid #9c27b0; padding: 20px; margin: 20px 0;">
+                        <h3>"${artworkTitle}"</h3>
+                        <p><strong>Artist:</strong> ${getSelectedChildName()}</p>
+                        <p><strong>Type:</strong> ${projectInfo.title}</p>
+                        <p><strong>Medium:</strong> Finger Painting</p>
+                        <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
+                        
+                        <div style="background: white; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <h4>🎨 Artistic Skills Developed:</h4>
+                            <ul>
+                                <li>🌈 Color theory and mixing</li>
+                                <li>🖐️ Fine and gross motor coordination</li>
+                                <li>🎯 Creative expression and imagination</li>
+                                <li>👁️ Visual composition and design</li>
+                                <li>🧘 Sensory exploration and mindfulness</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <button class="hint-button" onclick="togglePaintingHint('display-ideas')">🌟 Display Ideas</button>
+                    <div id="display-ideas" class="hint-content">
+                        <p><strong>Display Ideas:</strong> Frame your artwork, put it on the refrigerator, or create an art portfolio!</p>
+                        <p><strong>Share your art:</strong> Take photos to send to grandparents or friends!</p>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('final-gallery').innerHTML = galleryHtml;
+            document.getElementById('completion').style.display = 'block';
+            document.getElementById('completion').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function celebrateCompletion() {
+            const artworkTitle = document.getElementById('artwork-title').value || 'My Beautiful Finger Painting';
+            alert(`🎨 Spectacular work, ${getSelectedChildName()}! Your finger painting "${artworkTitle}" is absolutely amazing! 
+
+You've learned so much today:
+• How to mix colors to create new ones
+• Different finger painting techniques
+• Creative expression through art
+• How to display artwork proudly
+
+Show your family your beautiful painting and teach them the finger painting techniques you learned! 
+
+You're now a certified finger painting artist! 🌈✨`);
+        }
+        
+        function togglePaintingHint(hintId) {
+            const hintElement = document.getElementById(hintId);
+            const buttonElement = event.target;
+            
+            if (hintElement.classList.contains('show')) {
+                hintElement.classList.remove('show');
+                buttonElement.textContent = buttonElement.textContent.replace('Hide', 'Show');
+            } else {
+                hintElement.classList.add('show');
+                buttonElement.textContent = buttonElement.textContent.replace('Show', 'Hide');
+            }
+        }
+        
+        // Initialize
+        setPersonalizedGreeting();
+    </script>
+</body>
+</html> 
