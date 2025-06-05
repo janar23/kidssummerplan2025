@@ -10,7 +10,7 @@ storybook/node_modules/
 .history/
 .vscode/
 .cursor/
-
+node_modules/
 
 .git
 
