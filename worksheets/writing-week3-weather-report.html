@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writing Worksheet - Week 3: Write a Weather Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1, h2 {
+            color: #673ab7;
+            text-align: center;
+        }
+        .instructions {
+            background-color: #ede7f6;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .worksheet {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .writing-prompt {
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 5px solid #673ab7;
+        }
+        .writing-area {
+            width: 100%;
+            min-height: 400px;
+            border: 2px solid #d1c4e9;
+            border-radius: 5px;
+            padding: 15px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            line-height: 1.6;
+            background-color: #fffde7;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+        .word-bank {
+            background-color: #e1f5fe;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .word-bank h3 {
+            color: #0277bd;
+            margin-top: 0;
+        }
+        .word-bank ul {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 0;
+            list-style-type: none;
+        }
+        .word-bank li {
+            background-color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            border: 1px solid #b3e5fc;
+            font-size: 14px;
+        }
+        button {
+            background: linear-gradient(to right, #673ab7, #9c27b0);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 0;
+            display: block;
+        }
+        .back-button {
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            margin-top: 20px;
+        }
+        .save-button {
+            background: linear-gradient(to right, #4caf50, #8bc34a);
+        }
+        .ideas {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 5px solid #8bc34a;
+        }
+        .ideas h3 {
+            color: #558b2f;
+            margin-top: 0;
+        }
+        .weather-prompts {
+            background-color: #fff3e0;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 5px solid #ff9800;
+        }
+        .weather-prompts h3 {
+            color: #e65100;
+            margin-top: 0;
+        }
+        .weather-card {
+            background-color: #f3e5f5;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-left: 4px solid #9c27b0;
+        }
+        .weather-card h4 {
+            margin: 0 0 8px 0;
+            color: #7b1fa2;
+            font-size: 16px;
+        }
+        .weather-card p {
+            margin: 0;
+            color: #555;
+            font-size: 14px;
+        }
+        .weather-image {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto 20px;
+            border-radius: 10px;
+        }
+        .weather-template {
+            background-color: #e8f5e8;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 2px dashed #4caf50;
+        }
+        .weather-template h3 {
+            color: #2e7d32;
+            margin-top: 0;
+        }
+        .weather-conditions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .condition-card {
+            width: 100px;
+            background-color: #e3f2fd;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .condition-card h4 {
+            margin: 5px 0;
+            color: #1976d2;
+            font-size: 14px;
+        }
+        .condition-card p {
+            font-size: 12px;
+            color: #555;
+            margin: 5px 0;
+        }
+        .temperature-chart {
+            background-color: #fffde7;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 5px solid #ffc107;
+        }
+        .temperature-chart h3 {
+            color: #f57c00;
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Writing Worksheet - Week 3</h1>
+    <h2>Write a Weather Report</h2>
+
+    <div class="instructions">
+        <h3>Instructions:</h3>
+        <p>Write a weather report like a real weather person! Tell about today's weather, the temperature, what the sky looks like, and what the weather might be like tomorrow. You can look outside or use your imagination!</p>
+    </div>
+
+    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48c3R5bGU+LnN0MHtmaWxsOiNmZmMxMDd9LnN0MXtmaWxsOiNmZmUwYjN9LnN0MntmaWxsOiM5MGNhZjl9LnN0M3tmaWxsOiNmZmY7c3Ryb2tlOiMzMzM7c3Ryb2tlLXdpZHRoOjJ9LnN0NHtmaWxsOiM0Y2FmNTA7c3Ryb2tlOiMzMzM7c3Ryb2tlLXdpZHRoOjJ9PC9zdHlsZT48Y2lyY2xlIGNsYXNzPSJzdDAiIGN4PSIxMDAiIGN5PSI1MCIgcj0iMzAiLz48Y2lyY2xlIGNsYXNzPSJzdDEiIGN4PSIxNzAiIGN5PSI4MCIgcj0iMjAiLz48Y2lyY2xlIGNsYXNzPSJzdDEiIGN4PSIzMCIgY3k9IjgwIiByPSIyMCIvPjxwYXRoIGQ9Ik03MCwxMDAgQzcwLDgwIDExMCw4MCAxMTAsMTAwIiBmaWxsPSIjZmZjMTA3Ii8+PHBhdGggZD0iTTYwLDgwIEM2MCw2MCAxMDAsNjAgMTAwLDgwIiBmaWxsPSIjZmZlMGIzIi8+PHBhdGggZD0iTTUwLDYwIEM1MCw0MCA5MCw0MCA5MCw2MCIgZmlsbD0iIzkwY2FmOSIvPjxwYXRoIGQ9Ik0xNDAsMTAwIEMxNDAsODAgMTgwLDgwIDE4MCwxMDAiIGZpbGw9IiNmZmUwYTMiLz48cGF0aCBkPSJNMTUwLDgwIEMxNTAsNjAgMTkwLDYwIDE5MCw4MCIgZmlsbD0iIzkwY2FmOTsiLz48cGF0aCBkPSJNMjAsMTEwIEMyMCw5MCA2MCw5MCA2MCwxMTAiIGZpbGw9IiNmZmMxMDciLz48cGF0aCBkPSJNMzAsOTAgQzMwLDcwIDcwLDcwIDcwLDkwIiBmaWxsPSIjZmZlMGEzIi8+PHBhdGggZD0iTTQwLDcwIEM0MCw1MCA4MCw1MCA4MCw3MCIgZmlsbD0iIzkwY2FmOTsiLz48Y2lyY2xlIGNsYXNzPSJzdDIiIGN4PSIxMDAiIGN5PSIxODAiIHI9IjE1Ii8+PHBhdGggZD0iTTkwLDE3MCBDOTAsMTUwIDExMCwxNTAgMTEwLDE3MCIgZmlsbD0iIzRjYWY1MCIvPjxjaXJjbGUgY2xhc3M9InN0MyIgY3g9IjEwMCIgY3k9IjE4MCIgcj0iMTAiLz48Y2lyY2xlIGNsYXNzPSJzdDMiIGN4PSI5NSIgY3k9IjE3NSIgcj0iMyIvPjxjaXJjbGUgY2xhc3M9InN0MyIgY3g9IjEwNSIgY3k9IjE3NSIgcj0iMyIvPjwvc3ZnPg==" alt="Weather Report" class="weather-image">
+
+    <div class="writing-prompt">
+        <h3>Weather Report:</h3>
+        <p>Today's Weather Report - Be a weather reporter and tell everyone about the weather!</p>
+    </div>
+
+    <div class="weather-conditions">
+        <div class="condition-card">
+            <h4>☀️ Sunny</h4>
+            <p>Clear blue sky</p>
+        </div>
+        <div class="condition-card">
+            <h4>☁️ Cloudy</h4>
+            <p>Gray clouds</p>
+        </div>
+        <div class="condition-card">
+            <h4>🌧️ Rainy</h4>
+            <p>Water falling</p>
+        </div>
+        <div class="condition-card">
+            <h4>⛈️ Stormy</h4>
+            <p>Thunder and lightning</p>
+        </div>
+        <div class="condition-card">
+            <h4>❄️ Snowy</h4>
+            <p>White snow falling</p>
+        </div>
+        <div class="condition-card">
+            <h4>💨 Windy</h4>
+            <p>Strong wind blowing</p>
+        </div>
+    </div>
+
+    <div class="weather-prompts">
+        <h3>Weather Report Ideas:</h3>
+        
+        <div class="weather-card">
+            <h4>🌡️ Temperature Report</h4>
+            <p>Tell how hot or cold it is today</p>
+        </div>
+        
+        <div class="weather-card">
+            <h4>☁️ Sky Conditions</h4>
+            <p>Describe what the sky looks like</p>
+        </div>
+        
+        <div class="weather-card">
+            <h4>🌬️ Wind Report</h4>
+            <p>Tell if it's windy, calm, or breezy</p>
+        </div>
+        
+        <div class="weather-card">
+            <h4>🌧️ Precipitation</h4>
+            <p>Tell if it's raining, snowing, or dry</p>
+        </div>
+        
+        <div class="weather-card">
+            <h4>👕 What to Wear</h4>
+            <p>Suggest what clothes people should wear</p>
+        </div>
+        
+        <div class="weather-card">
+            <h4>🔮 Tomorrow's Forecast</h4>
+            <p>Predict what the weather might be like tomorrow</p>
+        </div>
+    </div>
+
+    <div class="weather-template">
+        <h3>Weather Report Template:</h3>
+        <p><strong>Today's Date:</strong> [Write today's date]</p>
+        <p><strong>Current Temperature:</strong> [How hot or cold is it?]</p>
+        <p><strong>Sky Conditions:</strong> [What does the sky look like?]</p>
+        <p><strong>Wind:</strong> [Is it windy or calm?]</p>
+        <p><strong>Precipitation:</strong> [Is it raining, snowing, or dry?]</p>
+        <p><strong>What to Wear:</strong> [What clothes should people wear?]</p>
+        <p><strong>Tomorrow's Forecast:</strong> [What might the weather be like tomorrow?]</p>
+    </div>
+
+    <div class="temperature-chart">
+        <h3>Temperature Words:</h3>
+        <p><strong>Hot:</strong> boiling, scorching, warm, toasty</p>
+        <p><strong>Cold:</strong> freezing, chilly, cool, cold</p>
+        <p><strong>Just Right:</strong> mild, pleasant, comfortable, nice</p>
+    </div>
+
+    <div class="word-bank">
+        <h3>Weather Words:</h3>
+        <ul>
+            <li>sunny</li>
+            <li>cloudy</li>
+            <li>rainy</li>
+            <li>stormy</li>
+            <li>snowy</li>
+            <li>windy</li>
+            <li>hot</li>
+            <li>cold</li>
+            <li>warm</li>
+            <li>cool</li>
+            <li>temperature</li>
+            <li>degrees</li>
+            <li>forecast</li>
+            <li>weather</li>
+            <li>sky</li>
+            <li>clouds</li>
+            <li>rain</li>
+            <li>snow</li>
+            <li>wind</li>
+            <li>storm</li>
+        </ul>
+    </div>
+
+    <div class="ideas">
+        <h3>Weather Report Tips:</h3>
+        <ul>
+            <li>Start with "Good morning/afternoon, this is your weather report"</li>
+            <li>Include the current temperature</li>
+            <li>Describe what the sky looks like</li>
+            <li>Tell about wind, rain, or other conditions</li>
+            <li>Suggest what clothes to wear</li>
+            <li>End with a forecast for tomorrow</li>
+            <li>Use weather words from the word bank</li>
+        </ul>
+    </div>
+
+    <div class="worksheet">
+        <textarea id="writing-area" class="writing-area" placeholder="Good morning! This is your weather report for today... Start writing your weather report here!"></textarea>
+        <button class="save-button" onclick="saveWriting()">Save My Weather Report</button>
+    </div>
+
+    <button class="back-button" onclick="window.close()">Close Worksheet</button>
+
+    <script>
+        // Save the writing to localStorage
+        function saveWriting() {
+            const writingArea = document.getElementById('writing-area');
+            const content = writingArea.value;
+            
+            if (content.trim() !== '') {
+                localStorage.setItem('writingWeek3WeatherReportContent', content);
+                alert('Your weather report has been saved! Great job! 🌤️📝');
+            } else {
+                alert('Please write something before saving!');
+            }
+        }
+        
+        // Load any saved writing when the page loads
+        window.onload = function() {
+            const savedWriting = localStorage.getItem('writingWeek3WeatherReportContent');
+            if (savedWriting) {
+                document.getElementById('writing-area').value = savedWriting;
+            }
+        }
+    </script>
+</body>
+</html> 

@@ -626,7 +626,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 "Write what you know about robots": "worksheets/writing-week2-robots.html"
             },
             3: {
-                "Write a letter to grandparents": "worksheets/writing-week3-letter.html"
+                "Write about your family": "worksheets/writing-week3-family.html",
+                "Write instructions for a game": "worksheets/writing-week3-game-instructions.html",
+                "Write a weather report": "worksheets/writing-week3-weather-report.html",
+                "Create a robot character description": "worksheets/writing-week3-robot-character.html",
+                "Write about summer fun": "worksheets/writing-week3-summer-fun.html"
             },
             4: {
                 "Write about an AI or tech hero": "worksheets/writing-week4-tech-hero.html"

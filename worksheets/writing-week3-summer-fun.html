@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writing Worksheet - Week 3: Write About Summer Fun</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1, h2 {
+            color: #673ab7;
+            text-align: center;
+        }
+        .instructions {
+            background-color: #ede7f6;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .worksheet {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .writing-prompt {
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 5px solid #673ab7;
+        }
+        .writing-area {
+            width: 100%;
+            min-height: 400px;
+            border: 2px solid #d1c4e9;
+            border-radius: 5px;
+            padding: 15px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            line-height: 1.6;
+            background-color: #fffde7;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+        .word-bank {
+            background-color: #e1f5fe;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .word-bank h3 {
+            color: #0277bd;
+            margin-top: 0;
+        }
+        .word-bank ul {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 0;
+            list-style-type: none;
+        }
+        .word-bank li {
+            background-color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            border: 1px solid #b3e5fc;
+            font-size: 14px;
+        }
+        button {
+            background: linear-gradient(to right, #673ab7, #9c27b0);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 0;
+            display: block;
+        }
+        .back-button {
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            margin-top: 20px;
+        }
+        .save-button {
+            background: linear-gradient(to right, #4caf50, #8bc34a);
+        }
+        .ideas {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 5px solid #8bc34a;
+        }
+        .ideas h3 {
+            color: #558b2f;
+            margin-top: 0;
+        }
+        .summer-prompts {
+            background-color: #fff3e0;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 5px solid #ff9800;
+        }
+        .summer-prompts h3 {
+            color: #e65100;
+            margin-top: 0;
+        }
+        .summer-card {
+            background-color: #f3e5f5;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-left: 4px solid #9c27b0;
+        }
+        .summer-card h4 {
+            margin: 0 0 8px 0;
+            color: #7b1fa2;
+            font-size: 16px;
+        }
+        .summer-card p {
+            margin: 0;
+            color: #555;
+            font-size: 14px;
+        }
+        .summer-image {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto 20px;
+            border-radius: 10px;
+        }
+        .summer-template {
+            background-color: #e8f5e8;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 2px dashed #4caf50;
+        }
+        .summer-template h3 {
+            color: #2e7d32;
+            margin-top: 0;
+        }
+        .summer-activities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .activity-card {
+            width: 120px;
+            background-color: #e3f2fd;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .activity-card h4 {
+            margin: 5px 0;
+            color: #1976d2;
+            font-size: 14px;
+        }
+        .activity-card p {
+            font-size: 12px;
+            color: #555;
+            margin: 5px 0;
+        }
+        .summer-memories {
+            background-color: #fffde7;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 5px solid #ffc107;
+        }
+        .summer-memories h3 {
+            color: #f57c00;
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Writing Worksheet - Week 3</h1>
+    <h2>Write About Summer Fun</h2>
+
+    <div class="instructions">
+        <h3>Instructions:</h3>
+        <p>Write about all the fun things you've been doing this summer! Tell about your favorite activities, adventures, and memories. Share what makes summer special for you!</p>
+    </div>
+
+    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48c3R5bGU+LnN0MHtmaWxsOiNmZmMxMDd9LnN0MXtmaWxsOiNmZmUwYjN9LnN0MntmaWxsOiM5MGNhZjl9LnN0M3tmaWxsOiNmZmY7c3Ryb2tlOiMzMzM7c3Ryb2tlLXdpZHRoOjJ9LnN0NHtmaWxsOiM0Y2FmNTA7c3Ryb2tlOiMzMzM7c3Ryb2tlLXdpZHRoOjJ9PC9zdHlsZT48Y2lyY2xlIGNsYXNzPSJzdDAiIGN4PSIxMDAiIGN5PSI1MCIgcj0iMzAiLz48Y2lyY2xlIGNsYXNzPSJzdDAiIGN4PSIxNzAiIGN5PSI4MCIgcj0iMjAiLz48Y2lyY2xlIGNsYXNzPSJzdDAiIGN4PSIzMCIgY3k9IjgwIiByPSIyMCIvPjxwYXRoIGQ9Ik03MCwxMDAgQzcwLDgwIDExMCw4MCAxMTAsMTAwIiBmaWxsPSIjZmZjMTA3Ii8+PHBhdGggZD0iTTYwLDgwIEM2MCw2MCAxMDAsNjAgMTAwLDgwIiBmaWxsPSIjZmZlMGIzIi8+PHBhdGggZD0iTTUwLDYwIEM1MCw0MCA5MCw0MCA5MCw2MCIgZmlsbD0iIzkwY2FmOSIvPjxwYXRoIGQ9Ik0xNDAsMTAwIEMxNDAsODAgMTgwLDgwIDE4MCwxMDAiIGZpbGw9IiNmZmUwYTMiLz48cGF0aCBkPSJNMTUwLDgwIEMxNTAsNjAgMTkwLDYwIDE5MCw4MCIgZmlsbD0iIzkwY2FmOTsiLz48cGF0aCBkPSJNMjAsMTEwIEMyMCw5MCA2MCw5MCA2MCwxMTAiIGZpbGw9IiNmZmMxMDciLz48cGF0aCBkPSJNMzAsOTAgQzMwLDcwIDcwLDcwIDcwLDkwIiBmaWxsPSIjZmZlMGEzIi8+PHBhdGggZD0iTTQwLDcwIEM0MCw1MCA4MCw1MCA4MCw3MCIgZmlsbD0iIzkwY2FmOTsiLz48Y2lyY2xlIGNsYXNzPSJzdDIiIGN4PSIxMDAiIGN5PSIxODAiIHI9IjE1Ii8+PHBhdGggZD0iTTkwLDE3MCBDOTAsMTUwIDExMCwxNTAgMTEwLDE3MCIgZmlsbD0iIzRjYWY1MCIvPjxjaXJjbGUgY2xhc3M9InN0MyIgY3g9IjEwMCIgY3k9IjE4MCIgcj0iMTAiLz48Y2lyY2xlIGNsYXNzPSJzdDMiIGN4PSI5NSIgY3k9IjE3NSIgcj0iMyIvPjxjaXJjbGUgY2xhc3M9InN0MyIgY3g9IjEwNSIgY3k9IjE3NSIgcj0iMyIvPjxwYXRoIGQ9Ik04NSwxNzUgQzg1LDE3MCA5NSwxNzAgOTUsMTc1IiBmaWxsPSIjZmZmZmZmIi8+PHBhdGggZD0iTTg1LDE4MCBDODUsMTc1IDk1LDE3NSA5NSwxODAiIGZpbGw9IiNmZmZmZmYiLz48cGF0aCBkPSJNODUsMTg1IEM4NSwxODAgOTUsMTgwIDk1LDE4NSIgZmlsbD0iI2ZmZmZmZiIvPjxwYXRoIGQ9Ik0xMDUsMTc1IEMxMDUsMTcwIDExNSwxNzAgMTE1LDE3NSIgZmlsbD0iI2ZmZmZmZiIvPjxwYXRoIGQ9Ik0xMDUsMTgwIEMxMDUsMTc1IDExNSwxNzUgMTE1LDE4MCIgZmlsbD0iI2ZmZmZmZiIvPjxwYXRoIGQ9Ik0xMDUsMTg1IEMxMDUsMTgwIDExNSwxODAgMTE1LDE4NSIgZmlsbD0iI2ZmZmZmZiIvPjwvc3ZnPg==" alt="Summer Fun" class="summer-image">
+
+    <div class="writing-prompt">
+        <h3>Summer Fun Writing:</h3>
+        <p>My Amazing Summer Adventures - Write about all the fun things you've been doing this summer!</p>
+    </div>
+
+    <div class="summer-activities">
+        <div class="activity-card">
+            <h4>🏊‍♂️ Swimming</h4>
+            <p>Pool or beach fun</p>
+        </div>
+        <div class="activity-card">
+            <h4>🎨 Arts & Crafts</h4>
+            <p>Creative projects</p>
+        </div>
+        <div class="activity-card">
+            <h4>🚴‍♂️ Biking</h4>
+            <p>Riding around</p>
+        </div>
+        <div class="activity-card">
+            <h4>🏖️ Beach Trips</h4>
+            <p>Sand and waves</p>
+        </div>
+        <div class="activity-card">
+            <h4>🎮 Games</h4>
+            <p>Indoor and outdoor</p>
+        </div>
+        <div class="activity-card">
+            <h4>🍦 Ice Cream</h4>
+            <p>Sweet treats</p>
+        </div>
+    </div>
+
+    <div class="summer-prompts">
+        <h3>Summer Writing Ideas:</h3>
+        
+        <div class="summer-card">
+            <h4>🌟 My Favorite Summer Activity</h4>
+            <p>Write about the thing you love doing most in summer</p>
+        </div>
+        
+        <div class="summer-card">
+            <h4>🏖️ Summer Adventures</h4>
+            <p>Tell about exciting trips or special outings</p>
+        </div>
+        
+        <div class="summer-card">
+            <h4>👥 Summer with Friends</h4>
+            <p>Write about fun times with friends and family</p>
+        </div>
+        
+        <div class="summer-card">
+            <h4>🎨 Summer Learning</h4>
+            <p>Tell about new things you've learned this summer</p>
+        </div>
+        
+        <div class="summer-card">
+            <h4>🍦 Summer Treats</h4>
+            <p>Write about your favorite summer foods and drinks</p>
+        </div>
+        
+        <div class="summer-card">
+            <h4>🌅 Summer Memories</h4>
+            <p>Share your best summer memories and experiences</p>
+        </div>
+    </div>
+
+    <div class="summer-template">
+        <h3>Summer Fun Template:</h3>
+        <p><strong>My favorite summer activity:</strong> [What do you love doing most?]</p>
+        <p><strong>Fun things I've done:</strong> [List your summer adventures]</p>
+        <p><strong>People I've spent time with:</strong> [Friends and family]</p>
+        <p><strong>New things I've learned:</strong> [What have you discovered?]</p>
+        <p><strong>My favorite summer treat:</strong> [What foods do you love?]</p>
+        <p><strong>Best summer memory:</strong> [What's your favorite moment?]</p>
+        <p><strong>What I'm excited about:</strong> [What are you looking forward to?]</p>
+    </div>
+
+    <div class="summer-memories">
+        <h3>Summer Memory Starters:</h3>
+        <p>"This summer, I..."</p>
+        <p>"My favorite thing about summer is..."</p>
+        <p>"I love summer because..."</p>
+        <p>"This summer I learned..."</p>
+        <p>"The best part of my summer was..."</p>
+        <p>"I'm excited about..."</p>
+    </div>
+
+    <div class="word-bank">
+        <h3>Summer Words:</h3>
+        <ul>
+            <li>summer</li>
+            <li>fun</li>
+            <li>hot</li>
+            <li>sunny</li>
+            <li>swimming</li>
+            <li>beach</li>
+            <li>pool</li>
+            <li>ice cream</li>
+            <li>vacation</li>
+            <li>adventure</li>
+            <li>friends</li>
+            <li>family</li>
+            <li>games</li>
+            <li>play</li>
+            <li>learn</li>
+            <li>explore</li>
+            <li>discover</li>
+            <li>excited</li>
+            <li>happy</li>
+            <li>amazing</li>
+        </ul>
+    </div>
+
+    <div class="ideas">
+        <h3>Writing Tips:</h3>
+        <ul>
+            <li>Start with "This summer I..." or "My favorite summer activity is..."</li>
+            <li>Include details about what you did and how you felt</li>
+            <li>Write about people you spent time with</li>
+            <li>Describe places you went and things you saw</li>
+            <li>Share what you learned or discovered</li>
+            <li>Tell about your favorite summer foods and treats</li>
+            <li>End with what you're excited about or looking forward to</li>
+        </ul>
+    </div>
+
+    <div class="worksheet">
+        <textarea id="writing-area" class="writing-area" placeholder="This summer I... Start writing about your summer fun here!"></textarea>
+        <button class="save-button" onclick="saveWriting()">Save My Summer Fun Writing</button>
+    </div>
+
+    <button class="back-button" onclick="window.close()">Close Worksheet</button>
+
+    <script>
+        // Save the writing to localStorage
+        function saveWriting() {
+            const writingArea = document.getElementById('writing-area');
+            const content = writingArea.value;
+            
+            if (content.trim() !== '') {
+                localStorage.setItem('writingWeek3SummerFunContent', content);
+                alert('Your summer fun writing has been saved! Great job! 🌞📝');
+            } else {
+                alert('Please write something before saving!');
+            }
+        }
+        
+        // Load any saved writing when the page loads
+        window.onload = function() {
+            const savedWriting = localStorage.getItem('writingWeek3SummerFunContent');
+            if (savedWriting) {
+                document.getElementById('writing-area').value = savedWriting;
+            }
+        }
+    </script>
+</body>
+</html> 

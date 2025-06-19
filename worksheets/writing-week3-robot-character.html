@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writing Worksheet - Week 3: Create a Robot Character Description</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1, h2 {
+            color: #673ab7;
+            text-align: center;
+        }
+        .instructions {
+            background-color: #ede7f6;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .worksheet {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .writing-prompt {
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 5px solid #673ab7;
+        }
+        .writing-area {
+            width: 100%;
+            min-height: 400px;
+            border: 2px solid #d1c4e9;
+            border-radius: 5px;
+            padding: 15px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            line-height: 1.6;
+            background-color: #fffde7;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+        .word-bank {
+            background-color: #e1f5fe;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .word-bank h3 {
+            color: #0277bd;
+            margin-top: 0;
+        }
+        .word-bank ul {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 0;
+            list-style-type: none;
+        }
+        .word-bank li {
+            background-color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            border: 1px solid #b3e5fc;
+            font-size: 14px;
+        }
+        button {
+            background: linear-gradient(to right, #673ab7, #9c27b0);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 0;
+            display: block;
+        }
+        .back-button {
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            margin-top: 20px;
+        }
+        .save-button {
+            background: linear-gradient(to right, #4caf50, #8bc34a);
+        }
+        .ideas {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 5px solid #8bc34a;
+        }
+        .ideas h3 {
+            color: #558b2f;
+            margin-top: 0;
+        }
+        .robot-prompts {
+            background-color: #fff3e0;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 5px solid #ff9800;
+        }
+        .robot-prompts h3 {
+            color: #e65100;
+            margin-top: 0;
+        }
+        .robot-card {
+            background-color: #f3e5f5;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-left: 4px solid #9c27b0;
+        }
+        .robot-card h4 {
+            margin: 0 0 8px 0;
+            color: #7b1fa2;
+            font-size: 16px;
+        }
+        .robot-card p {
+            margin: 0;
+            color: #555;
+            font-size: 14px;
+        }
+        .robot-image {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto 20px;
+            border-radius: 10px;
+        }
+        .robot-template {
+            background-color: #e8f5e8;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 2px dashed #4caf50;
+        }
+        .robot-template h3 {
+            color: #2e7d32;
+            margin-top: 0;
+        }
+        .robot-types {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .type-card {
+            width: 120px;
+            background-color: #e3f2fd;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .type-card h4 {
+            margin: 5px 0;
+            color: #1976d2;
+            font-size: 14px;
+        }
+        .type-card p {
+            font-size: 12px;
+            color: #555;
+            margin: 5px 0;
+        }
+        .character-traits {
+            background-color: #fffde7;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 5px solid #ffc107;
+        }
+        .character-traits h3 {
+            color: #f57c00;
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Writing Worksheet - Week 3</h1>
+    <h2>Create a Robot Character Description</h2>
+
+    <div class="instructions">
+        <h3>Instructions:</h3>
+        <p>Create your own robot character! Write a detailed description of what your robot looks like, what it can do, and what its personality is like. Make your robot unique and interesting!</p>
+    </div>
+
+    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48c3R5bGU+LnN0MHtmaWxsOiNmZmMxMDd9LnN0MXtmaWxsOiNmZmUwYjN9LnN0MntmaWxsOiM5MGNhZjl9LnN0M3tmaWxsOiNmZmY7c3Ryb2tlOiMzMzM7c3Ryb2tlLXdpZHRoOjJ9LnN0NHtmaWxsOiM0Y2FmNTA7c3Ryb2tlOiMzMzM7c3Ryb2tlLXdpZHRoOjJ9PC9zdHlsZT48cmVjdCBjbGFzcz0ic3QwIiB4PSI2MCIgeT0iNTAiIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgcng9IjEwIiByeT0iMTAiLz48cmVjdCBjbGFzcz0ic3Q1IiB4PSI3MCIgeT0iNjAiIHdpZHRoPSI2MCIgaGVpZ2h0PSI0MCIgcng9IjUiIHJ5PSI1Ii8+PGNpcmNsZSBjbGFzcz0ic3QyIiBjeD0iODAiIGN5PSI3MCIgcj0iNSIvPjxjaXJjbGUgY2xhc3M9InN0MiIgY3g9IjEyMCIgY3k9IjcwIiByPSI1Ii8+PGNpcmNsZSBjbGFzcz0ic3QzIiBjeD0iMTAwIiBjeT0iOTAiIHI9IjEwIi8+PHJlY3QgY2xhc3M9InN0MSIgeD0iNzAiIHk9IjExMCIgd2lkdGg9IjIwIiBoZWlnaHQ9IjQwIiByeD0iNSIgcnk9IjUiLz48cmVjdCBjbGFzcz0ic3QxIiB4PSIxMTAiIHk9IjExMCIgd2lkdGg9IjIwIiBoZWlnaHQ9IjQwIiByeD0iNSIgcnk9IjUiLz48cmVjdCBjbGFzcz0ic3Q0IiB4PSI5MCIgeT0iMTUwIiB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHJ4PSI1IiByeT0iNSIvPjxyZWN0IGNsYXNzPSJzdDYiIHg9Ijk1IiB5PSIzMCIgd2lkdGg9IjEwIiBoZWlnaHQ9IjIwIiByeD0iNSIgcnk9IjUiLz48Y2lyY2xlIGNsYXNzPSJzdDYiIGN4PSIxMDAiIGN5PSIyMCIgcj0iNSIvPjwvc3ZnPg==" alt="Robot Character" class="robot-image">
+
+    <div class="writing-prompt">
+        <h3>Robot Character:</h3>
+        <p>Meet My Robot Friend - Create a detailed description of your own robot character!</p>
+    </div>
+
+    <div class="robot-types">
+        <div class="type-card">
+            <h4>🤖 Helper Robot</h4>
+            <p>Helps with chores and tasks</p>
+        </div>
+        <div class="type-card">
+            <h4>🎮 Game Robot</h4>
+            <p>Loves to play games</p>
+        </div>
+        <div class="type-card">
+            <h4>🎨 Artist Robot</h4>
+            <p>Creates art and music</p>
+        </div>
+        <div class="type-card">
+            <h4>🚀 Space Robot</h4>
+            <p>Explores outer space</p>
+        </div>
+        <div class="type-card">
+            <h4>🏥 Doctor Robot</h4>
+            <p>Helps people feel better</p>
+        </div>
+        <div class="type-card">
+            <h4>🏫 Teacher Robot</h4>
+            <p>Helps with learning</p>
+        </div>
+    </div>
+
+    <div class="robot-prompts">
+        <h3>Robot Description Ideas:</h3>
+        
+        <div class="robot-card">
+            <h4>👁️ Appearance</h4>
+            <p>What does your robot look like? Size, color, shape, special features</p>
+        </div>
+        
+        <div class="robot-card">
+            <h4>⚡ Special Abilities</h4>
+            <p>What can your robot do? Fly, talk, transform, solve problems</p>
+        </div>
+        
+        <div class="robot-card">
+            <h4>😊 Personality</h4>
+            <p>What is your robot like? Friendly, shy, brave, funny, smart</p>
+        </div>
+        
+        <div class="robot-card">
+            <h4>🏠 Where It Lives</h4>
+            <p>Where does your robot live? Home, space station, school, factory</p>
+        </div>
+        
+        <div class="robot-card">
+            <h4>🎯 What It Does</h4>
+            <p>What is your robot's job or purpose? What does it help with?</p>
+        </div>
+        
+        <div class="robot-card">
+            <h4>👥 Friends</h4>
+            <p>Who are your robot's friends? Other robots, people, animals</p>
+        </div>
+    </div>
+
+    <div class="robot-template">
+        <h3>Robot Character Template:</h3>
+        <p><strong>Robot Name:</strong> [What is your robot called?]</p>
+        <p><strong>What it looks like:</strong> [Describe size, color, shape, special parts]</p>
+        <p><strong>Special abilities:</strong> [What can your robot do?]</p>
+        <p><strong>Personality:</strong> [What is your robot like?]</p>
+        <p><strong>Where it lives:</strong> [Where does your robot stay?]</p>
+        <p><strong>What it does:</strong> [What is your robot's job or purpose?]</p>
+        <p><strong>Friends:</strong> [Who does your robot like to spend time with?]</p>
+    </div>
+
+    <div class="character-traits">
+        <h3>Character Traits:</h3>
+        <p><strong>Personality:</strong> friendly, shy, brave, funny, smart, helpful, curious, energetic, calm, creative</p>
+        <p><strong>Colors:</strong> blue, red, green, yellow, purple, orange, silver, gold, rainbow, neon</p>
+        <p><strong>Abilities:</strong> fly, talk, sing, dance, cook, clean, build, paint, read, calculate</p>
+    </div>
+
+    <div class="word-bank">
+        <h3>Robot Words:</h3>
+        <ul>
+            <li>robot</li>
+            <li>machine</li>
+            <li>metal</li>
+            <li>electronic</li>
+            <li>computer</li>
+            <li>buttons</li>
+            <li>screen</li>
+            <li>lights</li>
+            <li>wheels</li>
+            <li>arms</li>
+            <li>legs</li>
+            <li>head</li>
+            <li>eyes</li>
+            <li>voice</li>
+            <li>battery</li>
+            <li>program</li>
+            <li>smart</li>
+            <li>helpful</li>
+            <li>friendly</li>
+            <li>amazing</li>
+        </ul>
+    </div>
+
+    <div class="ideas">
+        <h3>Writing Tips:</h3>
+        <ul>
+            <li>Start with your robot's name and what it looks like</li>
+            <li>Describe the robot's size, color, and special features</li>
+            <li>Tell what special abilities your robot has</li>
+            <li>Explain what your robot's personality is like</li>
+            <li>Describe where your robot lives and what it does</li>
+            <li>Tell about your robot's friends and activities</li>
+            <li>Use descriptive words to make your robot interesting</li>
+        </ul>
+    </div>
+
+    <div class="worksheet">
+        <textarea id="writing-area" class="writing-area" placeholder="Meet my robot friend... Start describing your robot character here!"></textarea>
+        <button class="save-button" onclick="saveWriting()">Save My Robot Character</button>
+    </div>
+
+    <button class="back-button" onclick="window.close()">Close Worksheet</button>
+
+    <script>
+        // Save the writing to localStorage
+        function saveWriting() {
+            const writingArea = document.getElementById('writing-area');
+            const content = writingArea.value;
+            
+            if (content.trim() !== '') {
+                localStorage.setItem('writingWeek3RobotCharacterContent', content);
+                alert('Your robot character has been saved! Great job! 🤖📝');
+            } else {
+                alert('Please write something before saving!');
+            }
+        }
+        
+        // Load any saved writing when the page loads
+        window.onload = function() {
+            const savedWriting = localStorage.getItem('writingWeek3RobotCharacterContent');
+            if (savedWriting) {
+                document.getElementById('writing-area').value = savedWriting;
+            }
+        }
+    </script>
+</body>
+</html> 
