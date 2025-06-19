@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writing Worksheet - Week 4: Write About an AI or Tech Hero</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .worksheet-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .writing-prompt {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .word-bank {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .word-bank h3 {
+            color: #1976d2;
+            margin-top: 0;
+        }
+        
+        .word-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .word-tag {
+            background: #2196f3;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .word-tag:hover {
+            background: #1976d2;
+        }
+        
+        .writing-area {
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            min-height: 200px;
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 15px 0;
+            resize: vertical;
+        }
+        
+        .template-section {
+            background: #fff3e0;
+            border: 2px solid #ff9800;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .template-section h3 {
+            color: #e65100;
+            margin-top: 0;
+        }
+        
+        .save-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin: 10px 5px;
+        }
+        
+        .save-button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .hero-examples {
+            background: #f1f8e9;
+            border: 2px solid #4caf50;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .hero-examples h3 {
+            color: #2e7d32;
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <div class="hero-section">
+            <h1>🌟 Write About an AI or Tech Hero 🌟</h1>
+            <p>Learn about amazing people who changed the world with technology!</p>
+        </div>
+
+        <div class="writing-prompt">
+            <h2>Your Mission:</h2>
+            <p>Choose an AI or technology hero and write about why they are amazing! You can write about:</p>
+            <ul>
+                <li>What they invented or discovered</li>
+                <li>How their work helps people today</li>
+                <li>Why you think they are a hero</li>
+                <li>What you would ask them if you could meet them</li>
+            </ul>
+        </div>
+
+        <div class="hero-examples">
+            <h3>🤖 Some Amazing Tech Heroes to Choose From:</h3>
+            <ul>
+                <li><strong>Ada Lovelace</strong> - First computer programmer</li>
+                <li><strong>Alan Turing</strong> - Father of computer science</li>
+                <li><strong>Grace Hopper</strong> - Computer programming pioneer</li>
+                <li><strong>Steve Jobs</strong> - Made computers for everyone</li>
+                <li><strong>Tim Berners-Lee</strong> - Created the World Wide Web</li>
+                <li><strong>Katherine Johnson</strong> - NASA mathematician</li>
+                <li><strong>Elon Musk</strong> - Electric cars and space travel</li>
+                <li><strong>Your own choice!</strong> - Any tech hero you admire</li>
+            </ul>
+        </div>
+
+        <div class="word-bank">
+            <h3>💡 Helpful Words for Your Writing:</h3>
+            <div class="word-list">
+                <span class="word-tag" onclick="addWord(this)">inventor</span>
+                <span class="word-tag" onclick="addWord(this)">scientist</span>
+                <span class="word-tag" onclick="addWord(this)">programmer</span>
+                <span class="word-tag" onclick="addWord(this)">computer</span>
+                <span class="word-tag" onclick="addWord(this)">technology</span>
+                <span class="word-tag" onclick="addWord(this)">innovation</span>
+                <span class="word-tag" onclick="addWord(this)">discovery</span>
+                <span class="word-tag" onclick="addWord(this)">amazing</span>
+                <span class="word-tag" onclick="addWord(this)">brilliant</span>
+                <span class="word-tag" onclick="addWord(this)">creative</span>
+                <span class="word-tag" onclick="addWord(this)">helpful</span>
+                <span class="word-tag" onclick="addWord(this)">inspiring</span>
+                <span class="word-tag" onclick="addWord(this)">changed the world</span>
+                <span class="word-tag" onclick="addWord(this)">made life better</span>
+            </div>
+        </div>
+
+        <div class="template-section">
+            <h3>📝 Writing Template (Optional):</h3>
+            <p><strong>My Tech Hero:</strong> [Write the name of your hero]</p>
+            <p><strong>What they did:</strong> [Write what they invented or discovered]</p>
+            <p><strong>Why they are amazing:</strong> [Write why you think they are a hero]</p>
+            <p><strong>How they help people:</strong> [Write how their work helps us today]</p>
+            <p><strong>What I would ask them:</strong> [Write a question you would ask your hero]</p>
+        </div>
+
+        <div>
+            <h3>✍️ Your Writing:</h3>
+            <textarea id="writingContent" class="writing-area" placeholder="Start writing about your AI or tech hero here..."></textarea>
+        </div>
+
+        <div style="text-align: center;">
+            <button class="save-button" onclick="saveWork()">💾 Save My Work</button>
+            <button class="save-button" onclick="clearWork()">🗑️ Clear</button>
+            <button class="save-button" onclick="window.print()">🖨️ Print</button>
+        </div>
+
+        <div id="saveMessage" style="text-align: center; margin-top: 15px; font-weight: bold; color: #4caf50;"></div>
+    </div>
+
+    <script>
+        // Load saved work when page loads
+        window.onload = function() {
+            loadWork();
+        };
+
+        function addWord(element) {
+            const textarea = document.getElementById('writingContent');
+            const word = element.textContent;
+            const cursorPos = textarea.selectionStart;
+            const textBefore = textarea.value.substring(0, cursorPos);
+            const textAfter = textarea.value.substring(cursorPos);
+            
+            textarea.value = textBefore + word + ' ' + textAfter;
+            textarea.focus();
+            textarea.setSelectionRange(cursorPos + word.length + 1, cursorPos + word.length + 1);
+        }
+
+        function saveWork() {
+            const content = document.getElementById('writingContent').value;
+            const saveKey = 'writing-week4-ai-hero';
+            
+            localStorage.setItem(saveKey, content);
+            
+            const saveMessage = document.getElementById('saveMessage');
+            saveMessage.textContent = '✅ Your work has been saved!';
+            saveMessage.style.color = '#4caf50';
+            
+            setTimeout(() => {
+                saveMessage.textContent = '';
+            }, 3000);
+        }
+
+        function loadWork() {
+            const saveKey = 'writing-week4-ai-hero';
+            const savedContent = localStorage.getItem(saveKey);
+            
+            if (savedContent) {
+                document.getElementById('writingContent').value = savedContent;
+            }
+        }
+
+        function clearWork() {
+            if (confirm('Are you sure you want to clear your work?')) {
+                document.getElementById('writingContent').value = '';
+                localStorage.removeItem('writing-week4-ai-hero');
+                document.getElementById('saveMessage').textContent = '';
+            }
+        }
+    </script>
+</body>
+</html> 

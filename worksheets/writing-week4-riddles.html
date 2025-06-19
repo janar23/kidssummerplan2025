@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writing Worksheet - Week 4: Create Riddles for a Computer to Solve</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .worksheet-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .riddle-section {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .writing-prompt {
+            background: #f8f9fa;
+            border-left: 4px solid #a8edea;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .word-bank {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .word-bank h3 {
+            color: #1976d2;
+            margin-top: 0;
+        }
+        
+        .word-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .word-tag {
+            background: #2196f3;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .word-tag:hover {
+            background: #1976d2;
+        }
+        
+        .writing-area {
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            min-height: 150px;
+            font-size: 16px;
+            line-height: 1.6;
+            margin: 15px 0;
+            resize: vertical;
+        }
+        
+        .template-section {
+            background: #fff3e0;
+            border: 2px solid #ff9800;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .template-section h3 {
+            color: #e65100;
+            margin-top: 0;
+        }
+        
+        .save-button {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin: 10px 5px;
+        }
+        
+        .save-button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .riddle-examples {
+            background: #f1f8e9;
+            border: 2px solid #4caf50;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .riddle-examples h3 {
+            color: #2e7d32;
+            margin-top: 0;
+        }
+        
+        .riddle-card {
+            background: #fff;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .riddle-card h4 {
+            color: #333;
+            margin-top: 0;
+        }
+        
+        .riddle-answer {
+            color: #666;
+            font-style: italic;
+        }
+        
+        .riddle-form {
+            background: #e8f5e8;
+            border: 2px solid #4caf50;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .riddle-form h3 {
+            color: #2e7d32;
+            margin-top: 0;
+        }
+        
+        .riddle-input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin: 5px 0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="worksheet-container">
+        <div class="riddle-section">
+            <h1>🤖 Create Riddles for a Computer to Solve 🤖</h1>
+            <p>Think like a computer and create clever riddles!</p>
+        </div>
+
+        <div class="writing-prompt">
+            <h2>Your Mission:</h2>
+            <p>Create riddles that a computer might have trouble solving! Think about things that computers find hard to understand, like emotions, jokes, or things that need imagination.</p>
+        </div>
+
+        <div class="riddle-examples">
+            <h3>🧩 Example Riddles to Get You Started:</h3>
+            
+            <div class="riddle-card">
+                <h4>Riddle 1:</h4>
+                <p><strong>Question:</strong> What has keys, but no locks; space, but no room; and you can enter, but not go in?</p>
+                <p class="riddle-answer"><strong>Answer:</strong> A computer keyboard</p>
+            </div>
+            
+            <div class="riddle-card">
+                <h4>Riddle 2:</h4>
+                <p><strong>Question:</strong> I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?</p>
+                <p class="riddle-answer"><strong>Answer:</strong> An echo</p>
+            </div>
+            
+            <div class="riddle-card">
+                <h4>Riddle 3:</h4>
+                <p><strong>Question:</strong> What gets wetter and wetter the more it dries?</p>
+                <p class="riddle-answer"><strong>Answer:</strong> A towel</p>
+            </div>
+            
+            <div class="riddle-card">
+                <h4>Riddle 4:</h4>
+                <p><strong>Question:</strong> What has cities, but no houses; forests, but no trees; and rivers, but no water?</p>
+                <p class="riddle-answer"><strong>Answer:</strong> A map</p>
+            </div>
+        </div>
+
+        <div class="word-bank">
+            <h3>💡 Helpful Words for Your Riddles:</h3>
+            <div class="word-list">
+                <span class="word-tag" onclick="addWord(this)">what</span>
+                <span class="word-tag" onclick="addWord(this)">who</span>
+                <span class="word-tag" onclick="addWord(this)">where</span>
+                <span class="word-tag" onclick="addWord(this)">when</span>
+                <span class="word-tag" onclick="addWord(this)">why</span>
+                <span class="word-tag" onclick="addWord(this)">how</span>
+                <span class="word-tag" onclick="addWord(this)">big</span>
+                <span class="word-tag" onclick="addWord(this)">small</span>
+                <span class="word-tag" onclick="addWord(this)">round</span>
+                <span class="word-tag" onclick="addWord(this)">square</span>
+                <span class="word-tag" onclick="addWord(this)">loud</span>
+                <span class="word-tag" onclick="addWord(this)">quiet</span>
+                <span class="word-tag" onclick="addWord(this)">bright</span>
+                <span class="word-tag" onclick="addWord(this)">dark</span>
+                <span class="word-tag" onclick="addWord(this)">soft</span>
+                <span class="word-tag" onclick="addWord(this)">hard</span>
+                <span class="word-tag" onclick="addWord(this)">hot</span>
+                <span class="word-tag" onclick="addWord(this)">cold</span>
+                <span class="word-tag" onclick="addWord(this)">fast</span>
+                <span class="word-tag" onclick="addWord(this)">slow</span>
+            </div>
+        </div>
+
+        <div class="template-section">
+            <h3>📝 Riddle Writing Tips:</h3>
+            <ul>
+                <li><strong>Use opposites:</strong> "I am tall when I am young, and short when I am old"</li>
+                <li><strong>Play with words:</strong> "What has keys but no locks?"</li>
+                <li><strong>Think about feelings:</strong> "I am not alive, but I grow; I don't have lungs, but I need air"</li>
+                <li><strong>Use imagination:</strong> "I have cities but no houses, forests but no trees"</li>
+                <li><strong>Make it tricky:</strong> Computers are good at facts, but bad at understanding jokes!</li>
+            </ul>
+        </div>
+
+        <div class="riddle-form">
+            <h3>🤔 Create Your Own Riddles:</h3>
+            
+            <div style="margin-bottom: 20px;">
+                <h4>Riddle 1:</h4>
+                <input type="text" id="riddle1" class="riddle-input" placeholder="Write your first riddle here...">
+                <input type="text" id="answer1" class="riddle-input" placeholder="What's the answer?">
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <h4>Riddle 2:</h4>
+                <input type="text" id="riddle2" class="riddle-input" placeholder="Write your second riddle here...">
+                <input type="text" id="answer2" class="riddle-input" placeholder="What's the answer?">
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <h4>Riddle 3:</h4>
+                <input type="text" id="riddle3" class="riddle-input" placeholder="Write your third riddle here...">
+                <input type="text" id="answer3" class="riddle-input" placeholder="What's the answer?">
+            </div>
+        </div>
+
+        <div>
+            <h3>✍️ Write About Your Riddles:</h3>
+            <p>Explain why you think a computer might have trouble solving your riddles:</p>
+            <textarea id="writingContent" class="writing-area" placeholder="Write about why your riddles are tricky for computers..."></textarea>
+        </div>
+
+        <div style="text-align: center;">
+            <button class="save-button" onclick="saveWork()">💾 Save My Riddles</button>
+            <button class="save-button" onclick="clearWork()">🗑️ Clear</button>
+            <button class="save-button" onclick="window.print()">🖨️ Print</button>
+        </div>
+
+        <div id="saveMessage" style="text-align: center; margin-top: 15px; font-weight: bold; color: #4caf50;"></div>
+    </div>
+
+    <script>
+        // Load saved work when page loads
+        window.onload = function() {
+            loadWork();
+        };
+
+        function addWord(element) {
+            const textarea = document.getElementById('writingContent');
+            const word = element.textContent;
+            const cursorPos = textarea.selectionStart;
+            const textBefore = textarea.value.substring(0, cursorPos);
+            const textAfter = textarea.value.substring(cursorPos);
+            
+            textarea.value = textBefore + word + ' ' + textAfter;
+            textarea.focus();
+            textarea.setSelectionRange(cursorPos + word.length + 1, cursorPos + word.length + 1);
+        }
+
+        function saveWork() {
+            const content = document.getElementById('writingContent').value;
+            const riddle1 = document.getElementById('riddle1').value;
+            const answer1 = document.getElementById('answer1').value;
+            const riddle2 = document.getElementById('riddle2').value;
+            const answer2 = document.getElementById('answer2').value;
+            const riddle3 = document.getElementById('riddle3').value;
+            const answer3 = document.getElementById('answer3').value;
+            
+            const saveData = {
+                content: content,
+                riddle1: riddle1,
+                answer1: answer1,
+                riddle2: riddle2,
+                answer2: answer2,
+                riddle3: riddle3,
+                answer3: answer3
+            };
+            
+            const saveKey = 'writing-week4-riddles';
+            localStorage.setItem(saveKey, JSON.stringify(saveData));
+            
+            const saveMessage = document.getElementById('saveMessage');
+            saveMessage.textContent = '✅ Your riddles have been saved!';
+            saveMessage.style.color = '#4caf50';
+            
+            setTimeout(() => {
+                saveMessage.textContent = '';
+            }, 3000);
+        }
+
+        function loadWork() {
+            const saveKey = 'writing-week4-riddles';
+            const savedData = localStorage.getItem(saveKey);
+            
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                document.getElementById('writingContent').value = data.content || '';
+                document.getElementById('riddle1').value = data.riddle1 || '';
+                document.getElementById('answer1').value = data.answer1 || '';
+                document.getElementById('riddle2').value = data.riddle2 || '';
+                document.getElementById('answer2').value = data.answer2 || '';
+                document.getElementById('riddle3').value = data.riddle3 || '';
+                document.getElementById('answer3').value = data.answer3 || '';
+            }
+        }
+
+        function clearWork() {
+            if (confirm('Are you sure you want to clear your riddles?')) {
+                document.getElementById('writingContent').value = '';
+                document.getElementById('riddle1').value = '';
+                document.getElementById('answer1').value = '';
+                document.getElementById('riddle2').value = '';
+                document.getElementById('answer2').value = '';
+                document.getElementById('riddle3').value = '';
+                document.getElementById('answer3').value = '';
+                
+                localStorage.removeItem('writing-week4-riddles');
+                document.getElementById('saveMessage').textContent = '';
+            }
+        }
+    </script>
+</body>
+</html> 

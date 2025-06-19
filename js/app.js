@@ -633,7 +633,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 "Write about summer fun": "worksheets/writing-week3-summer-fun.html"
             },
             4: {
-                "Write about an AI or tech hero": "worksheets/writing-week4-tech-hero.html"
+                "Write about an AI or tech hero": "worksheets/writing-week4-ai-hero.html",
+                "Write a book review": "worksheets/writing-week4-book-review.html",
+                "Create riddles for a computer to solve": "worksheets/writing-week4-riddles.html",
+                "Write about time travel": "worksheets/writing-week4-time-travel.html",
+                "Create your own mystery": "worksheets/writing-week4-mystery.html"
             }
         };
         
