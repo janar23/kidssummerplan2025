@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 5 Tuesday - Write Your Own Recipe Worksheet</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            min-height: 100vh;
+        }
+        .worksheet {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+        .header {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #e67e22;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        .header h2 {
+            color: #34495e;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+        .section {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 3px dashed #f39c12;
+            border-radius: 15px;
+            background: #fef9e7;
+        }
+        .section h3 {
+            color: #d68910;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .recipe-card {
+            background: linear-gradient(45deg, #ffeaa7 0%, #fab1a0 100%);
+            border: 3px solid #e17055;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        .recipe-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .recipe-header h4 {
+            color: #2d3436;
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+        .recipe-section {
+            margin-bottom: 20px;
+        }
+        .recipe-section h5 {
+            color: #e17055;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #e17055;
+            padding-bottom: 5px;
+        }
+        .ingredients-list {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .ingredients-list ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .ingredients-list li {
+            margin-bottom: 8px;
+            color: #2d3436;
+        }
+        .instructions-list {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .instructions-list ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .instructions-list li {
+            margin-bottom: 10px;
+            color: #2d3436;
+            line-height: 1.5;
+        }
+        .input-field {
+            width: 100%;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .textarea-field {
+            width: 100%;
+            min-height: 100px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-size: 14px;
+            resize: vertical;
+        }
+        .tips-box {
+            background: linear-gradient(45deg, #a29bfe 0%, #6c5ce7 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .tips-box h4 {
+            margin-bottom: 10px;
+        }
+        .tips-box ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .tips-box li {
+            margin-bottom: 5px;
+        }
+        .drawing-area {
+            border: 2px dashed #00b894;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            background: white;
+            margin-top: 15px;
+        }
+        .drawing-area h4 {
+            color: #00b894;
+            margin-bottom: 10px;
+        }
+        .print-button {
+            background: linear-gradient(45deg, #ffecd2 0%, #fcb69f 100%);
+            color: #2d3436;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-weight: bold;
+        }
+        .print-button:hover {
+            transform: scale(1.05);
+            transition: transform 0.2s;
+        }
+        @media print {
+            body { background: white; }
+            .print-button { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="worksheet">
+        <div class="header">
+            <h1>👨‍🍳 Junior Chef Recipe Creator 👩‍🍳</h1>
+            <h2>Week 5 - Tuesday Writing Worksheet</h2>
+            <p><strong>Today's Mission:</strong> Write your own recipe!</p>
+        </div>
+
+        <div class="section">
+            <h3>🌟 Recipe Writing Mission</h3>
+            <div class="tips-box">
+                <h4>🎯 Your Goal:</h4>
+                <p>Create your very own recipe! It can be for:</p>
+                <ul>
+                    <li>Your favorite snack</li>
+                    <li>A special family dish</li>
+                    <li>A creative dessert</li>
+                    <li>A healthy smoothie</li>
+                    <li>Any food you love to make or eat!</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>📝 Recipe Writing Tips</h3>
+            <div class="tips-box">
+                <h4>💡 How to Write a Great Recipe:</h4>
+                <ul>
+                    <li><strong>Be specific:</strong> Use exact measurements (cups, tablespoons, etc.)</li>
+                    <li><strong>List everything:</strong> Don't forget any ingredients!</li>
+                    <li><strong>Step by step:</strong> Write instructions in order</li>
+                    <li><strong>Be clear:</strong> Use simple words that everyone can understand</li>
+                    <li><strong>Add details:</strong> Include cooking time, temperature, and special tips</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="recipe-card">
+            <div class="recipe-header">
+                <h4>🍽️ MY AMAZING RECIPE</h4>
+                <p><em>Created by: _________________________________</em></p>
+            </div>
+
+            <div class="recipe-section">
+                <h5>📋 Recipe Information</h5>
+                <p><strong>Recipe Name:</strong> <input type="text" class="input-field" placeholder="Enter your recipe name here..."></p>
+                <p><strong>Prep Time:</strong> <input type="text" class="input-field" placeholder="e.g., 10 minutes"></p>
+                <p><strong>Cook Time:</strong> <input type="text" class="input-field" placeholder="e.g., 20 minutes"></p>
+                <p><strong>Servings:</strong> <input type="text" class="input-field" placeholder="e.g., 4 people"></p>
+            </div>
+
+            <div class="recipe-section">
+                <h5>🥕 Ingredients</h5>
+                <div class="ingredients-list">
+                    <ol>
+                        <li><input type="text" class="input-field" placeholder="e.g., 2 cups flour"></li>
+                        <li><input type="text" class="input-field" placeholder="e.g., 1 cup sugar"></li>
+                        <li><input type="text" class="input-field" placeholder="e.g., 3 eggs"></li>
+                        <li><input type="text" class="input-field" placeholder="e.g., 1/2 cup milk"></li>
+                        <li><input type="text" class="input-field" placeholder="e.g., 1 teaspoon vanilla"></li>
+                        <li><input type="text" class="input-field" placeholder="Add more ingredients as needed..."></li>
+                        <li><input type="text" class="input-field" placeholder="Add more ingredients as needed..."></li>
+                        <li><input type="text" class="input-field" placeholder="Add more ingredients as needed..."></li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="recipe-section">
+                <h5>👨‍🍳 Instructions</h5>
+                <div class="instructions-list">
+                    <ol>
+                        <li><textarea class="textarea-field" placeholder="Step 1: What do you do first? (e.g., Preheat oven to 350°F)"></textarea></li>
+                        <li><textarea class="textarea-field" placeholder="Step 2: What's the next step? (e.g., Mix dry ingredients together)"></textarea></li>
+                        <li><textarea class="textarea-field" placeholder="Step 3: Continue with the next step..."></textarea></li>
+                        <li><textarea class="textarea-field" placeholder="Step 4: Continue with the next step..."></textarea></li>
+                        <li><textarea class="textarea-field" placeholder="Step 5: Continue with the next step..."></textarea></li>
+                        <li><textarea class="textarea-field" placeholder="Step 6: Continue with the next step..."></textarea></li>
+                        <li><textarea class="textarea-field" placeholder="Step 7: Continue with the next step..."></textarea></li>
+                        <li><textarea class="textarea-field" placeholder="Step 8: Continue with the next step..."></textarea></li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="recipe-section">
+                <h5>💡 Chef's Tips</h5>
+                <textarea class="textarea-field" placeholder="Write any special tips, tricks, or notes about your recipe. For example: 'Make sure to let it cool before eating!' or 'You can add chocolate chips for extra flavor!'"></textarea>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>🎨 Draw Your Recipe</h3>
+            <div class="drawing-area">
+                <h4>Draw what your finished dish looks like!</h4>
+                <p>Show the colors, shapes, and how it should look when it's done.</p>
+                <div style="height: 200px; border: 1px solid #ccc; margin: 10px 0; background: #f9f9f9;">
+                    <p style="color: #999; padding-top: 80px;">Draw your delicious creation here!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>🔍 Recipe Checklist</h3>
+            <p>Make sure your recipe includes:</p>
+            <ul>
+                <li>✅ A catchy recipe name</li>
+                <li>✅ List of all ingredients with amounts</li>
+                <li>✅ Step-by-step instructions</li>
+                <li>✅ Cooking time and temperature (if needed)</li>
+                <li>✅ Number of servings</li>
+                <li>✅ At least one chef's tip</li>
+                <li>✅ Clear, easy-to-understand language</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>🌟 Recipe Challenge</h3>
+            <p><strong>Extra Challenge:</strong> Try making your recipe with an adult's help! Take a photo of your creation and write about how it turned out.</p>
+            <textarea class="textarea-field" placeholder="Write about your cooking experience here..."></textarea>
+        </div>
+
+        <button class="print-button" onclick="window.print()">🖨️ Print This Recipe</button>
+    </div>
+</body>
+</html> 

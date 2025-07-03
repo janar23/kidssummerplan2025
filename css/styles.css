@@ -197,6 +197,31 @@ h2 {
     box-shadow: none;
 }
 
+.week5-worksheets-button {
+    margin-top: 1rem;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 20px;
+    background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 1rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.week5-worksheets-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.week5-worksheets-button i {
+    margin-right: 0.5rem;
+}
+
 .week-indicator {
     flex: 1;
     padding: 0 1rem;

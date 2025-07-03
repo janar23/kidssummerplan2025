@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 5 Friday - Animal Fact Cards Worksheet</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .worksheet {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+        .header {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #27ae60;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        .header h2 {
+            color: #34495e;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+        .section {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 3px dashed #27ae60;
+            border-radius: 15px;
+            background: #f0fff4;
+        }
+        .section h3 {
+            color: #229954;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .fact-card-template {
+            background: linear-gradient(45deg, #a8edea 0%, #fed6e3 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 3px solid #27ae60;
+        }
+        .animal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .animal-choice {
+            background: #e8f5e8;
+            border: 2px solid #27ae60;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .animal-choice:hover {
+            transform: scale(1.05);
+            background: #d4edda;
+        }
+        .animal-choice.selected {
+            background: #27ae60;
+            color: white;
+        }
+        .fact-categories {
+            background: linear-gradient(45deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+        .fact-categories h4 {
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .fact-categories ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .fact-categories li {
+            margin-bottom: 8px;
+        }
+        .card-template {
+            background: white;
+            border: 3px solid #27ae60;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .card-template h4 {
+            color: #27ae60;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        .card-field {
+            margin-bottom: 15px;
+        }
+        .card-field label {
+            display: block;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        .card-field input, .card-field textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #27ae60;
+            border-radius: 8px;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-size: 14px;
+        }
+        .card-field textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        .animal-facts {
+            background: linear-gradient(45deg, #a8edea 0%, #fed6e3 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+        .animal-facts h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .animal-facts ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .animal-facts li {
+            margin-bottom: 8px;
+            color: #34495e;
+        }
+        .print-button {
+            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+        .print-button:hover {
+            transform: scale(1.05);
+            transition: transform 0.2s;
+        }
+        .create-card-button {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 5px;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+        .create-card-button:hover {
+            background: #229954;
+            transform: scale(1.05);
+            transition: transform 0.2s;
+        }
+        @media print {
+            body { background: white; }
+            .print-button, .create-card-button { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="worksheet">
+        <div class="header">
+            <h1>🐾 Animal Fact Cards 🐾</h1>
+            <h2>Week 5 - Friday Writing Worksheet</h2>
+            <p><strong>Today's Mission:</strong> Create amazing fact cards about your favorite animals!</p>
+        </div>
+
+        <div class="section">
+            <h3>🌟 Your Animal Research Mission</h3>
+            <div class="fact-card-template">
+                <h4>🎯 Today's Goal:</h4>
+                <p><strong>You're going to become an animal expert!</strong></p>
+                <p>Choose your favorite animals and create fact cards with interesting information about them. Each card will teach others about these amazing creatures!</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>🦁 Choose Your Animals</h3>
+            <p><strong>Pick 3-5 animals you'd like to research:</strong></p>
+            <div class="animal-grid">
+                <div class="animal-choice" onclick="selectAnimal(this, 'Lion')">
+                    🦁<br>Lion
+                </div>
+                <div class="animal-choice" onclick="selectAnimal(this, 'Elephant')">
+                    🐘<br>Elephant
+                </div>
+                <div class="animal-choice" onclick="selectAnimal(this, 'Dolphin')">
+                    🐬<br>Dolphin
+                </div>
+                <div class="animal-choice" onclick="selectAnimal(this, 'Penguin')">
+                    🐧<br>Penguin
+                </div>
+                <div class="animal-choice" onclick="selectAnimal(this, 'Giraffe')">
+                    🦒<br>Giraffe
+                </div>
+                <div class="animal-choice" onclick="selectAnimal(this, 'Tiger')">
+                    🐯<br>Tiger
+                </div>
+                <div class="animal-choice" onclick="selectAnimal(this, 'Panda')">
+                    🐼<br>Panda
+                </div>
+                <div class="animal-choice" onclick="selectAnimal(this, 'Eagle')">
+                    🦅<br>Eagle
+                </div>
+                <div class="animal-choice" onclick="selectAnimal(this, 'Shark')">
+                    🦈<br>Shark
+                </div>
+                <div class="animal-choice" onclick="selectAnimal(this, 'Kangaroo')">
+                    🦘<br>Kangaroo
+                </div>
+                <div class="animal-choice" onclick="selectAnimal(this, 'Butterfly')">
+                    🦋<br>Butterfly
+                </div>
+                <div class="animal-choice" onclick="selectAnimal(this, 'Your Choice')">
+                    ❓<br>Your Choice
+                </div>
+            </div>
+            <p><strong>Selected Animals:</strong> <span id="selected-animals">None yet</span></p>
+        </div>
+
+        <div class="section">
+            <h3>📋 What to Include in Your Fact Cards</h3>
+            <div class="fact-categories">
+                <h4>🔍 Fact Categories:</h4>
+                <ul>
+                    <li><strong>Animal Name:</strong> What is this animal called?</li>
+                    <li><strong>Habitat:</strong> Where does this animal live?</li>
+                    <li><strong>Diet:</strong> What does this animal eat?</li>
+                    <li><strong>Size:</strong> How big is this animal?</li>
+                    <li><strong>Special Features:</strong> What makes this animal unique?</li>
+                    <li><strong>Fun Fact:</strong> What's something amazing about this animal?</li>
+                    <li><strong>Conservation Status:</strong> Is this animal endangered?</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>🐾 Animal Facts to Help You</h3>
+            <div class="animal-facts">
+                <h4>🌍 Amazing Animal Facts:</h4>
+                <ul>
+                    <li><strong>Lions:</strong> Live in groups called prides, can roar very loudly</li>
+                    <li><strong>Elephants:</strong> Largest land animals, have amazing memories</li>
+                    <li><strong>Dolphins:</strong> Super smart, can communicate with each other</li>
+                    <li><strong>Penguins:</strong> Can't fly but are excellent swimmers</li>
+                    <li><strong>Giraffes:</strong> Tallest animals, have long necks to reach leaves</li>
+                    <li><strong>Tigers:</strong> Largest cats, have unique stripe patterns</li>
+                    <li><strong>Pandas:</strong> Love bamboo, have black and white fur</li>
+                    <li><strong>Eagles:</strong> Have amazing eyesight, can see from very far away</li>
+                    <li><strong>Sharks:</strong> Have been around for millions of years</li>
+                    <li><strong>Kangaroos:</strong> Hop around, carry babies in pouches</li>
+                    <li><strong>Butterflies:</strong> Start as caterpillars, taste with their feet</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>📝 Create Your Animal Fact Cards</h3>
+            <p><strong>Use the template below to create your fact cards:</strong></p>
+            
+            <div class="card-template">
+                <h4>🦁 Animal Fact Card Template</h4>
+                <div class="card-field">
+                    <label for="animal-name">Animal Name:</label>
+                    <input type="text" id="animal-name" placeholder="Enter the animal's name">
+                </div>
+                <div class="card-field">
+                    <label for="animal-habitat">Habitat (Where it lives):</label>
+                    <textarea id="animal-habitat" placeholder="Describe where this animal lives (forest, ocean, desert, etc.)"></textarea>
+                </div>
+                <div class="card-field">
+                    <label for="animal-diet">Diet (What it eats):</label>
+                    <textarea id="animal-diet" placeholder="What does this animal eat?"></textarea>
+                </div>
+                <div class="card-field">
+                    <label for="animal-size">Size:</label>
+                    <input type="text" id="animal-size" placeholder="How big is this animal?">
+                </div>
+                <div class="card-field">
+                    <label for="animal-features">Special Features:</label>
+                    <textarea id="animal-features" placeholder="What makes this animal special or unique?"></textarea>
+                </div>
+                <div class="card-field">
+                    <label for="animal-fun-fact">Fun Fact:</label>
+                    <textarea id="animal-fun-fact" placeholder="Share one amazing fact about this animal!"></textarea>
+                </div>
+                <div class="card-field">
+                    <label for="animal-conservation">Conservation Status:</label>
+                    <input type="text" id="animal-conservation" placeholder="Is this animal endangered, threatened, or safe?">
+                </div>
+            </div>
+            
+            <button class="create-card-button" onclick="createNewCard()">🆕 Create Another Card</button>
+        </div>
+
+        <div class="section">
+            <h3>🔍 Research Tips</h3>
+            <p><strong>How to find information about your animals:</strong></p>
+            <ul>
+                <li>✅ Ask your family about animals they know</li>
+                <li>✅ Look up information in books or online (with help)</li>
+                <li>✅ Watch nature documentaries</li>
+                <li>✅ Visit a zoo or aquarium</li>
+                <li>✅ Use your imagination for creative facts</li>
+                <li>✅ Draw pictures of your animals</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h3>🌟 Presentation Ideas</h3>
+            <p><strong>How to share your fact cards:</strong></p>
+            <ul>
+                <li>📖 Read your cards to family members</li>
+                <li>🎨 Add drawings or pictures to your cards</li>
+                <li>📱 Take photos of your cards to share</li>
+                <li>🎭 Act out the animals while presenting</li>
+                <li>🎵 Make up a song about your animals</li>
+                <li>🏆 Have a family quiz about your animals</li>
+            </ul>
+        </div>
+
+        <button class="print-button" onclick="window.print()">🖨️ Print This Worksheet</button>
+    </div>
+
+    <script>
+        let selectedAnimals = [];
+        let cardCount = 1;
+
+        function selectAnimal(element, animalName) {
+            if (element.classList.contains('selected')) {
+                element.classList.remove('selected');
+                selectedAnimals = selectedAnimals.filter(animal => animal !== animalName);
+            } else {
+                element.classList.add('selected');
+                selectedAnimals.push(animalName);
+            }
+            
+            document.getElementById('selected-animals').textContent = selectedAnimals.join(', ') || 'None yet';
+        }
+
+        function createNewCard() {
+            cardCount++;
+            const cardTemplate = document.querySelector('.card-template');
+            const newCard = cardTemplate.cloneNode(true);
+            
+            // Update the card title
+            newCard.querySelector('h4').textContent = `🦁 Animal Fact Card ${cardCount}`;
+            
+            // Clear all the input fields
+            newCard.querySelectorAll('input, textarea').forEach(input => {
+                input.value = '';
+            });
+            
+            // Insert the new card after the existing one
+            cardTemplate.parentNode.insertBefore(newCard, cardTemplate.nextSibling);
+        }
+
+        // Get the selected child's name for personalization
+        function getSelectedChildName() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('child') || 'Young Explorer';
+        }
+
+        // Update the greeting with the child's name
+        document.addEventListener('DOMContentLoaded', function() {
+            const childName = getSelectedChildName();
+            const greeting = document.querySelector('.header p');
+            if (greeting) {
+                greeting.innerHTML = `<strong>Today's Mission:</strong> Create amazing fact cards about your favorite animals, ${childName}!`;
+            }
+        });
+    </script>
+</body>
+</html> 

@@ -397,6 +397,24 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Update prev/next buttons
         prevWeekBtn.disabled = (currentWeek === 1);
+        
+        // Add special Week 5 worksheets button
+        const existingWeek5Button = document.getElementById('week5-worksheets-btn');
+        if (existingWeek5Button) {
+            existingWeek5Button.remove();
+        }
+        
+        if (currentWeek === 5) {
+            const weekSelectionSection = document.getElementById('week-selection');
+            const week5Button = document.createElement('button');
+            week5Button.id = 'week5-worksheets-btn';
+            week5Button.className = 'week5-worksheets-button';
+            week5Button.innerHTML = '<i class="fas fa-file-alt"></i> View All Week 5 Writing Worksheets';
+            week5Button.addEventListener('click', function() {
+                window.open('worksheets/week5/index.html', '_blank', 'width=1000,height=800');
+            });
+            weekSelectionSection.appendChild(week5Button);
+        }
         nextWeekBtn.disabled = (currentWeek === 8);
     }
     
@@ -633,11 +651,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 "Write about summer fun": "worksheets/writing-week3-summer-fun.html"
             },
             4: {
-                "Write about an AI or tech hero": "worksheets/writing-week4-ai-hero.html",
-                "Write a book review": "worksheets/writing-week4-book-review.html",
-                "Create riddles for a computer to solve": "worksheets/writing-week4-riddles.html",
-                "Write about time travel": "worksheets/writing-week4-time-travel.html",
-                "Create your own mystery": "worksheets/writing-week4-mystery.html"
+                "Write about an AI or tech hero": "worksheets/writing-week4-tech-hero.html"
+            },
+            5: {
+                "Write about robots helping on Mars": "worksheets/week5/monday-robots-mars.html",
+                "Write your own recipe": "worksheets/week5/tuesday-recipe.html",
+                "Underwater adventure story": "worksheets/week5/wednesday-underwater-story.html",
+                "Write about becoming an AI scientist": "worksheets/week5/thursday-ai-scientist.html",
+                "Create animal fact cards": "worksheets/week5/friday-animal-fact-cards.html"
             }
         };
         
